@@ -1,0 +1,14 @@
+/home/oliver/RiderProjects/InventorySystem/InventorySystem/bin/Debug/netcoreapp2.2/InventorySystem.deps.json
+/home/oliver/RiderProjects/InventorySystem/InventorySystem/bin/Debug/netcoreapp2.2/InventorySystem.runtimeconfig.json
+/home/oliver/RiderProjects/InventorySystem/InventorySystem/bin/Debug/netcoreapp2.2/InventorySystem.runtimeconfig.dev.json
+/home/oliver/RiderProjects/InventorySystem/InventorySystem/bin/Debug/netcoreapp2.2/InventorySystem.dll
+/home/oliver/RiderProjects/InventorySystem/InventorySystem/bin/Debug/netcoreapp2.2/InventorySystem.pdb
+/home/oliver/RiderProjects/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.csprojAssemblyReference.cache
+/home/oliver/RiderProjects/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.csproj.CoreCompileInputs.cache
+/home/oliver/RiderProjects/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.RazorAssemblyInfo.cache
+/home/oliver/RiderProjects/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.RazorAssemblyInfo.cs
+/home/oliver/RiderProjects/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.AssemblyInfoInputs.cache
+/home/oliver/RiderProjects/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.AssemblyInfo.cs
+/home/oliver/RiderProjects/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.RazorTargetAssemblyInfo.cache
+/home/oliver/RiderProjects/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.dll
+/home/oliver/RiderProjects/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.pdb
