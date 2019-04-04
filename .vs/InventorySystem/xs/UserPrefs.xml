@@ -1,0 +1,25 @@
+﻿<Properties StartupConfiguration="{D6C9DE40-E1A0-4B3A-83DD-6397F23563F0}|Default">
+  <MonoDevelop.Ide.Workbench>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="InventorySystem" expanded="True">
+            <Node name="InventorySystem" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="BrandsController.cs" selected="True" />
+              </Node>
+              <Node name="DataLayerClasses" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.InventorySystem PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

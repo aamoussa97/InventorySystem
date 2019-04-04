@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using InventorySystem.Models;
-using InventorySystem.Models.Categories.Vehicles;
+//using InventorySystem.Models;
+//using InventorySystem.Models.Categories.Vehicles;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventorySystem.Controllers
@@ -28,7 +28,7 @@ namespace InventorySystem.Controllers
 
     public struct Request
     {
-        public IProduct product { get; set; }
-        public Categories Categories { get; set; }
+        //public IProduct product { get; set; }
+        //public Categories Categories { get; set; }
     }
 }

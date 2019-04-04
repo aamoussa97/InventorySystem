@@ -12,3 +12,17 @@
 /home/oliver/RiderProjects/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.RazorTargetAssemblyInfo.cache
 /home/oliver/RiderProjects/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.dll
 /home/oliver/RiderProjects/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.pdb
+/Users/alimoussa/Documents/GitHub/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.csprojAssemblyReference.cache
+/Users/alimoussa/Documents/GitHub/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.csproj.CoreCompileInputs.cache
+/Users/alimoussa/Documents/GitHub/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.RazorAssemblyInfo.cache
+/Users/alimoussa/Documents/GitHub/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.RazorAssemblyInfo.cs
+/Users/alimoussa/Documents/GitHub/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.AssemblyInfoInputs.cache
+/Users/alimoussa/Documents/GitHub/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.AssemblyInfo.cs
+/Users/alimoussa/Documents/GitHub/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.dll
+/Users/alimoussa/Documents/GitHub/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.pdb
+/Users/alimoussa/Documents/GitHub/InventorySystem/InventorySystem/bin/Debug/netcoreapp2.2/InventorySystem.deps.json
+/Users/alimoussa/Documents/GitHub/InventorySystem/InventorySystem/bin/Debug/netcoreapp2.2/InventorySystem.runtimeconfig.json
+/Users/alimoussa/Documents/GitHub/InventorySystem/InventorySystem/bin/Debug/netcoreapp2.2/InventorySystem.runtimeconfig.dev.json
+/Users/alimoussa/Documents/GitHub/InventorySystem/InventorySystem/bin/Debug/netcoreapp2.2/InventorySystem.dll
+/Users/alimoussa/Documents/GitHub/InventorySystem/InventorySystem/bin/Debug/netcoreapp2.2/InventorySystem.pdb
+/Users/alimoussa/Documents/GitHub/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.RazorTargetAssemblyInfo.cache
