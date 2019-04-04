@@ -4,3 +4,5 @@
 .vs/InventorySystem/v15/Server/sqlite3/storage.ide
 .vs/InventorySystem/v15/Server/sqlite3/storage.ide-shm
 .vs/InventorySystem/v15/Server/sqlite3/storage.ide-wal
+
+InventorySystem/\.DS_Store
