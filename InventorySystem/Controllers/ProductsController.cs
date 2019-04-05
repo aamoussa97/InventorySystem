@@ -31,7 +31,6 @@ namespace InventorySystem.Controllers
             ProductsDataLayer dataLayer = new ProductsDataLayer(_configuration);
             return Ok(dataLayer.GetProduct(0));
         }
-
         // GET: api/products/1
         [HttpGet("{id}")]
         public IEnumerable<Product> Get(int id)

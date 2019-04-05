@@ -36,14 +36,14 @@ namespace InventorySystem
             {
                 c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info {Title="Inventory System API", Version="V1"});
             });
-
             services.AddCors(options =>
             {
                 options.AddPolicy(MyAllowSpecificOrigins, builder =>
                 {
                     builder.AllowAnyOrigin()
                     .AllowAnyMethod()
-                    .AllowAnyHeader();
+                    .AllowAnyHeader()
+                    .AllowCredentials();
                 });
             });
         }
@@ -70,8 +70,9 @@ namespace InventorySystem
             });
 
             //app.UseHttpsRedirection();
-            app.UseMvc();
             app.UseCors(MyAllowSpecificOrigins);
+            app.UseMvc();
+            
         }
     }
 }

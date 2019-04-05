@@ -48,6 +48,26 @@ namespace InventorySystem.DataLayerClasses
             }
         }
 
+        public IEnumerable<String> GetProductByName(string name)
+        {
+            List<String> products = new List<String>();
+            String toSearch = String.Format("SELECT * FROM Products WHERE productnameid LIKE = '{0}%'", name);
+            command = new SqlCommand(toSearch, connection);
+
+            connection.Open();
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                { 
+                    products.Add((String)reader["ProductNameId"]);
+                }
+            }
+
+            connection.Close();
+            return products;
+        }
+
         public IEnumerable<Product> GetProduct(int ProductID)
         {
             List<Product> products = new List<Product>();
