@@ -51,7 +51,7 @@ namespace InventorySystem.DataLayerClasses
         public IEnumerable<String> GetProductByName(string name)
         {
             List<String> products = new List<String>();
-            String toSearch = String.Format("SELECT * FROM Products WHERE productnameid LIKE = '{0}%'", name);
+            String toSearch = String.Format("SELECT * FROM Products WHERE productnameid LIKE '%{0}%'", name);
             command = new SqlCommand(toSearch, connection);
 
             connection.Open();
