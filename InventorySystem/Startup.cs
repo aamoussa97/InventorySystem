@@ -23,6 +23,8 @@ namespace InventorySystem
             Configuration = configuration;
         }
 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -33,6 +35,16 @@ namespace InventorySystem
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info {Title="Inventory System API", Version="V1"});
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins, builder =>
+                {
+                    builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
             });
         }
 
@@ -59,6 +71,7 @@ namespace InventorySystem
 
             //app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseCors(MyAllowSpecificOrigins);
         }
     }
 }
