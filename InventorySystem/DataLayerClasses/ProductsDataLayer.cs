@@ -68,11 +68,11 @@ namespace InventorySystem.DataLayerClasses
             return products;
         }
 
-        public IEnumerable<Product> GetProduct(int ProductID)
+        public IEnumerable<Product> GetProduct(int? ProductID)
         {
             List<Product> products = new List<Product>();
 
-            if (ProductID == 0)
+            if (ProductID == null)
             {
                 command = new SqlCommand("SELECT * FROM Products", connection);
             }

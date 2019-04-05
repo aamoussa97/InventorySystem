@@ -22,33 +22,19 @@ namespace InventorySystem.Controllers
             _configuration = configuration;
         }
 
-        // GET: api/products
-        [HttpGet]
-        public IActionResult Get()
-        {
-            String connectionString = _configuration.GetConnectionString("localDB");
-
-            ProductsDataLayer dataLayer = new ProductsDataLayer(_configuration);
-            return Ok(dataLayer.GetProduct(0));
-        }
+        
         // GET: api/products/1
-        [HttpGet("{id}")]
-        public IEnumerable<Product> Get(int id)
+        [HttpGet("{id?}")]
+        public IEnumerable<Product> Get(int? id)
         {
-            String connectionString = _configuration.GetConnectionString("localDB");
-
-            ProductsDataLayer dataLayer = new ProductsDataLayer(_configuration);
-            return dataLayer.GetProduct(id);
+            return new ProductsDataLayer(_configuration).GetProduct(id);
         }
 
         // PUT api/products/1
         [HttpPost]
         public void Post([FromBody] Product product)
         {
-            String connectionString = _configuration.GetConnectionString("localDB");
-
-            ProductsDataLayer dataLayer = new ProductsDataLayer(_configuration);
-            dataLayer.InsertProduct(product);
+            new ProductsDataLayer(_configuration).InsertProduct(product);
         }
 
         // DELETE api/products/1
