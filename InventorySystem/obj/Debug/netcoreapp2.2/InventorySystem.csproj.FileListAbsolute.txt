@@ -26,3 +26,17 @@
 /Users/alimoussa/Documents/GitHub/InventorySystem/InventorySystem/bin/Debug/netcoreapp2.2/InventorySystem.dll
 /Users/alimoussa/Documents/GitHub/InventorySystem/InventorySystem/bin/Debug/netcoreapp2.2/InventorySystem.pdb
 /Users/alimoussa/Documents/GitHub/InventorySystem/InventorySystem/obj/Debug/netcoreapp2.2/InventorySystem.RazorTargetAssemblyInfo.cache
+C:\Users\Oliver\Desktop\InventorySystem\InventorySystem\bin\Debug\netcoreapp2.2\InventorySystem.deps.json
+C:\Users\Oliver\Desktop\InventorySystem\InventorySystem\bin\Debug\netcoreapp2.2\InventorySystem.runtimeconfig.json
+C:\Users\Oliver\Desktop\InventorySystem\InventorySystem\bin\Debug\netcoreapp2.2\InventorySystem.runtimeconfig.dev.json
+C:\Users\Oliver\Desktop\InventorySystem\InventorySystem\bin\Debug\netcoreapp2.2\InventorySystem.dll
+C:\Users\Oliver\Desktop\InventorySystem\InventorySystem\bin\Debug\netcoreapp2.2\InventorySystem.pdb
+C:\Users\Oliver\Desktop\InventorySystem\InventorySystem\obj\Debug\netcoreapp2.2\InventorySystem.csprojAssemblyReference.cache
+C:\Users\Oliver\Desktop\InventorySystem\InventorySystem\obj\Debug\netcoreapp2.2\InventorySystem.csproj.CoreCompileInputs.cache
+C:\Users\Oliver\Desktop\InventorySystem\InventorySystem\obj\Debug\netcoreapp2.2\InventorySystem.RazorAssemblyInfo.cache
+C:\Users\Oliver\Desktop\InventorySystem\InventorySystem\obj\Debug\netcoreapp2.2\InventorySystem.RazorAssemblyInfo.cs
+C:\Users\Oliver\Desktop\InventorySystem\InventorySystem\obj\Debug\netcoreapp2.2\InventorySystem.AssemblyInfoInputs.cache
+C:\Users\Oliver\Desktop\InventorySystem\InventorySystem\obj\Debug\netcoreapp2.2\InventorySystem.AssemblyInfo.cs
+C:\Users\Oliver\Desktop\InventorySystem\InventorySystem\obj\Debug\netcoreapp2.2\InventorySystem.RazorTargetAssemblyInfo.cache
+C:\Users\Oliver\Desktop\InventorySystem\InventorySystem\obj\Debug\netcoreapp2.2\InventorySystem.dll
+C:\Users\Oliver\Desktop\InventorySystem\InventorySystem\obj\Debug\netcoreapp2.2\InventorySystem.pdb
