@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace InventorySystem.Controllers
 {
@@ -15,7 +16,12 @@ namespace InventorySystem.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] User userData)
         {
-           
+           //TODO: Connect to JAVA REST API
+           if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             return Ok(userData);
         }
         
@@ -23,6 +29,8 @@ namespace InventorySystem.Controllers
 
     public struct User
     {
+        [MinLength(4)]
+        [MaxLength(7)]
         public string Username { get; set; }
         public string Password { get; set; }
     }
