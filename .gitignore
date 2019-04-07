@@ -351,3 +351,11 @@ MigrationBackup/
 InventorySystem/bin/Debug/netcoreapp2\.2/
 
 InventorySystem/obj/project\.assets\.json
+
+*.props
+
+*.targets
+
+InventorySystem/obj/Debug/netcoreapp2\.2/
+
+*.cache
