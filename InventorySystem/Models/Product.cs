@@ -1,33 +1,30 @@
 ﻿using System;
 namespace InventorySystem.Models
 {
-    public class Product
+    public struct Product
     {
-        private int mProductID;
-        private String mProductSKU;
-        private String mProductName;
-        private int mProductPrice;
-        private int mProductVariableCost;
-        private String mProductBrand;
-        private int mProductMaterialsOrderID;
-
-        public Product(int mProductID, string mProductSKU, string mProductName, int mProductPrice, int mProductVariableCost, string mProductBrand, int mProductMaterialsOrderID)
+        public int ProductID { get; set; }
+        public string ProductSKU { get; set; }
+        public string ProductName { get; set; }
+        public int ProductPrice { get; set; }
+        public int ProductVariableCost { get; set; }
+        public string ProductBrand { get; set; }
+        public int ProductMaterialsOrderID { get; set; }
+        public Product(int id,
+                       string sku,
+                       string name,
+                       int price,
+                       int variablecost,
+                       string brand,
+                       int materialsid)
         {
-            this.mProductID = mProductID;
-            this.mProductSKU = mProductSKU;
-            this.mProductName = mProductName;
-            this.mProductPrice = mProductPrice;
-            this.mProductVariableCost = mProductVariableCost;
-            this.mProductBrand = mProductBrand;
-            this.mProductMaterialsOrderID = mProductMaterialsOrderID;
+            this.ProductID = id;
+            this.ProductSKU = sku;
+            this.ProductName = name;
+            this.ProductPrice = price;
+            this.ProductVariableCost = variablecost;
+            this.ProductBrand = brand;
+            this.ProductMaterialsOrderID = materialsid;
         }
-
-        public int ProductID { get => mProductID; set => mProductID = value; }
-        public string ProductSKU { get => mProductSKU; set => mProductSKU = value; }
-        public string ProductName { get => mProductName; set => mProductName = value; }
-        public int ProductPrice { get => mProductPrice; set => mProductPrice = value; }
-        public int ProductVariableCost { get => mProductVariableCost; set => mProductVariableCost = value; }
-        public string ProductBrand { get => mProductBrand; set => mProductBrand = value; }
-        public int ProductMaterialsOrderID { get => mProductMaterialsOrderID; set => mProductMaterialsOrderID = value; }
     }
 }

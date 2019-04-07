@@ -20,28 +20,14 @@ namespace InventorySystem.DataLayerClasses
 
         public int InsertBrand(Brand brand)
         {
-            try
-            {
-                //command.CommandText = "INSERT INTO Brands VALUES(@BrandID, @BrandName)";
-                command.CommandText = "INSERT INTO Brands (BrandID, BrandName) VALUES (@BrandID, @BrandName)";
-                command.Parameters.AddWithValue("@BrandID", brand.BrandID);
-                command.Parameters.AddWithValue("@BrandName", brand.BrandName);
+            String toSearch = String.Format("INSERT INTO Brands(BrandID, BrandName) VALUES({0}, {1})",
+                brand.BrandID,
+                brand.BrandName);
 
-                command.CommandType = CommandType.Text;
+            command = new SqlCommand(toSearch, connection);
+
                 connection.Open();
                 return command.ExecuteNonQuery();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                if (connection != null)
-                {
-                    connection.Close();
-                }
-            }
         }
 
         public IEnumerable<Brand> GetBrand(int BrandID)

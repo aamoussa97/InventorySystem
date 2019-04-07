@@ -18,34 +18,24 @@ namespace InventorySystem.DataLayerClasses
             connection = new SqlConnection(connectionString);
         }
 
-        public int InsertProduct(Product product)
+        public void InsertProduct(Product product)
         {
 
-            try
-            {
-                command.CommandText = "INSERT INTO Products VALUES(@ProductID, @ProductSKUID, @ProductNameID, @ProductBrandID, @ProductMaterialsOrderID, @ProductPriceID, @ProductVariableCostID)";
-                command.Parameters.AddWithValue("ProductID", product.ProductID);
-                command.Parameters.AddWithValue("ProductSKUID", product.ProductSKU);
-                command.Parameters.AddWithValue("ProductNameID", product.ProductName);
-                command.Parameters.AddWithValue("ProductMaterialsOrderID", product.ProductMaterialsOrderID);
-                command.Parameters.AddWithValue("ProductPriceID", product.ProductPrice);
-                command.Parameters.AddWithValue("ProductVariableCostID", product.ProductVariableCost);
+                String toSearch = String.Format("INSERT INTO Products VALUES ({1}, {2}, {3}, {4}, {5}, {6})",
+                    product.ProductID,
+                    product.ProductSKU,
+                    product.ProductName,
+                    product.ProductBrand,
+                    product.ProductMaterialsOrderID,
+                    product.ProductPrice,
+                    product.ProductVariableCost);
 
-                command.CommandType = CommandType.Text;
+            command = new SqlCommand(toSearch, connection);    
+
                 connection.Open();
-                return command.ExecuteNonQuery();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                if (connection != null)
-                {
-                    connection.Close();
-                }
-            }
+                command.ExecuteNonQuery();
+            connection.Close();
+      
         }
 
         public IEnumerable<String> GetProductByName(string name)

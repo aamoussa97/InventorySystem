@@ -46,10 +46,9 @@ namespace InventorySystem.Controllers
 
         // POST api/brands
         [HttpPost]
+        [Consumes("application/json")]
         public IActionResult Post([FromBody] Brand brand)
         {
-            String connectionString = _configuration.GetConnectionString("localDB");
-
             BrandsDataLayer dataLayer = new BrandsDataLayer(_configuration);
 
             return Ok(dataLayer.InsertBrand(brand));
