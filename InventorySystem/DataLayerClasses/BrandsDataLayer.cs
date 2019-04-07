@@ -20,12 +20,12 @@ namespace InventorySystem.DataLayerClasses
 
         public int InsertBrand(Brand brand)
         {
-
             try
             {
-                command.CommandText = "INSERT INTO Brands VALUES(@BrandID, @BrandName)";
-                command.Parameters.AddWithValue("BrandID", brand.BrandID);
-                command.Parameters.AddWithValue("BrandName", brand.BrandName);
+                //command.CommandText = "INSERT INTO Brands VALUES(@BrandID, @BrandName)";
+                command.CommandText = "INSERT INTO Brands (BrandID, BrandName) VALUES (@BrandID, @BrandName)";
+                command.Parameters.AddWithValue("@BrandID", brand.BrandID);
+                command.Parameters.AddWithValue("@BrandName", brand.BrandName);
 
                 command.CommandType = CommandType.Text;
                 connection.Open();

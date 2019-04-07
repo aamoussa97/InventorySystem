@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using InventorySystem.DataLayerClasses;
 using InventorySystem.Models;
+using System.IO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -45,15 +46,14 @@ namespace InventorySystem.Controllers
 
         // POST api/brands
         [HttpPost]
-        public void Post([FromBody] JObject body)
+        public IActionResult Post([FromBody] Brand brand)
         {
             String connectionString = _configuration.GetConnectionString("localDB");
 
-            int BrandID = (int)Convert.ToInt64(body.GetValue("BrandID").ToString(Formatting.None));
-            String BrandName = body.GetValue("BrandName").ToString(Formatting.None);
-
             BrandsDataLayer dataLayer = new BrandsDataLayer(_configuration);
-            //dataLayer.InsertBrand(BrandID, BrandName);
+
+            return Ok(dataLayer.InsertBrand(brand));
+
         }
 
         // PUT api/brands/1
