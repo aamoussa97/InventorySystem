@@ -348,3 +348,6 @@ healthchecksdb
 MigrationBackup/
 
 # End of https://www.gitignore.io/api/visualstudio
+InventorySystem/bin/Debug/netcoreapp2\.2/
+
+InventorySystem/obj/project\.assets\.json
