@@ -21,11 +21,12 @@ namespace InventorySystem.Controllers.Search
             _configuration = configuration;
         }
 
-        // GET: api/product/name
-        [HttpGet("{brand}")]
-        public IEnumerable<BrandsGET> Get(string name)
+        // GET: api/brand/name
+        [HttpGet("{name}")]
+        public IEnumerable<String> Get(string name)
         {
-            Console.WriteLine(name);
+            String connectionString = _configuration.GetConnectionString("localDB");
+
             return new BrandsDataLayer(_configuration).GetBrandsByName(name);
         }
     }

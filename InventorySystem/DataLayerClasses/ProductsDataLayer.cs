@@ -52,7 +52,7 @@ namespace InventorySystem.DataLayerClasses
         public IEnumerable<String> GetProductByName(string name)
         {
             List<String> products = new List<String>();
-            String toSearch = String.Format("SELECT * FROM Products WHERE productnameid LIKE '%{0}%'", name);
+            String toSearch = String.Format("SELECT * FROM [ShowProducts] WHERE ProductName LIKE '%{0}%'", name);
             command = new SqlCommand(toSearch, connection);
 
             connection.Open();
@@ -60,8 +60,9 @@ namespace InventorySystem.DataLayerClasses
             using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
-                { 
-                    products.Add((String)reader["ProductNameId"]);
+                {
+                    products.Add(reader["ProductID"].ToString());
+                    products.Add((String)reader["ProductName"]);
                 }
             }
 

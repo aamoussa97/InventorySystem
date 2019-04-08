@@ -44,12 +44,10 @@ namespace InventorySystem.DataLayerClasses
 
         }
 
-        internal IEnumerable<BrandsGET> GetBrandsByName(string name)
+        public IEnumerable<String> GetBrandsByName(string name)
         {
-            List<BrandsGET> brandsGETs = new List<BrandsGET>();
-
-            /*
-            String toSearch = String.Format("SELECT * FROM Brands WHERE brandname LIKE '%{0}%'", name);
+            List<String> brands = new List<String>();
+            String toSearch = String.Format("SELECT * FROM [ShowBrands] WHERE BrandName LIKE '%{0}%'", name);
             command = new SqlCommand(toSearch, connection);
 
             connection.Open();
@@ -58,36 +56,13 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    brands.Add(new Brand(Convert.ToInt32(reader["BrandID"]), (String)reader["BrandName"]));
+                    brands.Add(reader["BrandID"].ToString());
+                    brands.Add((String)reader["BrandName"]);
                 }
             }
 
             connection.Close();
-            return brands;*/
-
-            if (name == "")
-            {
-                command = new SqlCommand("SELECT * FROM Brands", connection);
-            }
-            else
-            {
-                command = new SqlCommand("SELECT * FROM Brands WHERE BrandName LIKE '" + name + "'", connection);
-            }
-
-            connection.Open();
-
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    BrandsGET brandsGET = new BrandsGET((String)reader["BrandName"]);
-                    brandsGETs.Add(brandsGET);
-                }
-            }
-
-            connection.Close();
-
-            return brandsGETs;
+            return brands;
         }
 
         public IEnumerable<Brand> GetBrand(int BrandID)
