@@ -50,11 +50,11 @@ namespace InventorySystem.DataLayerClasses
 
             if (PriceID == 0)
             {
-                command = new SqlCommand("SELECT * FROM Prices", connection);
+                command = new SqlCommand("SELECT * FROM ProductPrices", connection);
             }
             else
             {
-                command = new SqlCommand("SELECT * FROM Prices WHERE PriceID = " + PriceID, connection);
+                command = new SqlCommand("SELECT * FROM ProductPrices WHERE ProductID = " + PriceID, connection);
             }
 
             connection.Open();
@@ -63,8 +63,8 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    Price price = new Price((int)Convert.ToInt64(reader["PriceID"]),
-                         (int)Convert.ToInt64(reader["PriceValue"]));
+                    Price price = new Price((int)Convert.ToInt64(reader["ProductID"]),
+                         (int)Convert.ToInt64(reader["ProductPrice"]));
                     prices.Add(price);
                 }
             }
