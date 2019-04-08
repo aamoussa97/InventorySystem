@@ -24,11 +24,10 @@ namespace InventorySystem.DataLayerClasses
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                String query = "INSERT INTO Brands (BrandID, BrandName) VALUES (@BrandID, @BrandName)";
+                String query = "INSERT INTO Brands (BrandName) VALUES (@BrandName)";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@BrandID", brand.BrandID);
                     command.Parameters.AddWithValue("@BrandName", brand.BrandName);
 
                     connection.Open();
