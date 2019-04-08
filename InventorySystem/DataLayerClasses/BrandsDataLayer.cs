@@ -11,23 +11,38 @@ namespace InventorySystem.DataLayerClasses
     {
         SqlConnection connection;
         SqlCommand command;
+        String connectionString;
 
         public BrandsDataLayer(IConfiguration configuration)
         {
-            String connectionString = configuration.GetConnectionString("localDB");
+            connectionString = configuration.GetConnectionString("localDB");
             connection = new SqlConnection(connectionString);
         }
 
         public int InsertBrand(Brand brand)
         {
-            String toSearch = String.Format("INSERT INTO Brands(BrandID, BrandName) VALUES({0}, {1})",
-                brand.BrandID,
-                brand.BrandName);
 
-            command = new SqlCommand(toSearch, connection);
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                String query = "INSERT INTO Brands (BrandID, BrandName) VALUES (@BrandID, @BrandName)";
 
-                connection.Open();
-                return command.ExecuteNonQuery();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@BrandID", brand.BrandID);
+                    command.Parameters.AddWithValue("@BrandName", brand.BrandName);
+
+                    connection.Open();
+                    int result = command.ExecuteNonQuery();
+
+                    // Check Error
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+                        //Throw error status code
+                }
+
+                return -1;
+            }
+
         }
 
         public IEnumerable<Brand> GetBrand(int BrandID)

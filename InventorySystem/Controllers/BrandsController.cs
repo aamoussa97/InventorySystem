@@ -46,7 +46,7 @@ namespace InventorySystem.Controllers
 
         // POST api/brands
         [HttpPost]
-        [Consumes("application/json")]
+        //[Consumes("application/json")]
         public IActionResult Post([FromBody] Brand brand)
         {
             BrandsDataLayer dataLayer = new BrandsDataLayer(_configuration);
