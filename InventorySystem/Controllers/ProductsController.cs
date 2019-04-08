@@ -25,7 +25,7 @@ namespace InventorySystem.Controllers
         
         // GET: api/products/1
         [HttpGet("{id?}")]
-        public IEnumerable<Product> Get(int? id)
+        public IEnumerable<ProductsGET> Get(int? id)
         {
             return new ProductsDataLayer(_configuration).GetProduct(id);
         }

@@ -4,27 +4,27 @@ namespace InventorySystem.Models
     public struct Product
     {
         public int ProductID { get; set; }
-        public string ProductSKU { get; set; }
-        public string ProductName { get; set; }
-        public int ProductPrice { get; set; }
-        public int ProductVariableCost { get; set; }
-        public string ProductBrand { get; set; }
+        public int ProductSKUID { get; set; }
+        public int ProductNameID { get; set; }
+        public int ProductPriceID { get; set; }
+        public int ProductVariableCostID { get; set; }
+        public int ProductBrandID { get; set; }
         public int ProductMaterialsOrderID { get; set; }
         public Product(int id,
-                       string sku,
-                       string name,
-                       int price,
-                       int variablecost,
-                       string brand,
-                       int materialsid)
+                       int skuID,
+                       int nameID,
+                       int priceID,
+                       int variablecostID,
+                       int brandID,
+                       int materialsID)
         {
             this.ProductID = id;
-            this.ProductSKU = sku;
-            this.ProductName = name;
-            this.ProductPrice = price;
-            this.ProductVariableCost = variablecost;
-            this.ProductBrand = brand;
-            this.ProductMaterialsOrderID = materialsid;
+            this.ProductSKUID = skuID;
+            this.ProductNameID = nameID;
+            this.ProductPriceID = priceID;
+            this.ProductVariableCostID = variablecostID;
+            this.ProductBrandID = brandID;
+            this.ProductMaterialsOrderID = materialsID;
         }
     }
 }

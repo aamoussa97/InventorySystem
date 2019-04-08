@@ -24,17 +24,16 @@ namespace InventorySystem.DataLayerClasses
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                String query = "INSERT INTO Products (ProductID, ProductSKUID, ProductNameID, ProductBrandID, ProductMaterialsOrderID, ProductPriceID, ProductVariableCostID) VALUES (@ProductID, @ProductSKUID, @ProductNameID, @ProductBrandID, @ProductMaterialsOrderID, @ProductPriceID, @ProductVariableCostID)";
+                String query = "INSERT INTO Products (ProductSKUID, ProductNameID, ProductBrandID, ProductMaterialsOrderID, ProductPriceID, ProductVariableCostID) VALUES (@ProductSKUID, @ProductNameID, @ProductBrandID, @ProductMaterialsOrderID, @ProductPriceID, @ProductVariableCostID)";
                 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@ProductID", product.ProductID);
-                    command.Parameters.AddWithValue("@ProductSKUID", product.ProductSKU);
-                    command.Parameters.AddWithValue("@ProductNameID", product.ProductName);
-                    command.Parameters.AddWithValue("@ProductBrandID", product.ProductBrand);
+                    command.Parameters.AddWithValue("@ProductSKUID", product.ProductSKUID);
+                    command.Parameters.AddWithValue("@ProductNameID", product.ProductNameID);
+                    command.Parameters.AddWithValue("@ProductBrandID", product.ProductBrandID);
                     command.Parameters.AddWithValue("@ProductMaterialsOrderID", product.ProductMaterialsOrderID);
-                    command.Parameters.AddWithValue("@ProductPriceID", product.ProductPrice);
-                    command.Parameters.AddWithValue("@ProductVariableCostID", product.ProductVariableCost);
+                    command.Parameters.AddWithValue("@ProductPriceID", product.ProductPriceID);
+                    command.Parameters.AddWithValue("@ProductVariableCostID", product.ProductVariableCostID);
 
                     connection.Open();
                     int result = command.ExecuteNonQuery();
@@ -48,23 +47,6 @@ namespace InventorySystem.DataLayerClasses
                 return -1;
             }
 
-
-            /*
-            String toSearch = String.Format("INSERT INTO Products VALUES ({1}, {2}, {3}, {4}, {5}, {6})",
-                    product.ProductID,
-                    product.ProductSKU,
-                    product.ProductName,
-                    product.ProductBrand,
-                    product.ProductMaterialsOrderID,
-                    product.ProductPrice,
-                    product.ProductVariableCost);
-
-            command = new SqlCommand(toSearch, connection);    
-
-                connection.Open();
-                command.ExecuteNonQuery();
-            connection.Close();*/
-    
         }
 
         public IEnumerable<String> GetProductByName(string name)
@@ -87,13 +69,13 @@ namespace InventorySystem.DataLayerClasses
             return products;
         }
 
-        public IEnumerable<Product> GetProduct(int? ProductID)
+        public IEnumerable<ProductsGET> GetProduct(int? ProductID)
         {
-            List<Product> products = new List<Product>();
+            List<ProductsGET> productsGET = new List<ProductsGET>();
 
             if (ProductID == null)
             {
-                command = new SqlCommand("SELECT * FROM Products", connection);
+                command = new SqlCommand("SELECT Products.ProductID,ProductNames.ProductName,ProductSKU.ProductSKU,Brands.BrandName,ProductPrices.ProductPrice,ProductVariableCosts.ProductVariableCosts FROM Products,ProductNames,ProductSKU,Brands,ProductPrices,ProductVariableCosts WHERE Products.ProductID=ProductNames.ProductID AND Products.ProductSKUID=ProductSKU.ProductID AND Products.ProductBrandID=Brands.BrandID AND Products.ProductPriceID=ProductPrices.ProductID AND Products.ProductVariableCostID=ProductVariableCosts.ProductID;", connection);
             }
             else
             {
@@ -106,20 +88,20 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    Product product = new Product((int)Convert.ToInt64(reader["ProductID"]),
-                         (String)reader["ProductSKUID"],
-                         (String)reader["ProductNameID"],
-                         (int)Convert.ToInt64(reader["ProductPriceID"]),
-                         (int)Convert.ToInt64(reader["ProductVariableCostID"]),
-                          (String)reader["ProductBrandID"],
-                          (int)Convert.ToInt64(reader["ProductMaterialsOrderID"]));
-                    products.Add(product);
+                    ProductsGET productGET = new ProductsGET((int)Convert.ToInt64(reader["ProductID"]),
+                         (int)Convert.ToInt64(reader["ProductSKU"]),
+                         (String)reader["ProductName"],
+                         (int)Convert.ToInt64(reader["ProductPrice"]),
+                         (int)Convert.ToInt64(reader["ProductVariableCosts"]),
+                          (String)reader["BrandName"]);
+                          //(int)Convert.ToInt64(reader["MaterialID"]));
+                    productsGET.Add(productGET);
                 }
             }
 
             connection.Close();
 
-            return products;
+            return productsGET;
         }
 
     }
