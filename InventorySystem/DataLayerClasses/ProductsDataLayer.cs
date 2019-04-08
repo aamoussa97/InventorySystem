@@ -11,17 +11,46 @@ namespace InventorySystem.DataLayerClasses
     {
         SqlConnection connection;
         SqlCommand command;
+        String connectionString;
 
         public ProductsDataLayer(IConfiguration configuration)
         {
-            String connectionString = configuration.GetConnectionString("localDB");
+            connectionString = configuration.GetConnectionString("localDB");
             connection = new SqlConnection(connectionString);
         }
 
-        public void InsertProduct(Product product)
+        public int InsertProduct(Product product)
         {
 
-                String toSearch = String.Format("INSERT INTO Products VALUES ({1}, {2}, {3}, {4}, {5}, {6})",
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                String query = "INSERT INTO Products (ProductID, ProductSKUID, ProductNameID, ProductBrandID, ProductMaterialsOrderID, ProductPriceID, ProductVariableCostID) VALUES (@ProductID, @ProductSKUID, @ProductNameID, @ProductBrandID, @ProductMaterialsOrderID, @ProductPriceID, @ProductVariableCostID)";
+                
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ProductID", product.ProductID);
+                    command.Parameters.AddWithValue("@ProductSKUID", product.ProductSKU);
+                    command.Parameters.AddWithValue("@ProductNameID", product.ProductName);
+                    command.Parameters.AddWithValue("@ProductBrandID", product.ProductBrand);
+                    command.Parameters.AddWithValue("@ProductMaterialsOrderID", product.ProductMaterialsOrderID);
+                    command.Parameters.AddWithValue("@ProductPriceID", product.ProductPrice);
+                    command.Parameters.AddWithValue("@ProductVariableCostID", product.ProductVariableCost);
+
+                    connection.Open();
+                    int result = command.ExecuteNonQuery();
+
+                    // Check Error
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+                    //Throw error status code
+                }
+
+                return -1;
+            }
+
+
+            /*
+            String toSearch = String.Format("INSERT INTO Products VALUES ({1}, {2}, {3}, {4}, {5}, {6})",
                     product.ProductID,
                     product.ProductSKU,
                     product.ProductName,
@@ -34,8 +63,8 @@ namespace InventorySystem.DataLayerClasses
 
                 connection.Open();
                 command.ExecuteNonQuery();
-            connection.Close();
-      
+            connection.Close();*/
+    
         }
 
         public IEnumerable<String> GetProductByName(string name)
