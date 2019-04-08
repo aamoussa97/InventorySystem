@@ -9,13 +9,13 @@ using Microsoft.Extensions.Configuration;
 
 namespace InventorySystem.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/search/[controller]")]
     [ApiController]
-    public class SearchController : ControllerBase
+    public class ProductController : ControllerBase
     {
         IConfiguration _configuration;
 
-        public SearchController(IConfiguration configuration)
+        public ProductController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -28,5 +28,6 @@ namespace InventorySystem.Controllers
 
             return new ProductsDataLayer(_configuration).GetProductByName(name);
         }
+
     }
 }

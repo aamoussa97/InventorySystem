@@ -44,6 +44,28 @@ namespace InventorySystem.DataLayerClasses
 
         }
 
+        internal IEnumerable<Brand> GetBrandsByName(string name)
+        {
+            List<Brand> brands = new List<Brand>();
+
+         
+                String toSearch = String.Format("SELECT * FROM Brands WHERE brandname LIKE '%{0}%'", name);
+                command = new SqlCommand(toSearch, connection);
+
+                connection.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        brands.Add(new Brand(Convert.ToInt32(reader["BrandID"]), (String)reader["BrandName"]));
+                    }
+                }
+
+                connection.Close();
+                return brands;
+        }
+
         public IEnumerable<Brand> GetBrand(int BrandID)
         {
             List<Brand> brands = new List<Brand>();
