@@ -44,26 +44,50 @@ namespace InventorySystem.DataLayerClasses
 
         }
 
-        internal IEnumerable<Brand> GetBrandsByName(string name)
+        internal IEnumerable<BrandsGET> GetBrandsByName(string name)
         {
-            List<Brand> brands = new List<Brand>();
+            List<BrandsGET> brandsGETs = new List<BrandsGET>();
 
-         
-                String toSearch = String.Format("SELECT * FROM Brands WHERE brandname LIKE '%{0}%'", name);
-                command = new SqlCommand(toSearch, connection);
+            /*
+            String toSearch = String.Format("SELECT * FROM Brands WHERE brandname LIKE '%{0}%'", name);
+            command = new SqlCommand(toSearch, connection);
 
-                connection.Open();
+            connection.Open();
 
-                using (var reader = command.ExecuteReader())
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        brands.Add(new Brand(Convert.ToInt32(reader["BrandID"]), (String)reader["BrandName"]));
-                    }
+                    brands.Add(new Brand(Convert.ToInt32(reader["BrandID"]), (String)reader["BrandName"]));
                 }
+            }
 
-                connection.Close();
-                return brands;
+            connection.Close();
+            return brands;*/
+
+            if (name == "")
+            {
+                command = new SqlCommand("SELECT * FROM Brands", connection);
+            }
+            else
+            {
+                command = new SqlCommand("SELECT * FROM Brands WHERE BrandName LIKE '" + name + "'", connection);
+            }
+
+            connection.Open();
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    BrandsGET brandsGET = new BrandsGET((String)reader["BrandName"]);
+                    brandsGETs.Add(brandsGET);
+                }
+            }
+
+            connection.Close();
+
+            return brandsGETs;
         }
 
         public IEnumerable<Brand> GetBrand(int BrandID)

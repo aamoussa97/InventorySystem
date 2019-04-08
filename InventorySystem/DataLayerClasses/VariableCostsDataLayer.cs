@@ -50,11 +50,11 @@ namespace InventorySystem.DataLayerClasses
 
             if (VariableCostID == 0)
             {
-                command = new SqlCommand("SELECT * FROM VariableCosts", connection);
+                command = new SqlCommand("SELECT * FROM ProductVariableCosts", connection);
             }
             else
             {
-                command = new SqlCommand("SELECT * FROM VariableCosts WHERE VariableCostID = " + VariableCostID, connection);
+                command = new SqlCommand("SELECT * FROM ProductVariableCosts WHERE ProductID = " + VariableCostID, connection);
             }
 
             connection.Open();
@@ -63,8 +63,8 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    VariableCost variableCost = new VariableCost((int)Convert.ToInt64(reader["VariableCostID"]),
-                         (int)Convert.ToInt64(reader["VariableCostValue"]));
+                    VariableCost variableCost = new VariableCost((int)Convert.ToInt64(reader["ProductID"]),
+                         (int)Convert.ToInt64(reader["ProductVariableCost"]));
                     variableCosts.Add(variableCost);
                 }
             }
