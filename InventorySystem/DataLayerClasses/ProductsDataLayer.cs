@@ -76,11 +76,11 @@ namespace InventorySystem.DataLayerClasses
 
             if (ProductID == null)
             {
-                command = new SqlCommand("SELECT Products.ProductID,ProductNames.ProductName,ProductSKU.ProductSKU,Brands.BrandName,ProductPrices.ProductPrice,ProductVariableCosts.ProductVariableCosts FROM Products,ProductNames,ProductSKU,Brands,ProductPrices,ProductVariableCosts WHERE Products.ProductID=ProductNames.ProductID AND Products.ProductSKUID=ProductSKU.ProductID AND Products.ProductBrandID=Brands.BrandID AND Products.ProductPriceID=ProductPrices.ProductID AND Products.ProductVariableCostID=ProductVariableCosts.ProductID;", connection);
+                command = new SqlCommand("SELECT Products.ProductID,ProductNames.ProductName,ProductSKU.ProductSKU,Brands.BrandName,ProductPrices.ProductPrice,ProductVariableCosts.ProductVariableCost FROM Products,ProductNames,ProductSKU,Brands,ProductPrices,ProductVariableCosts WHERE Products.ProductID=ProductNames.ProductID AND Products.ProductSKUID=ProductSKU.ProductID AND Products.ProductBrandID=Brands.BrandID AND Products.ProductPriceID=ProductPrices.ProductID AND Products.ProductVariableCostID=ProductVariableCosts.ProductID;", connection);
             }
             else
             {
-                command = new SqlCommand("SELECT * FROM Products WHERE ProductID = " + ProductID, connection);
+                command = new SqlCommand("SELECT Products.ProductID,ProductNames.ProductName,ProductSKU.ProductSKU,Brands.BrandName,ProductPrices.ProductPrice,ProductVariableCosts.ProductVariableCost FROM Products,ProductNames,ProductSKU,Brands,ProductPrices,ProductVariableCosts WHERE Products.ProductID=ProductNames.ProductID AND Products.ProductSKUID=ProductSKU.ProductID AND Products.ProductBrandID=Brands.BrandID AND Products.ProductPriceID=ProductPrices.ProductID AND Products.ProductVariableCostID=ProductVariableCosts.ProductID AND Products.ProductID='" + ProductID + "'", connection);
             }
 
             connection.Open();
@@ -93,7 +93,7 @@ namespace InventorySystem.DataLayerClasses
                          (int)Convert.ToInt64(reader["ProductSKU"]),
                          (String)reader["ProductName"],
                          (int)Convert.ToInt64(reader["ProductPrice"]),
-                         (int)Convert.ToInt64(reader["ProductVariableCosts"]),
+                         (int)Convert.ToInt64(reader["ProductVariableCost"]),
                           (String)reader["BrandName"]);
                           //(int)Convert.ToInt64(reader["MaterialID"]));
                     productsGET.Add(productGET);
