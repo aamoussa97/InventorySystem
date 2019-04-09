@@ -9,13 +9,13 @@ namespace InventorySystem.DataLayerClasses
 {
     public class VariableCostsDataLayer
     {
-        readonly SqlConnection _connection;
-        private SqlCommand _command;
+        SqlConnection connection;
+        SqlCommand command;
 
         public VariableCostsDataLayer(IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("localDB");
-            _connection = new SqlConnection(connectionString);
+            String connectionString = configuration.GetConnectionString("localDB");
+            connection = new SqlConnection(connectionString);
         }
 
         public int InsertVariableCost(VariableCost variableCost)
@@ -23,29 +23,43 @@ namespace InventorySystem.DataLayerClasses
 
             try
             {
-                _command.CommandText = "INSERT INTO VariableCosts VALUES(@VariableCostID, @VariableCostValue)";
-                _command.Parameters.AddWithValue("VariableCostID", variableCost.VariableCostID);
-                _command.Parameters.AddWithValue("VariableCostValue", variableCost.VariableCostValue);
+                command.CommandText = "INSERT INTO VariableCosts VALUES(@VariableCostID, @VariableCostValue)";
+                command.Parameters.AddWithValue("VariableCostID", variableCost.VariableCostID);
+                command.Parameters.AddWithValue("VariableCostValue", variableCost.VariableCostValue);
 
-                _command.CommandType = CommandType.Text;
-                _connection.Open();
-                return _command.ExecuteNonQuery();
+                command.CommandType = CommandType.Text;
+                connection.Open();
+                return command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
             }
             finally
             {
-                _connection?.Close();
+                if (connection != null)
+                {
+                    connection.Close();
+                }
             }
         }
 
-        public IEnumerable<VariableCost> GetVariableCost(int? variableCostId)
+        public IEnumerable<VariableCost> GetVariableCost(int VariableCostID)
         {
-            var variableCosts = new List<VariableCost>();
+            List<VariableCost> variableCosts = new List<VariableCost>();
 
-            _command = variableCostId == null ? new SqlCommand("SELECT * FROM ProductVariableCosts", _connection) : new SqlCommand("SELECT * FROM ProductVariableCosts WHERE ProductID = " + variableCostId, _connection);
+            if (VariableCostID == 0)
+            {
+                command = new SqlCommand("SELECT * FROM ProductVariableCosts", connection);
+            }
+            else
+            {
+                command = new SqlCommand("SELECT * FROM ProductVariableCosts WHERE ProductID = " + VariableCostID, connection);
+            }
 
-            _connection.Open();
+            connection.Open();
 
-            using (var reader = _command.ExecuteReader())
+            using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
@@ -55,7 +69,7 @@ namespace InventorySystem.DataLayerClasses
                 }
             }
 
-            _connection.Close();
+            connection.Close();
 
             return variableCosts;
         }

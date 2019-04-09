@@ -9,20 +9,20 @@ namespace InventorySystem.DataLayerClasses
 {
     public class BrandsDataLayer
     {
-        readonly SqlConnection _connection;
-        private SqlCommand _command;
-        private readonly string _connectionString;
+        SqlConnection connection;
+        SqlCommand command;
+        String connectionString;
 
         public BrandsDataLayer(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("localDB");
-            _connection = new SqlConnection(_connectionString);
+            connectionString = configuration.GetConnectionString("localDB");
+            connection = new SqlConnection(connectionString);
         }
 
         public int InsertBrand(Brand brand)
         {
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 String query = "INSERT INTO Brands (BrandName) VALUES (@BrandName)";
 
@@ -44,15 +44,15 @@ namespace InventorySystem.DataLayerClasses
 
         }
 
-        public IEnumerable<string> GetBrandsByName(string name)
+        public IEnumerable<String> GetBrandsByName(string name)
         {
-            var brands = new List<string>();
-            var toSearch = $"SELECT * FROM [ShowBrands] WHERE BrandName LIKE '%{name}%'";
-            _command = new SqlCommand(toSearch, _connection);
+            List<String> brands = new List<String>();
+            String toSearch = String.Format("SELECT * FROM [ShowBrands] WHERE BrandName LIKE '%{0}%'", name);
+            command = new SqlCommand(toSearch, connection);
 
-            _connection.Open();
+            connection.Open();
 
-            using (var reader = _command.ExecuteReader())
+            using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
@@ -61,29 +61,36 @@ namespace InventorySystem.DataLayerClasses
                 }
             }
 
-            _connection.Close();
+            connection.Close();
             return brands;
         }
 
-        public IEnumerable<Brand> GetBrand(int? brandId)
+        public IEnumerable<Brand> GetBrand(int BrandID)
         {
-            var brands = new List<Brand>();
+            List<Brand> brands = new List<Brand>();
 
-            _command = brandId == null ? new SqlCommand("SELECT * FROM Brands", _connection) : new SqlCommand("SELECT * FROM Brands WHERE BrandID = " + brandId, _connection);
+            if (BrandID == 0)
+            {
+                command = new SqlCommand("SELECT * FROM Brands", connection);
+            }
+            else
+            {
+                command = new SqlCommand("SELECT * FROM Brands WHERE BrandID = " + BrandID, connection);
+            }
 
-            _connection.Open();
+            connection.Open();
 
-            using (var reader = _command.ExecuteReader())
+            using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    var brand = new Brand((int)Convert.ToInt64(reader["BrandID"]),
-                       (string)reader["BrandName"]);
+                    Brand brand = new Brand((int)Convert.ToInt64(reader["BrandID"]),
+                       (String)reader["BrandName"]);
                     brands.Add(brand);
                 }
             }
 
-            _connection.Close();
+            connection.Close();
 
             return brands;
         }
