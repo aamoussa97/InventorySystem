@@ -9,13 +9,13 @@ namespace InventorySystem.DataLayerClasses
 {
     public class MaterialsDataLayer
     {
-        SqlConnection connection;
-        SqlCommand command;
+        private readonly SqlConnection _connection;
+        private SqlCommand _command;
 
         public MaterialsDataLayer(IConfiguration configuration)
         {
-            String connectionString = configuration.GetConnectionString("localDB");
-            connection = new SqlConnection(connectionString);
+            var connectionString = configuration.GetConnectionString("localDB");
+            _connection = new SqlConnection(connectionString);
         }
 
         public int InsertMaterial(Material material)
@@ -23,54 +23,40 @@ namespace InventorySystem.DataLayerClasses
 
             try
             {
-                command.CommandText = "INSERT INTO Materials VALUES(@MaterialID, @MaterialSKU)";
-                command.Parameters.AddWithValue("MaterialID", material.MaterialID);
-                command.Parameters.AddWithValue("MaterialSKU", material.MaterialSKU);
+                _command.CommandText = "INSERT INTO Materials VALUES(@MaterialID, @MaterialSKU)";
+                _command.Parameters.AddWithValue("MaterialID", material.MaterialID);
+                _command.Parameters.AddWithValue("MaterialSKU", material.MaterialSKU);
 
-                command.CommandType = CommandType.Text;
-                connection.Open();
-                return command.ExecuteNonQuery();
-            }
-            catch (Exception)
-            {
-                throw;
+                _command.CommandType = CommandType.Text;
+                _connection.Open();
+                return _command.ExecuteNonQuery();
             }
             finally
             {
-                if (connection != null)
-                {
-                    connection.Close();
-                }
+                _connection?.Close();
             }
         }
 
-        public IEnumerable<Material> GetMaterial(int MaterialID)
+        public IEnumerable<Material> GetMaterial(int? materialId)
         {
-            List<Material> materials = new List<Material>();
+            var materials = new List<Material>();
 
-            if (MaterialID == 0)
-            {
-                command = new SqlCommand("SELECT * FROM Materials", connection);
-            }
-            else
-            {
-                command = new SqlCommand("SELECT * FROM Materials WHERE MaterialID = " + MaterialID, connection);
-            }
+            _command = materialId == null ? new SqlCommand("SELECT * FROM Materials", _connection) : new SqlCommand("SELECT * FROM Materials WHERE MaterialID = " + materialId, _connection);
 
-            connection.Open();
+            _connection.Open();
 
-            using (var reader = command.ExecuteReader())
+            using (var reader = _command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    Material material = new Material((int)Convert.ToInt64(reader["MaterialID"]),
-                         (String)reader["MaterialSKU"],
-                         (String)reader["MaterialName"]);
+                    var material = new Material((int)Convert.ToInt64(reader["MaterialID"]),
+                         (string)reader["MaterialSKU"],
+                         (string)reader["MaterialName"]);
                     materials.Add(material);
                 }
             }
 
-            connection.Close();
+            _connection.Close();
 
             return materials;
         }

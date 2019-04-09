@@ -21,16 +21,9 @@ namespace InventorySystem.Controllers
             _configuration = configuration;
         }
 
-        // GET: api/prices
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok(new PricesDataLayer(_configuration).GetPrice(0));
-        }
-
         // GET: api/prices/1
-        [HttpGet("{id}")]
-        public IEnumerable<Price> Get(int id)
+        [HttpGet("{id?}")]
+        public IEnumerable<Price> Get(int? id)
         {
             return new PricesDataLayer(_configuration).GetPrice(id);
         }

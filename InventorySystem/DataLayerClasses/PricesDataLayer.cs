@@ -9,13 +9,13 @@ namespace InventorySystem.DataLayerClasses
 {
     public class PricesDataLayer
     {
-        SqlConnection connection;
-        SqlCommand command;
+        readonly SqlConnection _connection;
+        private SqlCommand _command;
 
         public PricesDataLayer(IConfiguration configuration)
         {
-            String connectionString = configuration.GetConnectionString("localDB");
-            connection = new SqlConnection(connectionString);
+            var connectionString = configuration.GetConnectionString("localDB");
+            _connection = new SqlConnection(connectionString);
         }
 
         public int InsertPrice(Price price)
@@ -23,43 +23,29 @@ namespace InventorySystem.DataLayerClasses
 
             try
             {
-                command.CommandText = "INSERT INTO Prices VALUES(@PriceID, @PriceValue)";
-                command.Parameters.AddWithValue("PriceID", price.PriceID);
-                command.Parameters.AddWithValue("PriceValue", price.PriceValue);
+                _command.CommandText = "INSERT INTO Prices VALUES(@PriceID, @PriceValue)";
+                _command.Parameters.AddWithValue("PriceID", price.PriceID);
+                _command.Parameters.AddWithValue("PriceValue", price.PriceValue);
 
-                command.CommandType = CommandType.Text;
-                connection.Open();
-                return command.ExecuteNonQuery();
-            }
-            catch (Exception)
-            {
-                throw;
+                _command.CommandType = CommandType.Text;
+                _connection.Open();
+                return _command.ExecuteNonQuery();
             }
             finally
             {
-                if (connection != null)
-                {
-                    connection.Close();
-                }
+                _connection?.Close();
             }
         }
 
-        public IEnumerable<Price> GetPrice(int PriceID)
+        public IEnumerable<Price> GetPrice(int? priceId)
         {
-            List<Price> prices = new List<Price>();
+            var prices = new List<Price>();
 
-            if (PriceID == 0)
-            {
-                command = new SqlCommand("SELECT * FROM ProductPrices", connection);
-            }
-            else
-            {
-                command = new SqlCommand("SELECT * FROM ProductPrices WHERE ProductID = " + PriceID, connection);
-            }
+            _command = priceId == null ? new SqlCommand("SELECT * FROM ProductPrices", _connection) : new SqlCommand("SELECT * FROM ProductPrices WHERE ProductID = " + priceId, _connection);
 
-            connection.Open();
+            _connection.Open();
 
-            using (var reader = command.ExecuteReader())
+            using (var reader = _command.ExecuteReader())
             {
                 while (reader.Read())
                 {
@@ -69,7 +55,7 @@ namespace InventorySystem.DataLayerClasses
                 }
             }
 
-            connection.Close();
+            _connection.Close();
 
             return prices;
         }
