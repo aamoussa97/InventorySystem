@@ -76,11 +76,11 @@ namespace InventorySystem.DataLayerClasses
 
             if (ProductID == null)
             {
-                command = new SqlCommand("SELECT Products.ProductID,ProductNames.ProductName,ProductSKU.ProductSKU,Brands.BrandName,ProductPrices.ProductPrice,ProductVariableCosts.ProductVariableCost FROM Products,ProductNames,ProductSKU,Brands,ProductPrices,ProductVariableCosts WHERE Products.ProductID=ProductNames.ProductID AND Products.ProductSKUID=ProductSKU.ProductID AND Products.ProductBrandID=Brands.BrandID AND Products.ProductPriceID=ProductPrices.ProductID AND Products.ProductVariableCostID=ProductVariableCosts.ProductID;", connection);
+                command = new SqlCommand("SELECT * FROM [ShowProducts]", connection);
             }
             else
             {
-                command = new SqlCommand("SELECT Products.ProductID,ProductNames.ProductName,ProductSKU.ProductSKU,Brands.BrandName,ProductPrices.ProductPrice,ProductVariableCosts.ProductVariableCost FROM Products,ProductNames,ProductSKU,Brands,ProductPrices,ProductVariableCosts WHERE Products.ProductID=ProductNames.ProductID AND Products.ProductSKUID=ProductSKU.ProductID AND Products.ProductBrandID=Brands.BrandID AND Products.ProductPriceID=ProductPrices.ProductID AND Products.ProductVariableCostID=ProductVariableCosts.ProductID AND Products.ProductID='" + ProductID + "'", connection);
+                command = new SqlCommand("SELECT * FROM [ShowProducts] WHERE ProductID = '" + ProductID + "'", connection);
             }
 
             connection.Open();
