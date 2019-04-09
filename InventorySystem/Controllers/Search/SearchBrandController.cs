@@ -14,7 +14,7 @@ namespace InventorySystem.Controllers.Search
     [ApiController]
     public class BrandController : ControllerBase
     {
-        IConfiguration _configuration;
+        readonly IConfiguration _configuration;
 
         public BrandController(IConfiguration configuration)
         {
@@ -23,10 +23,8 @@ namespace InventorySystem.Controllers.Search
 
         // GET: api/brand/name
         [HttpGet("{name}")]
-        public IEnumerable<String> Get(string name)
+        public IEnumerable<string> Get(string name)
         {
-            String connectionString = _configuration.GetConnectionString("localDB");
-
             return new BrandsDataLayer(_configuration).GetBrandsByName(name);
         }
     }

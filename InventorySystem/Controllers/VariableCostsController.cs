@@ -14,7 +14,7 @@ namespace InventorySystem.Controllers
     [Route("api/[controller]")]
     public class VariableCostsController : Controller
     {
-        IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public VariableCostsController(IConfiguration configuration)
         {
@@ -25,20 +25,14 @@ namespace InventorySystem.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            String connectionString = _configuration.GetConnectionString("localDB");
-
-            VariableCostsDataLayer dataLayer = new VariableCostsDataLayer(_configuration);
-            return Ok(dataLayer.GetVariableCost(0));
+            return Ok(new VariableCostsDataLayer(_configuration).GetVariableCost(0));
         }
 
         // GET: api/variablecosts/1
         [HttpGet("{id}")]
         public IEnumerable<VariableCost> Get(int id)
         {
-            String connectionString = _configuration.GetConnectionString("localDB");
-
-            VariableCostsDataLayer dataLayer = new VariableCostsDataLayer(_configuration);
-            return dataLayer.GetVariableCost(id);
+            return new VariableCostsDataLayer(_configuration).GetVariableCost(id);
         }
 
         // POST api/variablecosts/1

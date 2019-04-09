@@ -14,8 +14,7 @@ namespace InventorySystem.Controllers
     [Route("api/[controller]")]
     public class ProductsController : Controller
     {
-
-        IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public ProductsController(IConfiguration configuration)
         {

@@ -17,7 +17,7 @@ namespace InventorySystem.Controllers
     [Route("api/[controller]")]
     public class BrandsController : Controller
     {
-        IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public BrandsController(IConfiguration configuration)
         {
@@ -28,20 +28,14 @@ namespace InventorySystem.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            String connectionString = _configuration.GetConnectionString("localDB");
-
-            BrandsDataLayer dataLayer = new BrandsDataLayer(_configuration);
-            return Ok(dataLayer.GetBrand(0));
+            return Ok(new BrandsDataLayer(_configuration).GetBrand(0));
         }
 
         // GET: api/brands/1
         [HttpGet("{id}")]
         public IEnumerable<Brand> Get(int id)
         {
-            String connectionString = _configuration.GetConnectionString("localDB");
-
-            BrandsDataLayer dataLayer = new BrandsDataLayer(_configuration);
-            return dataLayer.GetBrand(id);
+            return new BrandsDataLayer(_configuration).GetBrand(id);
         }
 
         // POST api/brands
@@ -49,9 +43,7 @@ namespace InventorySystem.Controllers
         //[Consumes("application/json")]
         public IActionResult Post([FromBody] Brand brand)
         {
-            BrandsDataLayer dataLayer = new BrandsDataLayer(_configuration);
-
-            return Ok(dataLayer.InsertBrand(brand));
+            return Ok(new BrandsDataLayer(_configuration).InsertBrand(brand));
 
         }
 

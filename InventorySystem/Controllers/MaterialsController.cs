@@ -14,8 +14,7 @@ namespace InventorySystem.Controllers
     [Route("api/[controller]")]
     public class MaterialsController : Controller
     {
-
-        IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public MaterialsController(IConfiguration configuration)
         {
@@ -26,20 +25,14 @@ namespace InventorySystem.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            String connectionString = _configuration.GetConnectionString("localDB");
-
-            MaterialsDataLayer dataLayer = new MaterialsDataLayer(_configuration);
-            return Ok(dataLayer.GetMaterial(0));
+            return Ok(new MaterialsDataLayer(_configuration).GetMaterial(0));
         }
 
         // GET api/materials/1
         [HttpGet("{id}")]
         public IEnumerable<Material> Get(int id)
         {
-            String connectionString = _configuration.GetConnectionString("localDB");
-
-            MaterialsDataLayer dataLayer = new MaterialsDataLayer(_configuration);
-            return dataLayer.GetMaterial(id);
+            return new MaterialsDataLayer(_configuration).GetMaterial(id);
         }
 
         // POST api/materials

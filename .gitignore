@@ -348,3 +348,8 @@ healthchecksdb
 MigrationBackup/
 
 # End of https://www.gitignore.io/api/visualstudio
+\.idea/\.idea\.InventorySystem/\.idea/
+
+InventorySystem/obj/project\.packagespec\.json
+
+\.idea/\.idea\.InventorySystem/riderModule\.iml

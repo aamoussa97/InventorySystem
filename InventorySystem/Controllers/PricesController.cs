@@ -14,7 +14,7 @@ namespace InventorySystem.Controllers
     [Route("api/[controller]")]
     public class PricesController : Controller
     {
-        IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public PricesController(IConfiguration configuration)
         {
@@ -25,20 +25,14 @@ namespace InventorySystem.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            String connectionString = _configuration.GetConnectionString("localDB");
-
-            PricesDataLayer dataLayer = new PricesDataLayer(_configuration);
-            return Ok(dataLayer.GetPrice(0));
+            return Ok(new PricesDataLayer(_configuration).GetPrice(0));
         }
 
         // GET: api/prices/1
         [HttpGet("{id}")]
         public IEnumerable<Price> Get(int id)
         {
-            String connectionString = _configuration.GetConnectionString("localDB");
-
-            PricesDataLayer dataLayer = new PricesDataLayer(_configuration);
-            return dataLayer.GetPrice(id);
+            return new PricesDataLayer(_configuration).GetPrice(id);
         }
 
         // POST api/prices

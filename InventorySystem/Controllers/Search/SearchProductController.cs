@@ -13,7 +13,7 @@ namespace InventorySystem.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        IConfiguration _configuration;
+        readonly IConfiguration _configuration;
 
         public ProductController(IConfiguration configuration)
         {
@@ -22,10 +22,8 @@ namespace InventorySystem.Controllers
 
         // GET: api/product/name
         [HttpGet("{name}")]
-        public IEnumerable<String> Get(string name)
+        public IEnumerable<string> Get(string name)
         {
-            String connectionString = _configuration.GetConnectionString("localDB");
-
             return new ProductsDataLayer(_configuration).GetProductByName(name);
         }
 
