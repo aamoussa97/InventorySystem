@@ -47,7 +47,7 @@ namespace InventorySystem.DataLayerClasses
         public IEnumerable<String> GetBrandsByName(string name)
         {
             List<String> brands = new List<String>();
-            String toSearch = String.Format("SELECT * FROM [ShowBrands] WHERE BrandName LIKE '%{0}%'", name);
+            String toSearch = String.Format("SELECT * FROM [ViewBrands] WHERE BrandName LIKE '%{0}%'", name);
             command = new SqlCommand(toSearch, connection);
 
             connection.Open();
@@ -71,11 +71,11 @@ namespace InventorySystem.DataLayerClasses
 
             if (BrandID == 0)
             {
-                command = new SqlCommand("SELECT * FROM Brands", connection);
+                command = new SqlCommand("SELECT * FROM [ViewBrands]", connection);
             }
             else
             {
-                command = new SqlCommand("SELECT * FROM Brands WHERE BrandID = " + BrandID, connection);
+                command = new SqlCommand("SELECT * FROM [ViewBrands] WHERE BrandID = '" + BrandID + "'", connection);
             }
 
             connection.Open();
