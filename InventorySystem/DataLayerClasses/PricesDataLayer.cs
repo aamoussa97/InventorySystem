@@ -50,11 +50,11 @@ namespace InventorySystem.DataLayerClasses
 
             if (PriceID == 0)
             {
-                command = new SqlCommand("SELECT * FROM ProductPrices", connection);
+                command = new SqlCommand("SELECT * FROM [ViewProductPrices]", connection);
             }
             else
             {
-                command = new SqlCommand("SELECT * FROM ProductPrices WHERE ProductID = " + PriceID, connection);
+                command = new SqlCommand("SELECT * FROM [ViewProductPrices] WHERE ProductID = '" + PriceID + "'", connection);
             }
 
             connection.Open();

@@ -50,11 +50,11 @@ namespace InventorySystem.DataLayerClasses
 
             if (VariableCostID == 0)
             {
-                command = new SqlCommand("SELECT * FROM ProductVariableCosts", connection);
+                command = new SqlCommand("SELECT * FROM [ViewProductVariableCosts]", connection);
             }
             else
             {
-                command = new SqlCommand("SELECT * FROM ProductVariableCosts WHERE ProductID = " + VariableCostID, connection);
+                command = new SqlCommand("SELECT * FROM [ViewProductVariableCosts] WHERE ProductID = '" + VariableCostID + "'", connection);
             }
 
             connection.Open();
