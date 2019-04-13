@@ -49,10 +49,10 @@ namespace InventorySystem.DataLayerClasses
             }
         }
 
-        public IEnumerable<String> GetProductByName(string name)
+        public IEnumerable<ProductsGET> GetProductByName(string ProductName)
         {
-            List<String> products = new List<String>();
-            String toSearch = String.Format("SELECT * FROM [ViewProducts] WHERE ProductName LIKE '%{0}%'", name);
+            List<ProductsGET> productsGET = new List<ProductsGET>();
+            String toSearch = String.Format("SELECT * FROM [ViewProducts] WHERE ProductName LIKE '%{0}%'", ProductName);
             command = new SqlCommand(toSearch, connection);
 
             connection.Open();
@@ -61,13 +61,19 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    products.Add(reader["ProductID"].ToString());
-                    products.Add((String)reader["ProductName"]);
+                    ProductsGET productGET = new ProductsGET((int)Convert.ToInt64(reader["ProductID"]),
+                         (int)Convert.ToInt64(reader["ProductSKU"]),
+                         (String)reader["ProductName"],
+                         (int)Convert.ToInt64(reader["ProductPrice"]),
+                         (int)Convert.ToInt64(reader["ProductVariableCost"]),
+                          (String)reader["BrandName"]);
+                    //(int)Convert.ToInt64(reader["MaterialID"]));
+                    productsGET.Add(productGET);
                 }
             }
 
             connection.Close();
-            return products;
+            return productsGET;
         }
 
         public IEnumerable<ProductsGET> GetProduct(int? ProductID)

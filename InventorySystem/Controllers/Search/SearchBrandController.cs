@@ -22,10 +22,10 @@ namespace InventorySystem.Controllers.Search
         }
 
         // GET: api/brand/name
-        [HttpGet("{name}")]
-        public IEnumerable<string> Get(string name)
+        [HttpGet("{BrandName}")]
+        public IEnumerable<Brand> Get(string BrandName)
         {
-            return new BrandsDataLayer(_configuration).GetBrandsByName(name);
+            return new BrandsDataLayer(_configuration).GetBrandsByName(BrandName);
         }
     }
 }

@@ -48,10 +48,10 @@ namespace InventorySystem.DataLayerClasses
 
         }
 
-        public IEnumerable<String> GetBrandsByName(string name)
+        public IEnumerable<Brand> GetBrandsByName(string BrandName)
         {
-            List<String> brands = new List<String>();
-            String toSearch = String.Format("SELECT * FROM [ViewBrands] WHERE BrandName LIKE '%{0}%'", name);
+            List<Brand> brands = new List<Brand>();
+            String toSearch = String.Format("SELECT * FROM [ViewBrands] WHERE BrandName LIKE '%{0}%'", BrandName);
             command = new SqlCommand(toSearch, connection);
 
             connection.Open();
@@ -60,8 +60,9 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    brands.Add(reader["BrandID"].ToString());
-                    brands.Add((String)reader["BrandName"]);
+                    Brand brand = new Brand((int)Convert.ToInt64(reader["BrandID"]),
+                       (String)reader["BrandName"]);
+                    brands.Add(brand);
                 }
             }
 
