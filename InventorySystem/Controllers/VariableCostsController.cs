@@ -37,8 +37,9 @@ namespace InventorySystem.Controllers
 
         // POST api/variablecosts/1
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post([FromBody]VariableCost variableCost)
         {
+            return Ok(new VariableCostsDataLayer(_configuration).InsertVariableCost(variableCost));
         }
 
         // PUT api/variablecosts/1

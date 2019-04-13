@@ -11,36 +11,39 @@ namespace InventorySystem.DataLayerClasses
     {
         SqlConnection connection;
         SqlCommand command;
+        String connectionString;
 
         public VariableCostsDataLayer(IConfiguration configuration)
         {
-            String connectionString = configuration.GetConnectionString("localDB");
+            connectionString = configuration.GetConnectionString("localDB");
             connection = new SqlConnection(connectionString);
         }
 
-        public int InsertVariableCost(VariableCost variableCost)
+        public VariableCost InsertVariableCost(VariableCost variableCost)
         {
-
-            try
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                command.CommandText = "INSERT INTO VariableCosts VALUES(@VariableCostID, @VariableCostValue)";
-                command.Parameters.AddWithValue("VariableCostID", variableCost.VariableCostID);
-                command.Parameters.AddWithValue("VariableCostValue", variableCost.VariableCostValue);
-
-                command.CommandType = CommandType.Text;
-                connection.Open();
-                return command.ExecuteNonQuery();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                if (connection != null)
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsVariableCost", connection))
                 {
-                    connection.Close();
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductVariableCost", variableCost.VariableCostValue);
+                    command.Parameters.AddWithValue("@ProductVariableCost_Output", variableCost.VariableCostID).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    variableCost.VariableCostID = Convert.ToInt32(command.Parameters["@ProductVariableCost_Output"].Value);
+
+                    /*
+                    // Check Error
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+                        //Throw error status code
+                        */
                 }
+
+                return variableCost;
             }
         }
 
