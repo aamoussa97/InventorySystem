@@ -35,10 +35,11 @@ namespace InventorySystem.Controllers
             return new PricesDataLayer(_configuration).GetPrice(id);
         }
 
-        // POST api/prices
+        // PUT api/products/1
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post([FromBody] Price price)
         {
+            return Ok(new PricesDataLayer(_configuration).InsertPrice(price));
         }
 
         // PUT api/prices/1

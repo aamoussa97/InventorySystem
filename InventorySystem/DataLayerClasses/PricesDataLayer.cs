@@ -11,36 +11,39 @@ namespace InventorySystem.DataLayerClasses
     {
         SqlConnection connection;
         SqlCommand command;
+        String connectionString;
 
         public PricesDataLayer(IConfiguration configuration)
         {
-            String connectionString = configuration.GetConnectionString("localDB");
+            connectionString = configuration.GetConnectionString("localDB");
             connection = new SqlConnection(connectionString);
         }
 
-        public int InsertPrice(Price price)
+        public Price InsertPrice(Price price)
         {
-
-            try
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                command.CommandText = "INSERT INTO Prices VALUES(@PriceID, @PriceValue)";
-                command.Parameters.AddWithValue("PriceID", price.PriceID);
-                command.Parameters.AddWithValue("PriceValue", price.PriceValue);
-
-                command.CommandType = CommandType.Text;
-                connection.Open();
-                return command.ExecuteNonQuery();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                if (connection != null)
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsPrice", connection))
                 {
-                    connection.Close();
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductPrice", price.PriceValue);
+                    command.Parameters.AddWithValue("@ProductPrice_Output", price.PriceID).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    price.PriceID = Convert.ToInt32(command.Parameters["@ProductPrice_Output"].Value);
+
+                    /*
+                    // Check Error
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+                        //Throw error status code
+                        */
                 }
+
+                return price;
             }
         }
 
