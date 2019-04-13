@@ -31,9 +31,9 @@ namespace InventorySystem.Controllers
 
         // PUT api/products/1
         [HttpPost]
-        public void Post([FromBody] Product product)
+        public IActionResult Post([FromBody] Product product)
         {
-            new ProductsDataLayer(_configuration).InsertProduct(product);
+            return Ok(new ProductsDataLayer(_configuration).InsertProduct(product));
         }
 
         // DELETE api/products/1

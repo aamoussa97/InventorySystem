@@ -19,15 +19,14 @@ namespace InventorySystem.DataLayerClasses
             connection = new SqlConnection(connectionString);
         }
 
-        public int InsertProduct(Product product)
+        public Product InsertProduct(Product product)
         {
-
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                String query = "INSERT INTO Products (ProductSKUID, ProductNameID, ProductBrandID, ProductMaterialsOrderID, ProductPriceID, ProductVariableCostID) VALUES (@ProductSKUID, @ProductNameID, @ProductBrandID, @ProductMaterialsOrderID, @ProductPriceID, @ProductVariableCostID)";
-                
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProducts", connection))
                 {
+                    command.CommandType = CommandType.StoredProcedure;
+
                     command.Parameters.AddWithValue("@ProductSKUID", product.ProductSKUID);
                     command.Parameters.AddWithValue("@ProductNameID", product.ProductNameID);
                     command.Parameters.AddWithValue("@ProductBrandID", product.ProductBrandID);
@@ -36,17 +35,18 @@ namespace InventorySystem.DataLayerClasses
                     command.Parameters.AddWithValue("@ProductVariableCostID", product.ProductVariableCostID);
 
                     connection.Open();
-                    int result = command.ExecuteNonQuery();
-
+                    command.ExecuteNonQuery();
+                    
+                    /*
                     // Check Error
                     if (result < 0)
                         Console.WriteLine("Error inserting data into Database!");
-                    //Throw error status code
+                        //Throw error status code
+                        */
                 }
 
-                return -1;
+                return product;
             }
-
         }
 
         public IEnumerable<String> GetProductByName(string name)
