@@ -11,36 +11,39 @@ namespace InventorySystem.DataLayerClasses
     {
         SqlConnection connection;
         SqlCommand command;
+        String connectionString;
 
         public MaterialsDataLayer(IConfiguration configuration)
         {
-            String connectionString = configuration.GetConnectionString("localDB");
+            connectionString = configuration.GetConnectionString("localDB");
             connection = new SqlConnection(connectionString);
         }
 
-        public int InsertMaterial(Material material)
+        public Material InsertMaterial(Material material)
         {
-
-            try
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                command.CommandText = "INSERT INTO Materials VALUES(@MaterialID, @MaterialSKU)";
-                command.Parameters.AddWithValue("MaterialID", material.MaterialID);
-                command.Parameters.AddWithValue("MaterialSKU", material.MaterialSKU);
-
-                command.CommandType = CommandType.Text;
-                connection.Open();
-                return command.ExecuteNonQuery();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                if (connection != null)
+                using (SqlCommand command = new SqlCommand("ProcedureInsertMaterial", connection))
                 {
-                    connection.Close();
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@MaterialName", material.MaterialName);
+                    command.Parameters.AddWithValue("@MaterialID_Output", material.MaterialID).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    material.MaterialID = Convert.ToInt32(command.Parameters["@MaterialID_Output"].Value);
+
+                    /*
+                    // Check Error
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+                        //Throw error status code
+                        */
                 }
+
+                return material;
             }
         }
 

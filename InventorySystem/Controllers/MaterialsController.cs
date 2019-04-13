@@ -37,8 +37,9 @@ namespace InventorySystem.Controllers
 
         // POST api/materials
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post([FromBody]Material material)
         {
+            return Ok(new MaterialsDataLayer(_configuration).InsertMaterial(material));
         }
 
         // PUT api/materials/1
