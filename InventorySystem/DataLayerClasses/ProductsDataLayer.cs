@@ -62,7 +62,7 @@ namespace InventorySystem.DataLayerClasses
                 while (reader.Read())
                 {
                     ProductsGET productGET = new ProductsGET((int)Convert.ToInt64(reader["ProductID"]),
-                         (int)Convert.ToInt64(reader["ProductSKU"]),
+                         (long)reader["ProductSKU"],
                          (String)reader["ProductName"],
                          (int)Convert.ToInt64(reader["ProductPrice"]),
                          (int)Convert.ToInt64(reader["ProductVariableCost"]),
@@ -96,7 +96,7 @@ namespace InventorySystem.DataLayerClasses
                 while (reader.Read())
                 {
                     ProductsGET productGET = new ProductsGET((int)Convert.ToInt64(reader["ProductID"]),
-                         (int)Convert.ToInt64(reader["ProductSKU"]),
+                         (long)reader["ProductSKU"],
                          (String)reader["ProductName"],
                          (int)Convert.ToInt64(reader["ProductPrice"]),
                          (int)Convert.ToInt64(reader["ProductVariableCost"]),
