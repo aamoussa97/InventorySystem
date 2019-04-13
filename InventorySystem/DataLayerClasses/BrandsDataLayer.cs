@@ -19,27 +19,31 @@ namespace InventorySystem.DataLayerClasses
             connection = new SqlConnection(connectionString);
         }
 
-        public int InsertBrand(Brand brand)
+        public Brand InsertBrand(Brand brand)
         {
-
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                String query = "INSERT INTO Brands (BrandName) VALUES (@BrandName)";
-
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsBrand", connection))
                 {
-                    command.Parameters.AddWithValue("@BrandName", brand.BrandName);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductBrandName", brand.BrandName);
+                    command.Parameters.AddWithValue("@BrandID_Output", brand.BrandID).Direction = ParameterDirection.Output;
 
                     connection.Open();
-                    int result = command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
 
+                    brand.BrandID = Convert.ToInt32(command.Parameters["@BrandID_Output"].Value);
+
+                    /*
                     // Check Error
                     if (result < 0)
                         Console.WriteLine("Error inserting data into Database!");
                         //Throw error status code
+                        */
                 }
 
-                return -1;
+                return brand;
             }
 
         }
