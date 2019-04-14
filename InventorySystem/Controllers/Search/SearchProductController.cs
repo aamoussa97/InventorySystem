@@ -23,7 +23,7 @@ namespace InventorySystem.Controllers
 
         // GET: api/product/name
         [HttpGet("{ProductName}")]
-        public IEnumerable<ProductsGET> Get(string ProductName)
+        public IEnumerable<ProductsGet> Get(string ProductName)
         {
             return new ProductsDataLayer(_configuration).GetProductByName(ProductName);
         }

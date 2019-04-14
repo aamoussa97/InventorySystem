@@ -9,6 +9,8 @@ namespace InventorySystem.DataLayerClasses
 {
     public class ProductsDataLayer
     {
+        private readonly IConfiguration _configuration;
+
         SqlConnection connection;
         SqlCommand command;
         String connectionString;
@@ -17,9 +19,10 @@ namespace InventorySystem.DataLayerClasses
         {
             connectionString = configuration.GetConnectionString("localDB");
             connection = new SqlConnection(connectionString);
+            _configuration = configuration;
         }
 
-        public Product InsertProduct(Product product)
+        public ProductsInsert InsertProduct(ProductsInsert productsInsert)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -27,16 +30,16 @@ namespace InventorySystem.DataLayerClasses
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductSKUID", product.ProductSKUID);
-                    command.Parameters.AddWithValue("@ProductNameID", product.ProductNameID);
-                    command.Parameters.AddWithValue("@ProductBrandID", product.ProductBrandID);
-                    command.Parameters.AddWithValue("@ProductMaterialsOrderID", product.ProductMaterialsOrderID);
-                    command.Parameters.AddWithValue("@ProductPriceID", product.ProductPriceID);
-                    command.Parameters.AddWithValue("@ProductVariableCostID", product.ProductVariableCostID);
+                    command.Parameters.AddWithValue("@ProductSKUID", productsInsert.ProductSKUID);
+                    command.Parameters.AddWithValue("@ProductNameID", productsInsert.ProductNameID);
+                    command.Parameters.AddWithValue("@ProductBrandID", productsInsert.ProductBrandID);
+                    command.Parameters.AddWithValue("@ProductMaterialsOrderID", productsInsert.ProductMaterialsOrderID);
+                    command.Parameters.AddWithValue("@ProductPriceID", productsInsert.ProductPriceID);
+                    command.Parameters.AddWithValue("@ProductVariableCostID", productsInsert.ProductVariableCostID);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-                    
+
                     /*
                     // Check Error
                     if (result < 0)
@@ -45,13 +48,13 @@ namespace InventorySystem.DataLayerClasses
                         */
                 }
 
-                return product;
+                return productsInsert;
             }
         }
 
-        public IEnumerable<ProductsGET> GetProductByName(string ProductName)
+        public IEnumerable<ProductsGet> GetProductByName(string ProductName)
         {
-            List<ProductsGET> productsGET = new List<ProductsGET>();
+            List<ProductsGet> productsGET = new List<ProductsGet>();
             String toSearch = String.Format("SELECT * FROM [ViewProducts] WHERE ProductName LIKE '%{0}%'", ProductName);
             command = new SqlCommand(toSearch, connection);
 
@@ -61,13 +64,13 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    ProductsGET productGET = new ProductsGET((int)Convert.ToInt64(reader["ProductID"]),
+                    ProductsGet productGET = new ProductsGet((int)Convert.ToInt64(reader["ProductID"]),
                          (long)reader["ProductSKU"],
                          (String)reader["ProductName"],
                          (int)Convert.ToInt64(reader["ProductPrice"]),
                          (int)Convert.ToInt64(reader["ProductVariableCost"]),
-                          (String)reader["BrandName"]);
-                    //(int)Convert.ToInt64(reader["MaterialID"]));
+                          (String)reader["BrandName"],
+                    (int)Convert.ToInt64(reader["MaterialID"]));
                     productsGET.Add(productGET);
                 }
             }
@@ -76,9 +79,9 @@ namespace InventorySystem.DataLayerClasses
             return productsGET;
         }
 
-        public IEnumerable<ProductsGET> GetProduct(int? ProductID)
+        public IEnumerable<ProductsGet> GetProduct(int? ProductID)
         {
-            List<ProductsGET> productsGET = new List<ProductsGET>();
+            List<ProductsGet> productsGet = new List<ProductsGet>();
 
             if (ProductID == null)
             {
@@ -95,20 +98,20 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    ProductsGET productGET = new ProductsGET((int)Convert.ToInt64(reader["ProductID"]),
+                    ProductsGet productGet = new ProductsGet((int)Convert.ToInt64(reader["ProductID"]),
                          (long)reader["ProductSKU"],
                          (String)reader["ProductName"],
                          (int)Convert.ToInt64(reader["ProductPrice"]),
                          (int)Convert.ToInt64(reader["ProductVariableCost"]),
-                          (String)reader["BrandName"]);
-                          //(int)Convert.ToInt64(reader["MaterialID"]));
-                    productsGET.Add(productGET);
+                          (String)reader["BrandName"],
+                          (int)Convert.ToInt64(reader["MaterialID"]));
+                    productsGet.Add(productGet);
                 }
             }
 
             connection.Close();
 
-            return productsGET;
+            return productsGet;
         }
 
     }

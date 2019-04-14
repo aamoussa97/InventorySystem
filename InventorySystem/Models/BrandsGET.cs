@@ -1,11 +1,11 @@
 ﻿using System;
 namespace InventorySystem.Models
 {
-    public class BrandsGET
+    public class BrandsGet
     {
         private String mBrandName;
 
-        public BrandsGET(String mBrandName)
+        public BrandsGet(String mBrandName)
         {
             this.mBrandName = mBrandName;
         }

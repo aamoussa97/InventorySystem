@@ -25,16 +25,20 @@ namespace InventorySystem.Controllers
         // GET: api/products?id
         [HttpGet("{id?}")]
         [EnableQuery()]
-        public IEnumerable<ProductsGET> Get(int? id)
+        public IEnumerable<ProductsGet> Get(int? id)
         {
             return new ProductsDataLayer(_configuration).GetProduct(id);
         }
 
         // PUT api/products/1
         [HttpPost]
-        public IActionResult Post([FromBody] Product product)
+        public IActionResult Post([FromBody] ProductsGet productsGet)
         {
-            return Ok(new ProductsDataLayer(_configuration).InsertProduct(product));
+            ProductsInsert productsInsert = new ProductsInsert(0, 0, 0, 0, 0, 0);
+
+            productsInsert = new ProductsInsertDataLayer(_configuration).InsertProduct(productsGet);
+
+            return Ok(new ProductsDataLayer(_configuration).InsertProduct(productsInsert));
         }
 
         // DELETE api/products/1
