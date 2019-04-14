@@ -22,18 +22,10 @@ namespace InventorySystem.Controllers
             _configuration = configuration;
         }
 
-        // GET: api/variablecosts
-        [HttpGet]
+        // GET: api/variablecosts?id
+        [HttpGet("{id?}")]
         [EnableQuery()]
-        public IActionResult Get()
-        {
-            return Ok(new VariableCostsDataLayer(_configuration).GetVariableCost(0));
-        }
-
-        // GET: api/variablecosts/1
-        [HttpGet("{id}")]
-        [EnableQuery()]
-        public IEnumerable<VariableCost> Get(int id)
+        public IEnumerable<VariableCost> Get(int? id)
         {
             return new VariableCostsDataLayer(_configuration).GetVariableCost(id);
         }

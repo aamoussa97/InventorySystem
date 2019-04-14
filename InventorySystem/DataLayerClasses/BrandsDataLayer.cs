@@ -70,11 +70,11 @@ namespace InventorySystem.DataLayerClasses
             return brands;
         }
 
-        public IEnumerable<Brand> GetBrand(int BrandID)
+        public IEnumerable<Brand> GetBrand(int? BrandID)
         {
             List<Brand> brands = new List<Brand>();
 
-            if (BrandID == 0)
+            if (BrandID == null)
             {
                 command = new SqlCommand("SELECT * FROM [ViewBrands]", connection);
             }

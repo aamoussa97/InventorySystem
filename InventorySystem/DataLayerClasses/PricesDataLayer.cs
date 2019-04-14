@@ -47,11 +47,11 @@ namespace InventorySystem.DataLayerClasses
             }
         }
 
-        public IEnumerable<Price> GetPrice(int PriceID)
+        public IEnumerable<Price> GetPrice(int? PriceID)
         {
             List<Price> prices = new List<Price>();
 
-            if (PriceID == 0)
+            if (PriceID == null)
             {
                 command = new SqlCommand("SELECT * FROM [ViewProductPrices]", connection);
             }

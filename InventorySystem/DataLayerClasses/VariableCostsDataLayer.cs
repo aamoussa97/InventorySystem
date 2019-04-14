@@ -47,11 +47,11 @@ namespace InventorySystem.DataLayerClasses
             }
         }
 
-        public IEnumerable<VariableCost> GetVariableCost(int VariableCostID)
+        public IEnumerable<VariableCost> GetVariableCost(int? VariableCostID)
         {
             List<VariableCost> variableCosts = new List<VariableCost>();
 
-            if (VariableCostID == 0)
+            if (VariableCostID == null)
             {
                 command = new SqlCommand("SELECT * FROM [ViewProductVariableCosts]", connection);
             }

@@ -22,7 +22,7 @@ namespace InventorySystem.Controllers
             _configuration = configuration;
         }
 
-        // GET: api/products/1
+        // GET: api/products?id
         [HttpGet("{id?}")]
         [EnableQuery()]
         public IEnumerable<ProductsGET> Get(int? id)

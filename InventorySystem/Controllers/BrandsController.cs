@@ -25,30 +25,13 @@ namespace InventorySystem.Controllers
             _configuration = configuration;
         }
 
-        // GET: api/brands/1
+        // GET: api/brands?id
         [HttpGet("{id?}")]
         [EnableQuery()]
         public IEnumerable<Brand> Get(int? id)
         {
             return new BrandsDataLayer(_configuration).GetBrand(id);
         }
-
-        /*
-        // GET: api/brands
-        [HttpGet]
-        [EnableQuery()]
-        public IActionResult Get()
-        {
-            return Ok(new BrandsDataLayer(_configuration).GetBrand(0));
-        }
-
-        // GET: api/brands/1
-        [HttpGet("{id}")]
-        [EnableQuery()]
-        public IEnumerable<Brand> Get(int id)
-        {
-            return new BrandsDataLayer(_configuration).GetBrand(id);
-        }*/
 
         // POST api/brands
         [HttpPost]

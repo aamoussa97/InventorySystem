@@ -22,18 +22,10 @@ namespace InventorySystem.Controllers
             _configuration = configuration;
         }
 
-        // GET: api/materials
-        [HttpGet]
+        // GET api/materials?id
+        [HttpGet("{id?}")]
         [EnableQuery()]
-        public IActionResult Get()
-        {
-            return Ok(new MaterialsDataLayer(_configuration).GetMaterial(0));
-        }
-
-        // GET api/materials/1
-        [HttpGet("{id}")]
-        [EnableQuery()]
-        public IEnumerable<Material> Get(int id)
+        public IEnumerable<Material> Get(int? id)
         {
             return new MaterialsDataLayer(_configuration).GetMaterial(id);
         }

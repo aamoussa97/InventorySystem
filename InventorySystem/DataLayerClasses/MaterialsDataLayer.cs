@@ -47,11 +47,11 @@ namespace InventorySystem.DataLayerClasses
             }
         }
 
-        public IEnumerable<Material> GetMaterial(int MaterialID)
+        public IEnumerable<Material> GetMaterial(int? MaterialID)
         {
             List<Material> materials = new List<Material>();
 
-            if (MaterialID == 0)
+            if (MaterialID == null)
             {
                 command = new SqlCommand("SELECT * FROM Materials", connection);
             }
