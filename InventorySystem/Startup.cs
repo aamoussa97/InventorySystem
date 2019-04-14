@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.OData.Extensions;
+using Microsoft.AspNet.OData.Formatter;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace InventorySystem
@@ -30,7 +33,26 @@ namespace InventorySystem
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddOData();
+
+            //Fix for exception: InvalidOperationException: No media types found in ‘Microsoft.AspNet.OData.Formatter.ODataOutputFormatter.SupportedMediaTypes’. Add at least one media type to the list of supported media types.
+            services.AddMvc(op =>
+            {
+                foreach (var formatter in op.OutputFormatters
+                .OfType<ODataOutputFormatter>()
+                .Where(it => !it.SupportedMediaTypes.Any()))
+                {
+                    formatter.SupportedMediaTypes.Add(
+                        new MediaTypeHeaderValue("application/prs.mock-odata"));
+                }
+                foreach (var formatter in op.InputFormatters
+                    .OfType<ODataInputFormatter>()
+                    .Where(it => !it.SupportedMediaTypes.Any()))
+                {
+                    formatter.SupportedMediaTypes.Add(
+                        new MediaTypeHeaderValue("application/prs.mock-odata"));
+                }
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSwaggerGen(c =>
             {
@@ -71,7 +93,12 @@ namespace InventorySystem
 
             //app.UseHttpsRedirection();
             app.UseCors(MyAllowSpecificOrigins);
-            app.UseMvc();
+            //DependencyInjection for OData.
+            app.UseMvc(routeBuilder =>
+            {
+                routeBuilder.EnableDependencyInjection();
+                routeBuilder.Expand().Select().Count().OrderBy().Filter();
+            });
             
         }
     }
