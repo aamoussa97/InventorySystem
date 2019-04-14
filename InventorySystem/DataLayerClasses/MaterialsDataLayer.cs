@@ -67,7 +67,7 @@ namespace InventorySystem.DataLayerClasses
                 while (reader.Read())
                 {
                     Material material = new Material((int)Convert.ToInt64(reader["MaterialID"]),
-                         (String)reader["MaterialSKU"],
+                         //(String)reader["MaterialSKU"],
                          (String)reader["MaterialName"]);
                     materials.Add(material);
                 }
