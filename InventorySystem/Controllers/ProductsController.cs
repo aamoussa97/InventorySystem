@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using InventorySystem.DataLayerClasses;
 using InventorySystem.Models;
+using Microsoft.AspNet.OData;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,9 +22,9 @@ namespace InventorySystem.Controllers
             _configuration = configuration;
         }
 
-        
         // GET: api/products/1
         [HttpGet("{id?}")]
+        [EnableQuery()]
         public IEnumerable<ProductsGET> Get(int? id)
         {
             return new ProductsDataLayer(_configuration).GetProduct(id);

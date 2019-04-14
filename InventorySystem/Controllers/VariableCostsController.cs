@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using InventorySystem.DataLayerClasses;
 using InventorySystem.Models;
+using Microsoft.AspNet.OData;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,6 +24,7 @@ namespace InventorySystem.Controllers
 
         // GET: api/variablecosts
         [HttpGet]
+        [EnableQuery()]
         public IActionResult Get()
         {
             return Ok(new VariableCostsDataLayer(_configuration).GetVariableCost(0));
@@ -30,6 +32,7 @@ namespace InventorySystem.Controllers
 
         // GET: api/variablecosts/1
         [HttpGet("{id}")]
+        [EnableQuery()]
         public IEnumerable<VariableCost> Get(int id)
         {
             return new VariableCostsDataLayer(_configuration).GetVariableCost(id);

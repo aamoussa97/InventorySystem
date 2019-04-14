@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using InventorySystem.DataLayerClasses;
 using InventorySystem.Models;
+using Microsoft.AspNet.OData;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,6 +24,7 @@ namespace InventorySystem.Controllers
 
         // GET: api/materials
         [HttpGet]
+        [EnableQuery()]
         public IActionResult Get()
         {
             return Ok(new MaterialsDataLayer(_configuration).GetMaterial(0));
@@ -30,6 +32,7 @@ namespace InventorySystem.Controllers
 
         // GET api/materials/1
         [HttpGet("{id}")]
+        [EnableQuery()]
         public IEnumerable<Material> Get(int id)
         {
             return new MaterialsDataLayer(_configuration).GetMaterial(id);

@@ -9,6 +9,7 @@ using Newtonsoft.Json.Linq;
 using InventorySystem.DataLayerClasses;
 using InventorySystem.Models;
 using System.IO;
+using Microsoft.AspNet.OData;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,8 +25,18 @@ namespace InventorySystem.Controllers
             _configuration = configuration;
         }
 
+        // GET: api/brands/1
+        [HttpGet("{id?}")]
+        [EnableQuery()]
+        public IEnumerable<Brand> Get(int? id)
+        {
+            return new BrandsDataLayer(_configuration).GetBrand(id);
+        }
+
+        /*
         // GET: api/brands
         [HttpGet]
+        [EnableQuery()]
         public IActionResult Get()
         {
             return Ok(new BrandsDataLayer(_configuration).GetBrand(0));
@@ -33,10 +44,11 @@ namespace InventorySystem.Controllers
 
         // GET: api/brands/1
         [HttpGet("{id}")]
+        [EnableQuery()]
         public IEnumerable<Brand> Get(int id)
         {
             return new BrandsDataLayer(_configuration).GetBrand(id);
-        }
+        }*/
 
         // POST api/brands
         [HttpPost]
