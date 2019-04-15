@@ -5,6 +5,8 @@ InventorySystem is a project made by Ali Moussa, Oliver Køppen and Sebastian Bi
 
 InventorySystem as the name implies, allows for a systemised inventory.
 
+
+## Technologies involved
 **Backend** consists of a REST backend, developed in ASP.NET Core 2.0 in C#.
 
 **Frontend** consists of an Angular webapp.
