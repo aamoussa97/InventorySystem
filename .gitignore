@@ -353,3 +353,8 @@ MigrationBackup/
 InventorySystem/obj/project\.packagespec\.json
 
 \.idea/\.idea\.InventorySystem/riderModule\.iml
+
+InventorySystem/\.DS_Store
+
+#Mac DS_Store file
+.DS_Store
