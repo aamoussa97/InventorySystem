@@ -1,7 +1,7 @@
 # InventorySystem
 
 ## About
-InventorySystem is a project made by Ali Moussa, Oliver Køppen and Sebastian Bilde, in collaboration with three courses in the fourth semester.
+InventorySystem is a project made by Ali Moussa (s175119), Oliver Køppen (s175108) and Sebastian Bilde (s175116), in collaboration with three courses in the fourth semester.
 
 InventorySystem as the name implies, allows for a systemised inventory.
 
