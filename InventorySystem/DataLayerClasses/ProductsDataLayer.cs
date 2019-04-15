@@ -67,10 +67,10 @@ namespace InventorySystem.DataLayerClasses
                     ProductsGet productGET = new ProductsGet((int)Convert.ToInt64(reader["ProductID"]),
                          (long)reader["ProductSKU"],
                          (String)reader["ProductName"],
+                         (String)reader["BrandName"],
+                         (int)Convert.ToInt64(reader["MaterialID"]),
                          (int)Convert.ToInt64(reader["ProductPrice"]),
-                         (int)Convert.ToInt64(reader["ProductVariableCost"]),
-                          (String)reader["BrandName"],
-                    (int)Convert.ToInt64(reader["MaterialID"]));
+                         (int)Convert.ToInt64(reader["ProductVariableCost"]));
                     productsGET.Add(productGET);
                 }
             }
@@ -101,10 +101,10 @@ namespace InventorySystem.DataLayerClasses
                     ProductsGet productGet = new ProductsGet((int)Convert.ToInt64(reader["ProductID"]),
                          (long)reader["ProductSKU"],
                          (String)reader["ProductName"],
+                         (String)reader["BrandName"],
+                         (int)Convert.ToInt64(reader["MaterialID"]),
                          (int)Convert.ToInt64(reader["ProductPrice"]),
-                         (int)Convert.ToInt64(reader["ProductVariableCost"]),
-                          (String)reader["BrandName"],
-                          (int)Convert.ToInt64(reader["MaterialID"]));
+                         (int)Convert.ToInt64(reader["ProductVariableCost"]));
                     productsGet.Add(productGet);
                 }
             }

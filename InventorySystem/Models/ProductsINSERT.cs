@@ -10,7 +10,7 @@ namespace InventorySystem.Models
         private int mProductPriceID;
         private int mProductVariableCostID;
 
-        public ProductsInsert(int mProductSKUID, int mProductNameID, int mProductBrandID, int mProductPriceID, int mProductVariableCostID, int mProductMaterialsOrderID)
+        public ProductsInsert(int mProductSKUID, int mProductNameID, int mProductBrandID, int mProductMaterialsOrderID, int mProductPriceID, int mProductVariableCostID)
         {
             this.mProductSKUID = mProductSKUID;
             this.mProductNameID = mProductNameID;

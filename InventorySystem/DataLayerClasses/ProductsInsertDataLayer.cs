@@ -30,6 +30,21 @@ namespace InventorySystem.DataLayerClasses
             _configuration = configuration;
         }
 
+        public ProductsInsert InsertProduct(ProductsGet productsGet)
+        {
+            SKUID = InsertSKU(productsGet.ProductSKU);
+            NameID = InsertName(productsGet.ProductName);
+            BrandID = InsertBrand(productsGet.ProductBrand);
+            MaterialsOrderID = InsertMaterialsOrder(productsGet.ProductMaterialsOrderID);
+            //MaterialID = InsertMaterial(productsGet.);
+            PriceID = InsertPrice(productsGet.ProductPrice);
+            VariableCostID = InsertVariableCost(productsGet.ProductVariableCost);
+
+            ProductsInsert productsInsert = new ProductsInsert(SKUID, NameID, BrandID, MaterialsOrderID, PriceID, VariableCostID);
+
+            return productsInsert;
+        }
+
         public int InsertName(string name)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -179,25 +194,6 @@ namespace InventorySystem.DataLayerClasses
 
                 return VariableCostID;
             }
-        }
-
-        public ProductsInsert InsertProduct(ProductsGet productsGet)
-        {
-            //Run method for insert for every model.
-            //Assign ID from output of model to ProductsInsert attribute
-            //Return new model.
-
-            SKUID = InsertSKU(productsGet.ProductSKU);
-            NameID = InsertName(productsGet.ProductName);
-            BrandID = InsertBrand(productsGet.ProductBrand);
-            MaterialsOrderID = InsertMaterialsOrder(productsGet.ProductMaterialsOrderID);
-            //MaterialID = InsertMaterial(productsGet.);
-            PriceID = InsertPrice(productsGet.ProductPrice);
-            VariableCostID = InsertVariableCost(productsGet.ProductVariableCost);
-
-            ProductsInsert productsInsert = new ProductsInsert(SKUID, NameID, BrandID, MaterialsOrderID, PriceID, VariableCostID);
-
-            return productsInsert;
         }
 
     }
