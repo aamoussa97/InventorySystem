@@ -48,6 +48,64 @@ namespace InventorySystem.DataLayerClasses
 
         }
 
+        public Brand UpdateBrand(Brand brand)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsBrand", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductBrandName", brand.BrandName);
+                    command.Parameters.AddWithValue("@BrandID_Output", brand.BrandID).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    brand.BrandID = Convert.ToInt32(command.Parameters["@BrandID_Output"].Value);
+
+                    /*
+                    // Check Error
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+                        //Throw error status code
+                        */
+                }
+
+                return brand;
+            }
+
+        }
+
+        public Brand DeleteBrand(Brand brand)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsBrand", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductBrandName", brand.BrandName);
+                    command.Parameters.AddWithValue("@BrandID_Output", brand.BrandID).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    brand.BrandID = Convert.ToInt32(command.Parameters["@BrandID_Output"].Value);
+
+                    /*
+                    // Check Error
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+                        //Throw error status code
+                        */
+                }
+
+                return brand;
+            }
+
+        }
+
         public IEnumerable<Brand> GetBrandsByName(string BrandName)
         {
             List<Brand> brands = new List<Brand>();

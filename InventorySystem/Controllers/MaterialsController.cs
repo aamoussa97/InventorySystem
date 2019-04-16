@@ -30,23 +30,26 @@ namespace InventorySystem.Controllers
             return new MaterialsDataLayer(_configuration).GetMaterial(id);
         }
 
-        // POST api/materials
+        // POST api/material
         [HttpPost]
-        public IActionResult Post([FromBody]Material material)
+        //[Consumes("application/json")]
+        public IActionResult Post([FromBody] Material material)
         {
             return Ok(new MaterialsDataLayer(_configuration).InsertMaterial(material));
         }
 
-        // PUT api/materials/1
+        // PUT api/material/1
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put([FromBody] Material material)
         {
+            return Ok(new MaterialsDataLayer(_configuration).UpdateMaterial(material));
         }
 
-        // DELETE api/materials/1
+        // DELETE api/material/1
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete([FromBody] Material material)
         {
+            return Ok(new MaterialsDataLayer(_configuration).DeleteMaterial(material));
         }
     }
 }

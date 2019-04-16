@@ -41,6 +41,50 @@ namespace InventorySystem.DataLayerClasses
 
         }
 
+        public MaterialsOrder UpdateMaterialsOrder(MaterialsOrder materialsOrder)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsMaterialsOrder", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductMaterialOrderID", materialsOrder.MaterialID);
+                    command.Parameters.AddWithValue("@ProductMaterialOrderID_Output", materialsOrder.MaterialsOrderID).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    materialsOrder.MaterialsOrderID = Convert.ToInt32(command.Parameters["@ProductMaterialOrderID_Output"].Value);
+                }
+
+                return materialsOrder;
+            }
+
+        }
+
+        public MaterialsOrder DeleteMaterialsOrder(MaterialsOrder materialsOrder)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsMaterialsOrder", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductMaterialOrderID", materialsOrder.MaterialID);
+                    command.Parameters.AddWithValue("@ProductMaterialOrderID_Output", materialsOrder.MaterialsOrderID).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    materialsOrder.MaterialsOrderID = Convert.ToInt32(command.Parameters["@ProductMaterialOrderID_Output"].Value);
+                }
+
+                return materialsOrder;
+            }
+
+        }
+
         /*
         public IEnumerable<Brand> GetBrandsByName(string BrandName)
         {
@@ -62,19 +106,19 @@ namespace InventorySystem.DataLayerClasses
 
             connection.Close();
             return brands;
-        }
+        }*/
 
-        public IEnumerable<Brand> GetBrand(int? BrandID)
+        public IEnumerable<MaterialsOrder> GetProductMaterialsOrder(int? MaterialsOrderID)
         {
-            List<Brand> brands = new List<Brand>();
+            List<MaterialsOrder> materialsOrders = new List<MaterialsOrder>();
 
-            if (BrandID == null)
+            if (MaterialsOrderID == null)
             {
-                command = new SqlCommand("SELECT * FROM [ViewBrands]", connection);
+                command = new SqlCommand("SELECT * FROM [ViewProductMaterials]", connection);
             }
             else
             {
-                command = new SqlCommand("SELECT * FROM [ViewBrands] WHERE BrandID = '" + BrandID + "'", connection);
+                command = new SqlCommand("SELECT * FROM [ViewProductMaterials] WHERE ProductID = '" + MaterialsOrderID + "'", connection);
             }
 
             connection.Open();
@@ -83,15 +127,15 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    Brand brand = new Brand((int)Convert.ToInt64(reader["BrandID"]),
-                       (String)reader["BrandName"]);
-                    brands.Add(brand);
+                    MaterialsOrder materialsOrder = new MaterialsOrder((int)Convert.ToInt64(reader["ProductID"]),
+                       (int)Convert.ToInt64(reader["MaterialID"]));
+                    materialsOrders.Add(materialsOrder);
                 }
             }
 
             connection.Close();
 
-            return brands;
-        }*/
+            return materialsOrders;
+        }
     }
 }

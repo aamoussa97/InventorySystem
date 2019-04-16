@@ -41,6 +41,50 @@ namespace InventorySystem.DataLayerClasses
 
         }
 
+        public SKU UpdateSKU(SKU sKU)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsSKU", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductSKU", sKU.SKUValue);
+                    command.Parameters.AddWithValue("@SKUID_Output", sKU.SKUID).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    sKU.SKUID = Convert.ToInt32(command.Parameters["@BrandID_Output"].Value);
+                }
+
+                return sKU;
+            }
+
+        }
+
+        public SKU DeleteSKU(SKU sKU)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsSKU", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductSKU", sKU.SKUValue);
+                    command.Parameters.AddWithValue("@SKUID_Output", sKU.SKUID).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    sKU.SKUID = Convert.ToInt32(command.Parameters["@BrandID_Output"].Value);
+                }
+
+                return sKU;
+            }
+
+        }
+
         /*
         public IEnumerable<Brand> GetBrandsByName(string BrandName)
         {
@@ -62,19 +106,19 @@ namespace InventorySystem.DataLayerClasses
 
             connection.Close();
             return brands;
-        }
+        }*/
 
-        public IEnumerable<Brand> GetBrand(int? BrandID)
+        public IEnumerable<SKU> GetProductSKU(int? SKUID)
         {
-            List<Brand> brands = new List<Brand>();
+            List<SKU> sKUs = new List<SKU>();
 
-            if (BrandID == null)
+            if (SKUID == null)
             {
-                command = new SqlCommand("SELECT * FROM [ViewBrands]", connection);
+                command = new SqlCommand("SELECT * FROM [ViewProductsSKU]", connection);
             }
             else
             {
-                command = new SqlCommand("SELECT * FROM [ViewBrands] WHERE BrandID = '" + BrandID + "'", connection);
+                command = new SqlCommand("SELECT * FROM [ViewProductsSKU] WHERE ProductID = '" + SKUID + "'", connection);
             }
 
             connection.Open();
@@ -83,15 +127,15 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    Brand brand = new Brand((int)Convert.ToInt64(reader["BrandID"]),
-                       (String)reader["BrandName"]);
-                    brands.Add(brand);
+                    SKU sKU = new SKU((int)Convert.ToInt64(reader["ProductID"]),
+                       (long)reader["ProductSKU"]);
+                    sKUs.Add(sKU);
                 }
             }
 
             connection.Close();
 
-            return brands;
-        }*/
+            return sKUs;
+        }
     }
 }

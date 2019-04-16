@@ -52,6 +52,66 @@ namespace InventorySystem.DataLayerClasses
             }
         }
 
+        public Product UpdateProduct(Product product)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProducts", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductSKUID", product.ProductSKUID);
+                    command.Parameters.AddWithValue("@ProductNameID", product.ProductNameID);
+                    command.Parameters.AddWithValue("@ProductBrandID", product.ProductBrandID);
+                    command.Parameters.AddWithValue("@ProductMaterialsOrderID", product.ProductMaterialsOrderID);
+                    command.Parameters.AddWithValue("@ProductPriceID", product.ProductPriceID);
+                    command.Parameters.AddWithValue("@ProductVariableCostID", product.ProductVariableCostID);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    /*
+                    // Check Error
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+                        //Throw error status code
+                        */
+                }
+
+                return product;
+            }
+        }
+
+        public Product DeleteProduct(Product product)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProducts", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductSKUID", product.ProductSKUID);
+                    command.Parameters.AddWithValue("@ProductNameID", product.ProductNameID);
+                    command.Parameters.AddWithValue("@ProductBrandID", product.ProductBrandID);
+                    command.Parameters.AddWithValue("@ProductMaterialsOrderID", product.ProductMaterialsOrderID);
+                    command.Parameters.AddWithValue("@ProductPriceID", product.ProductPriceID);
+                    command.Parameters.AddWithValue("@ProductVariableCostID", product.ProductVariableCostID);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    /*
+                    // Check Error
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+                        //Throw error status code
+                        */
+                }
+
+                return product;
+            }
+        }
+
         public IEnumerable<ProductsGet> GetProductByName(string ProductName)
         {
             List<ProductsGet> productsGET = new List<ProductsGet>();

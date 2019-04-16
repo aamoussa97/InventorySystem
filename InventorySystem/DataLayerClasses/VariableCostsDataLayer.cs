@@ -47,6 +47,62 @@ namespace InventorySystem.DataLayerClasses
             }
         }
 
+        public VariableCost UpdateVariableCost(VariableCost variableCost)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsVariableCost", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductVariableCost", variableCost.VariableCostValue);
+                    command.Parameters.AddWithValue("@ProductVariableCost_Output", variableCost.VariableCostID).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    variableCost.VariableCostID = Convert.ToInt32(command.Parameters["@ProductVariableCost_Output"].Value);
+
+                    /*
+                    // Check Error
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+                        //Throw error status code
+                        */
+                }
+
+                return variableCost;
+            }
+        }
+
+        public VariableCost DeleteVariableCost(VariableCost variableCost)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsVariableCost", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductVariableCost", variableCost.VariableCostValue);
+                    command.Parameters.AddWithValue("@ProductVariableCost_Output", variableCost.VariableCostID).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    variableCost.VariableCostID = Convert.ToInt32(command.Parameters["@ProductVariableCost_Output"].Value);
+
+                    /*
+                    // Check Error
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+                        //Throw error status code
+                        */
+                }
+
+                return variableCost;
+            }
+        }
+
         public IEnumerable<VariableCost> GetVariableCost(int? VariableCostID)
         {
             List<VariableCost> variableCosts = new List<VariableCost>();

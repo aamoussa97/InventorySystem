@@ -47,17 +47,73 @@ namespace InventorySystem.DataLayerClasses
             }
         }
 
+        public Material UpdateMaterial(Material material)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("ProcedureInsertMaterial", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@MaterialName", material.MaterialName);
+                    command.Parameters.AddWithValue("@MaterialID_Output", material.MaterialID).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    material.MaterialID = Convert.ToInt32(command.Parameters["@MaterialID_Output"].Value);
+
+                    /*
+                    // Check Error
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+                        //Throw error status code
+                        */
+                }
+
+                return material;
+            }
+        }
+
+        public Material DeleteMaterial(Material material)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("ProcedureInsertMaterial", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@MaterialName", material.MaterialName);
+                    command.Parameters.AddWithValue("@MaterialID_Output", material.MaterialID).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    material.MaterialID = Convert.ToInt32(command.Parameters["@MaterialID_Output"].Value);
+
+                    /*
+                    // Check Error
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+                        //Throw error status code
+                        */
+                }
+
+                return material;
+            }
+        }
+
         public IEnumerable<Material> GetMaterial(int? MaterialID)
         {
             List<Material> materials = new List<Material>();
 
             if (MaterialID == null)
             {
-                command = new SqlCommand("SELECT * FROM Materials", connection);
+                command = new SqlCommand("SELECT * FROM [ViewMaterials]", connection);
             }
             else
             {
-                command = new SqlCommand("SELECT * FROM Materials WHERE MaterialID = " + MaterialID, connection);
+                command = new SqlCommand("SELECT * FROM [ViewMaterials] WHERE MaterialID = '" + MaterialID + "'", connection);
             }
 
             connection.Open();

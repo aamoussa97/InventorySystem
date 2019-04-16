@@ -47,6 +47,62 @@ namespace InventorySystem.DataLayerClasses
             }
         }
 
+        public Price UpdatePrice(Price price)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsPrice", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductPrice", price.PriceValue);
+                    command.Parameters.AddWithValue("@ProductPrice_Output", price.PriceID).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    price.PriceID = Convert.ToInt32(command.Parameters["@ProductPrice_Output"].Value);
+
+                    /*
+                    // Check Error
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+                        //Throw error status code
+                        */
+                }
+
+                return price;
+            }
+        }
+
+        public Price DeletePrice(Price price)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsPrice", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductPrice", price.PriceValue);
+                    command.Parameters.AddWithValue("@ProductPrice_Output", price.PriceID).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    price.PriceID = Convert.ToInt32(command.Parameters["@ProductPrice_Output"].Value);
+
+                    /*
+                    // Check Error
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+                        //Throw error status code
+                        */
+                }
+
+                return price;
+            }
+        }
+
         public IEnumerable<Price> GetPrice(int? PriceID)
         {
             List<Price> prices = new List<Price>();

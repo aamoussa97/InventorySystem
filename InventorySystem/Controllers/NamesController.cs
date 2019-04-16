@@ -4,8 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using InventorySystem.DataLayerClasses;
 using InventorySystem.Models;
+using System.IO;
 using Microsoft.AspNet.OData;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,43 +16,43 @@ using Microsoft.AspNet.OData;
 namespace InventorySystem.Controllers
 {
     [Route("api/[controller]")]
-    public class PricesController : Controller
+    public class NamesController : Controller
     {
         private readonly IConfiguration _configuration;
 
-        public PricesController(IConfiguration configuration)
+        public NamesController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        // GET: api/prices?id
+        // GET: api/brands?id
         [HttpGet("{id?}")]
         [EnableQuery()]
-        public IEnumerable<Price> Get(int? id)
+        public IEnumerable<Name> Get(int? id)
         {
-            return new PricesDataLayer(_configuration).GetPrice(id);
+            return new NameDataLayer(_configuration).GetProductName(id);
         }
 
-        // POST api/prices
+        // POST api/brands
         [HttpPost]
         //[Consumes("application/json")]
-        public IActionResult Post([FromBody] Price price)
+        public IActionResult Post([FromBody] Name name)
         {
-            return Ok(new PricesDataLayer(_configuration).InsertPrice(price));
+            return Ok(new NameDataLayer(_configuration).InsertName(name));
         }
 
-        // PUT api/prices/1
+        // PUT api/brands/1
         [HttpPut("{id}")]
-        public IActionResult Put([FromBody] Price price)
+        public IActionResult Put([FromBody] Name name)
         {
-            return Ok(new PricesDataLayer(_configuration).UpdatePrice(price));
+            return Ok(new NameDataLayer(_configuration).UpdateName(name));
         }
 
-        // DELETE api/prices/1
+        // DELETE api/brands/1
         [HttpDelete("{id}")]
-        public IActionResult Delete([FromBody] Price price)
+        public IActionResult Delete([FromBody] Name name)
         {
-            return Ok(new PricesDataLayer(_configuration).DeletePrice(price));
+            return Ok(new NameDataLayer(_configuration).DeleteName(name));
         }
     }
 }

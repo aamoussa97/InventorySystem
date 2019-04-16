@@ -30,7 +30,7 @@ namespace InventorySystem.Controllers
             return new ProductsDataLayer(_configuration).GetProduct(id);
         }
 
-        // PUT api/products/1
+        // POST api/products/1
         [HttpPost]
         public IActionResult Post([FromBody] ProductsGet productsGet)
         {
@@ -41,10 +41,18 @@ namespace InventorySystem.Controllers
             return Ok(new ProductsDataLayer(_configuration).InsertProduct(productsInsert));
         }
 
+        // PUT api/products/1
+        [HttpPut("{id}")]
+        public IActionResult Put([FromBody] Product product)
+        {
+            return Ok(new ProductsDataLayer(_configuration).UpdateProduct(product));
+        }
+
         // DELETE api/products/1
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete([FromBody] Product product)
         {
+            return Ok(new ProductsDataLayer(_configuration).DeleteProduct(product));
         }
     }
 }

@@ -41,6 +41,51 @@ namespace InventorySystem.DataLayerClasses
 
         }
 
+
+        public Name UpdateName(Name name)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsName", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductName", name.NameValue);
+                    command.Parameters.AddWithValue("@ProductName_Output", null).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    name.NameID = Convert.ToInt32(command.Parameters["@ProductName_Output"].Value);
+                }
+
+                return name;
+            }
+
+        }
+
+        public Name DeleteName(Name name)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsName", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductName", name.NameValue);
+                    command.Parameters.AddWithValue("@ProductName_Output", null).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    name.NameID = Convert.ToInt32(command.Parameters["@ProductName_Output"].Value);
+                }
+
+                return name;
+            }
+
+        }
+
         /*
         public IEnumerable<Brand> GetBrandsByName(string BrandName)
         {
@@ -62,19 +107,19 @@ namespace InventorySystem.DataLayerClasses
 
             connection.Close();
             return brands;
-        }
+        }*/
 
-        public IEnumerable<Brand> GetBrand(int? BrandID)
+        public IEnumerable<Name> GetProductName(int? NameID)
         {
-            List<Brand> brands = new List<Brand>();
+            List<Name> names = new List<Name>();
 
-            if (BrandID == null)
+            if (NameID == null)
             {
-                command = new SqlCommand("SELECT * FROM [ViewBrands]", connection);
+                command = new SqlCommand("SELECT * FROM [ViewProductNames]", connection);
             }
             else
             {
-                command = new SqlCommand("SELECT * FROM [ViewBrands] WHERE BrandID = '" + BrandID + "'", connection);
+                command = new SqlCommand("SELECT * FROM [ViewProductNames] WHERE ProductID = '" + NameID + "'", connection);
             }
 
             connection.Open();
@@ -83,15 +128,15 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    Brand brand = new Brand((int)Convert.ToInt64(reader["BrandID"]),
-                       (String)reader["BrandName"]);
-                    brands.Add(brand);
+                    Name name = new Name((int)Convert.ToInt64(reader["ProductID"]),
+                       (String)reader["ProductName"]);
+                    names.Add(name);
                 }
             }
 
             connection.Close();
 
-            return brands;
-        }*/
+            return names;
+        }
     }
 }

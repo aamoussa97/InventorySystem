@@ -30,23 +30,26 @@ namespace InventorySystem.Controllers
             return new VariableCostsDataLayer(_configuration).GetVariableCost(id);
         }
 
-        // POST api/variablecosts/1
+        // POST api/variablecosts
         [HttpPost]
-        public IActionResult Post([FromBody]VariableCost variableCost)
+        //[Consumes("application/json")]
+        public IActionResult Post([FromBody] VariableCost variableCost)
         {
             return Ok(new VariableCostsDataLayer(_configuration).InsertVariableCost(variableCost));
         }
 
         // PUT api/variablecosts/1
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put([FromBody] VariableCost variableCost)
         {
+            return Ok(new VariableCostsDataLayer(_configuration).UpdateVariableCost(variableCost));
         }
 
         // DELETE api/variablecosts/1
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete([FromBody] VariableCost variableCost)
         {
+            return Ok(new VariableCostsDataLayer(_configuration).DeleteVariableCost(variableCost));
         }
     }
 }

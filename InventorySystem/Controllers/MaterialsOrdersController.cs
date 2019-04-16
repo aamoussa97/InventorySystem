@@ -16,11 +16,11 @@ using Microsoft.AspNet.OData;
 namespace InventorySystem.Controllers
 {
     [Route("api/[controller]")]
-    public class BrandsController : Controller
+    public class MaterialsOrdersController : Controller
     {
         private readonly IConfiguration _configuration;
 
-        public BrandsController(IConfiguration configuration)
+        public MaterialsOrdersController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -28,31 +28,31 @@ namespace InventorySystem.Controllers
         // GET: api/brands?id
         [HttpGet("{id?}")]
         [EnableQuery()]
-        public IEnumerable<Brand> Get(int? id)
+        public IEnumerable<MaterialsOrder> Get(int? id)
         {
-            return new BrandsDataLayer(_configuration).GetBrand(id);
+            return new MaterialsOrderDataLayer(_configuration).GetProductMaterialsOrder(id);
         }
 
-        // POST api/brand
+        // POST api/brands
         [HttpPost]
         //[Consumes("application/json")]
-        public IActionResult Post([FromBody] Brand brand)
+        public IActionResult Post([FromBody] MaterialsOrder materialsOrder)
         {
-            return Ok(new BrandsDataLayer(_configuration).InsertBrand(brand));
+            return Ok(new MaterialsOrderDataLayer(_configuration).InsertMaterialsOrder(materialsOrder));
         }
 
-        // PUT api/brand/1
+        // PUT api/brands/1
         [HttpPut("{id}")]
-        public IActionResult Put([FromBody] Brand brand)
+        public IActionResult Put([FromBody] MaterialsOrder materialsOrder)
         {
-            return Ok(new BrandsDataLayer(_configuration).UpdateBrand(brand));
+            return Ok(new MaterialsOrderDataLayer(_configuration).UpdateMaterialsOrder(materialsOrder));
         }
 
-        // DELETE api/brand/1
+        // DELETE api/brands/1
         [HttpDelete("{id}")]
-        public IActionResult Delete([FromBody] Brand brand)
+        public IActionResult Delete([FromBody] MaterialsOrder materialsOrder)
         {
-            return Ok(new BrandsDataLayer(_configuration).DeleteBrand(brand));
+            return Ok(new MaterialsOrderDataLayer(_configuration).DeleteMaterialsOrder(materialsOrder));
         }
     }
 }
