@@ -16,11 +16,11 @@ using Microsoft.AspNet.OData;
 namespace InventorySystem.Controllers
 {
     [Route("api/[controller]")]
-    public class NamesController : Controller
+    public class ProductNamesController : Controller
     {
         private readonly IConfiguration _configuration;
 
-        public NamesController(IConfiguration configuration)
+        public ProductNamesController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -30,7 +30,7 @@ namespace InventorySystem.Controllers
         [EnableQuery()]
         public IEnumerable<Name> Get(int? id)
         {
-            return new NameDataLayer(_configuration).GetProductName(id);
+            return new ProductNamesDataLayer(_configuration).GetProductName(id);
         }
 
         // POST api/brands
@@ -38,21 +38,21 @@ namespace InventorySystem.Controllers
         //[Consumes("application/json")]
         public IActionResult Post([FromBody] Name name)
         {
-            return Ok(new NameDataLayer(_configuration).InsertName(name));
+            return Ok(new ProductNamesDataLayer(_configuration).InsertName(name));
         }
 
         // PUT api/brands/1
-        [HttpPut("{id}")]
-        public IActionResult Put([FromBody] Name name)
+        [HttpPut]
+        public IActionResult Put([FromBody] ProductsNameUpdate productsNameUpdate)
         {
-            return Ok(new NameDataLayer(_configuration).UpdateName(name));
+            return Ok(new ProductNamesDataLayer(_configuration).UpdateName(productsNameUpdate));
         }
 
         // DELETE api/brands/1
-        [HttpDelete("{id}")]
-        public IActionResult Delete([FromBody] Name name)
+        [HttpDelete]
+        public IActionResult Delete([FromBody] ProductsNameDelete productsNameDelete)
         {
-            return Ok(new NameDataLayer(_configuration).DeleteName(name));
+            return Ok(new ProductNamesDataLayer(_configuration).DeleteName(productsNameDelete));
         }
     }
 }

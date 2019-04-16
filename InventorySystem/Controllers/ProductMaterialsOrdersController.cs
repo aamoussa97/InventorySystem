@@ -16,11 +16,11 @@ using Microsoft.AspNet.OData;
 namespace InventorySystem.Controllers
 {
     [Route("api/[controller]")]
-    public class MaterialsOrdersController : Controller
+    public class ProductMaterialsOrdersController : Controller
     {
         private readonly IConfiguration _configuration;
 
-        public MaterialsOrdersController(IConfiguration configuration)
+        public ProductMaterialsOrdersController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -30,7 +30,7 @@ namespace InventorySystem.Controllers
         [EnableQuery()]
         public IEnumerable<MaterialsOrder> Get(int? id)
         {
-            return new MaterialsOrderDataLayer(_configuration).GetProductMaterialsOrder(id);
+            return new ProductMaterialsOrderDataLayer(_configuration).GetProductMaterialsOrder(id);
         }
 
         // POST api/brands
@@ -38,21 +38,21 @@ namespace InventorySystem.Controllers
         //[Consumes("application/json")]
         public IActionResult Post([FromBody] MaterialsOrder materialsOrder)
         {
-            return Ok(new MaterialsOrderDataLayer(_configuration).InsertMaterialsOrder(materialsOrder));
+            return Ok(new ProductMaterialsOrderDataLayer(_configuration).InsertMaterialsOrder(materialsOrder));
         }
 
         // PUT api/brands/1
-        [HttpPut("{id}")]
-        public IActionResult Put([FromBody] MaterialsOrder materialsOrder)
+        [HttpPut]
+        public IActionResult Put([FromBody] ProductMaterialsOrderUpdate productMaterialsOrderUpdate)
         {
-            return Ok(new MaterialsOrderDataLayer(_configuration).UpdateMaterialsOrder(materialsOrder));
+            return Ok(new ProductMaterialsOrderDataLayer(_configuration).UpdateMaterialsOrder(productMaterialsOrderUpdate));
         }
 
         // DELETE api/brands/1
-        [HttpDelete("{id}")]
-        public IActionResult Delete([FromBody] MaterialsOrder materialsOrder)
+        [HttpDelete]
+        public IActionResult Delete([FromBody] ProductMaterialsOrderDelete productMaterialsOrderDelete)
         {
-            return Ok(new MaterialsOrderDataLayer(_configuration).DeleteMaterialsOrder(materialsOrder));
+            return Ok(new ProductMaterialsOrderDataLayer(_configuration).DeleteMaterialsOrder(productMaterialsOrderDelete));
         }
     }
 }

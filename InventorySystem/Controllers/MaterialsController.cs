@@ -39,17 +39,17 @@ namespace InventorySystem.Controllers
         }
 
         // PUT api/material/1
-        [HttpPut("{id}")]
-        public IActionResult Put([FromBody] Material material)
+        [HttpPut]
+        public IActionResult Put([FromBody] MaterialsUpdate materialsUpdate)
         {
-            return Ok(new MaterialsDataLayer(_configuration).UpdateMaterial(material));
+            return Ok(new MaterialsDataLayer(_configuration).UpdateMaterial(materialsUpdate));
         }
 
         // DELETE api/material/1
-        [HttpDelete("{id}")]
-        public IActionResult Delete([FromBody] Material material)
+        [HttpDelete]
+        public IActionResult Delete([FromBody] MaterialsDelete materialsDelete)
         {
-            return Ok(new MaterialsDataLayer(_configuration).DeleteMaterial(material));
+            return Ok(new MaterialsDataLayer(_configuration).DeleteMaterial(materialsDelete));
         }
     }
 }

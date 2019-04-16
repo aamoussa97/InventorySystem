@@ -42,17 +42,17 @@ namespace InventorySystem.Controllers
         }
 
         // PUT api/brand/1
-        [HttpPut("{id}")]
-        public IActionResult Put([FromBody] Brand brand)
+        [HttpPut]
+        public IActionResult Put([FromBody] BrandsUpdate brandsUpdate)
         {
-            return Ok(new BrandsDataLayer(_configuration).UpdateBrand(brand));
+            return Ok(new BrandsDataLayer(_configuration).UpdateBrand(brandsUpdate));
         }
 
         // DELETE api/brand/1
-        [HttpDelete("{id}")]
-        public IActionResult Delete([FromBody] Brand brand)
+        [HttpDelete]
+        public IActionResult Delete([FromBody] BrandsDelete brandsDelete)
         {
-            return Ok(new BrandsDataLayer(_configuration).DeleteBrand(brand));
+            return Delete(new BrandsDataLayer(_configuration).DeleteBrand(brandsDelete));
         }
     }
 }

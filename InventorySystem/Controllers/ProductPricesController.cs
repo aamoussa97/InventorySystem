@@ -13,11 +13,11 @@ using Microsoft.AspNet.OData;
 namespace InventorySystem.Controllers
 {
     [Route("api/[controller]")]
-    public class PricesController : Controller
+    public class ProductPricesController : Controller
     {
         private readonly IConfiguration _configuration;
 
-        public PricesController(IConfiguration configuration)
+        public ProductPricesController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -27,7 +27,7 @@ namespace InventorySystem.Controllers
         [EnableQuery()]
         public IEnumerable<Price> Get(int? id)
         {
-            return new PricesDataLayer(_configuration).GetPrice(id);
+            return new ProductPricesDataLayer(_configuration).GetPrice(id);
         }
 
         // POST api/prices
@@ -35,21 +35,21 @@ namespace InventorySystem.Controllers
         //[Consumes("application/json")]
         public IActionResult Post([FromBody] Price price)
         {
-            return Ok(new PricesDataLayer(_configuration).InsertPrice(price));
+            return Ok(new ProductPricesDataLayer(_configuration).InsertPrice(price));
         }
 
         // PUT api/prices/1
-        [HttpPut("{id}")]
-        public IActionResult Put([FromBody] Price price)
+        [HttpPut]
+        public IActionResult Put([FromBody] ProductsPriceUpdate productsPriceUpdate)
         {
-            return Ok(new PricesDataLayer(_configuration).UpdatePrice(price));
+            return Ok(new ProductPricesDataLayer(_configuration).UpdateProductPrice(productsPriceUpdate));
         }
 
         // DELETE api/prices/1
-        [HttpDelete("{id}")]
-        public IActionResult Delete([FromBody] Price price)
+        [HttpDelete]
+        public IActionResult Delete([FromBody] ProductsPriceDelete productsPriceDelete)
         {
-            return Ok(new PricesDataLayer(_configuration).DeletePrice(price));
+            return Ok(new ProductPricesDataLayer(_configuration).DeleteProductPrice(productsPriceDelete));
         }
     }
 }

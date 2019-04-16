@@ -7,13 +7,13 @@ using InventorySystem.Models;
 
 namespace InventorySystem.DataLayerClasses
 {
-    public class PricesDataLayer
+    public class ProductPricesDataLayer
     {
         SqlConnection connection;
         SqlCommand command;
         String connectionString;
 
-        public PricesDataLayer(IConfiguration configuration)
+        public ProductPricesDataLayer(IConfiguration configuration)
         {
             connectionString = configuration.GetConnectionString("localDB");
             connection = new SqlConnection(connectionString);
@@ -47,35 +47,26 @@ namespace InventorySystem.DataLayerClasses
             }
         }
 
-        public Price UpdatePrice(Price price)
+        public ProductsPriceUpdate UpdateProductPrice(ProductsPriceUpdate productsPriceUpdate)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsPrice", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureUpdateProductsPrice", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductPrice", price.PriceValue);
-                    command.Parameters.AddWithValue("@ProductPrice_Output", price.PriceID).Direction = ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@PriceIDUpdate", productsPriceUpdate.ProductPriceID);
+                    command.Parameters.AddWithValue("@PriceValueUpdate", productsPriceUpdate.ProductPrice);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    price.PriceID = Convert.ToInt32(command.Parameters["@ProductPrice_Output"].Value);
-
-                    /*
-                    // Check Error
-                    if (result < 0)
-                        Console.WriteLine("Error inserting data into Database!");
-                        //Throw error status code
-                        */
                 }
 
-                return price;
+                return productsPriceUpdate;
             }
         }
 
-        public Price DeletePrice(Price price)
+        public ProductsPriceDelete DeleteProductPrice(ProductsPriceDelete productsPriceDelete)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -83,23 +74,13 @@ namespace InventorySystem.DataLayerClasses
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductPrice", price.PriceValue);
-                    command.Parameters.AddWithValue("@ProductPrice_Output", price.PriceID).Direction = ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@ProductPrice", productsPriceDelete.ProductPriceID);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    price.PriceID = Convert.ToInt32(command.Parameters["@ProductPrice_Output"].Value);
-
-                    /*
-                    // Check Error
-                    if (result < 0)
-                        Console.WriteLine("Error inserting data into Database!");
-                        //Throw error status code
-                        */
                 }
 
-                return price;
+                return productsPriceDelete;
             }
         }
 

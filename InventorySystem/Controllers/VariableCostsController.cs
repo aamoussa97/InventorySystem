@@ -13,11 +13,11 @@ using Microsoft.AspNet.OData;
 namespace InventorySystem.Controllers
 {
     [Route("api/[controller]")]
-    public class VariableCostsController : Controller
+    public class ProductVariableCostsController : Controller
     {
         private readonly IConfiguration _configuration;
 
-        public VariableCostsController(IConfiguration configuration)
+        public ProductVariableCostsController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -27,7 +27,7 @@ namespace InventorySystem.Controllers
         [EnableQuery()]
         public IEnumerable<VariableCost> Get(int? id)
         {
-            return new VariableCostsDataLayer(_configuration).GetVariableCost(id);
+            return new ProductVariableCostsDataLayer(_configuration).GetVariableCost(id);
         }
 
         // POST api/variablecosts
@@ -35,21 +35,21 @@ namespace InventorySystem.Controllers
         //[Consumes("application/json")]
         public IActionResult Post([FromBody] VariableCost variableCost)
         {
-            return Ok(new VariableCostsDataLayer(_configuration).InsertVariableCost(variableCost));
+            return Ok(new ProductVariableCostsDataLayer(_configuration).InsertVariableCost(variableCost));
         }
 
         // PUT api/variablecosts/1
-        [HttpPut("{id}")]
-        public IActionResult Put([FromBody] VariableCost variableCost)
+        [HttpPut]
+        public IActionResult Put([FromBody] ProductsVariableCostUpdate productsVariableCostUpdate)
         {
-            return Ok(new VariableCostsDataLayer(_configuration).UpdateVariableCost(variableCost));
+            return Ok(new ProductVariableCostsDataLayer(_configuration).UpdateVariableCost(productsVariableCostUpdate));
         }
 
         // DELETE api/variablecosts/1
-        [HttpDelete("{id}")]
-        public IActionResult Delete([FromBody] VariableCost variableCost)
+        [HttpDelete]
+        public IActionResult Delete([FromBody] ProductsVariableCostDelete productsVariableCostDelete)
         {
-            return Ok(new VariableCostsDataLayer(_configuration).DeleteVariableCost(variableCost));
+            return Ok(new ProductVariableCostsDataLayer(_configuration).DeleteVariableCost(productsVariableCostDelete));
         }
     }
 }

@@ -52,7 +52,7 @@ namespace InventorySystem.DataLayerClasses
             }
         }
 
-        public Product UpdateProduct(Product product)
+        public ProductsUpdate UpdateProduct(ProductsUpdate productsUpdate)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -60,55 +60,37 @@ namespace InventorySystem.DataLayerClasses
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductSKUID", product.ProductSKUID);
-                    command.Parameters.AddWithValue("@ProductNameID", product.ProductNameID);
-                    command.Parameters.AddWithValue("@ProductBrandID", product.ProductBrandID);
-                    command.Parameters.AddWithValue("@ProductMaterialsOrderID", product.ProductMaterialsOrderID);
-                    command.Parameters.AddWithValue("@ProductPriceID", product.ProductPriceID);
-                    command.Parameters.AddWithValue("@ProductVariableCostID", product.ProductVariableCostID);
+                    command.Parameters.AddWithValue("@ProductIDUpdate", productsUpdate.ProductID);
+                    command.Parameters.AddWithValue("@ProductSKUIDUpdate", productsUpdate.ProductSKUID);
+                    command.Parameters.AddWithValue("@ProductNameIDUpdate", productsUpdate.ProductNameID);
+                    command.Parameters.AddWithValue("@ProductBrandIDUpdate", productsUpdate.ProductBrandID);
+                    command.Parameters.AddWithValue("@ProductMaterialsOrderIDUpdate", productsUpdate.ProductMaterialsOrderID);
+                    command.Parameters.AddWithValue("@ProductPriceIDUpdate", productsUpdate.ProductPriceID);
+                    command.Parameters.AddWithValue("@ProductVariableCostIDUpdate", productsUpdate.ProductVariableCostID);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    /*
-                    // Check Error
-                    if (result < 0)
-                        Console.WriteLine("Error inserting data into Database!");
-                        //Throw error status code
-                        */
                 }
 
-                return product;
+                return productsUpdate;
             }
         }
 
-        public Product DeleteProduct(Product product)
+        public ProductsDelete DeleteProduct(ProductsDelete productsDelete)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProducts", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureDeleteProducts", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductSKUID", product.ProductSKUID);
-                    command.Parameters.AddWithValue("@ProductNameID", product.ProductNameID);
-                    command.Parameters.AddWithValue("@ProductBrandID", product.ProductBrandID);
-                    command.Parameters.AddWithValue("@ProductMaterialsOrderID", product.ProductMaterialsOrderID);
-                    command.Parameters.AddWithValue("@ProductPriceID", product.ProductPriceID);
-                    command.Parameters.AddWithValue("@ProductVariableCostID", product.ProductVariableCostID);
+                    command.Parameters.AddWithValue("@ProductIDDelete", productsDelete.ProductID);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    /*
-                    // Check Error
-                    if (result < 0)
-                        Console.WriteLine("Error inserting data into Database!");
-                        //Throw error status code
-                        */
                 }
 
-                return product;
+                return productsDelete;
             }
         }
 

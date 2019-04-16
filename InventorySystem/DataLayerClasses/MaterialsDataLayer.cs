@@ -47,59 +47,40 @@ namespace InventorySystem.DataLayerClasses
             }
         }
 
-        public Material UpdateMaterial(Material material)
+        public MaterialsUpdate UpdateMaterial(MaterialsUpdate materialsUpdate)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertMaterial", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureUpdateMaterial", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@MaterialName", material.MaterialName);
-                    command.Parameters.AddWithValue("@MaterialID_Output", material.MaterialID).Direction = ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@MaterialIDUpdate", materialsUpdate.MaterialName);
+                    command.Parameters.AddWithValue("@MaterialNameUpdate", materialsUpdate.MaterialID);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    material.MaterialID = Convert.ToInt32(command.Parameters["@MaterialID_Output"].Value);
-
-                    /*
-                    // Check Error
-                    if (result < 0)
-                        Console.WriteLine("Error inserting data into Database!");
-                        //Throw error status code
-                        */
                 }
 
-                return material;
+                return materialsUpdate;
             }
         }
 
-        public Material DeleteMaterial(Material material)
+        public MaterialsDelete DeleteMaterial(MaterialsDelete materialsDelete)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertMaterial", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureDeleteMaterial", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@MaterialName", material.MaterialName);
-                    command.Parameters.AddWithValue("@MaterialID_Output", material.MaterialID).Direction = ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@MaterialIDDelete", materialsDelete.MaterialID);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    material.MaterialID = Convert.ToInt32(command.Parameters["@MaterialID_Output"].Value);
-
-                    /*
-                    // Check Error
-                    if (result < 0)
-                        Console.WriteLine("Error inserting data into Database!");
-                        //Throw error status code
-                        */
                 }
 
-                return material;
+                return materialsDelete;
             }
         }
 

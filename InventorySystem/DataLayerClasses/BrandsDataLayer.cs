@@ -48,50 +48,38 @@ namespace InventorySystem.DataLayerClasses
 
         }
 
-        public Brand UpdateBrand(Brand brand)
+        public BrandsUpdate UpdateBrand(BrandsUpdate brandsUpdate)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsBrand", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureUpdateProductsBrand", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductBrandName", brand.BrandName);
-                    command.Parameters.AddWithValue("@BrandID_Output", brand.BrandID).Direction = ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@BrandIDUpdate", brandsUpdate.BrandID);
+                    command.Parameters.AddWithValue("@BrandNameUpdate", brandsUpdate.BrandName);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    brand.BrandID = Convert.ToInt32(command.Parameters["@BrandID_Output"].Value);
-
-                    /*
-                    // Check Error
-                    if (result < 0)
-                        Console.WriteLine("Error inserting data into Database!");
-                        //Throw error status code
-                        */
                 }
 
-                return brand;
+                return brandsUpdate;
             }
 
         }
 
-        public Brand DeleteBrand(Brand brand)
+        public BrandsDelete DeleteBrand(BrandsDelete brandsDelete)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsBrand", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureDeleteProductsBrand", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductBrandName", brand.BrandName);
-                    command.Parameters.AddWithValue("@BrandID_Output", brand.BrandID).Direction = ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@BrandIDDelete", brandsDelete.BrandID);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    brand.BrandID = Convert.ToInt32(command.Parameters["@BrandID_Output"].Value);
 
                     /*
                     // Check Error
@@ -101,7 +89,7 @@ namespace InventorySystem.DataLayerClasses
                         */
                 }
 
-                return brand;
+                return brandsDelete;
             }
 
         }

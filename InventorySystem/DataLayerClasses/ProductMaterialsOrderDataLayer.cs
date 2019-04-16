@@ -7,13 +7,13 @@ using InventorySystem.Models;
 
 namespace InventorySystem.DataLayerClasses
 {
-    public class MaterialsOrderDataLayer
+    public class ProductMaterialsOrderDataLayer
     {
         SqlConnection connection;
         SqlCommand command;
         String connectionString;
 
-        public MaterialsOrderDataLayer(IConfiguration configuration)
+        public ProductMaterialsOrderDataLayer(IConfiguration configuration)
         {
             connectionString = configuration.GetConnectionString("localDB");
             connection = new SqlConnection(connectionString);
@@ -41,46 +41,41 @@ namespace InventorySystem.DataLayerClasses
 
         }
 
-        public MaterialsOrder UpdateMaterialsOrder(MaterialsOrder materialsOrder)
+        public ProductMaterialsOrderUpdate UpdateMaterialsOrder(ProductMaterialsOrderUpdate productMaterialsOrderUpdate)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsMaterialsOrder", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureUpdateProductsMaterialsOrder", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductMaterialOrderID", materialsOrder.MaterialID);
-                    command.Parameters.AddWithValue("@ProductMaterialOrderID_Output", materialsOrder.MaterialsOrderID).Direction = ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@ProductMaterialOrderIDUpdate", productMaterialsOrderUpdate.MaterialsOrderID);
+                    command.Parameters.AddWithValue("@ProductMaterialIDValueUpdate", productMaterialsOrderUpdate.MaterialID);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    materialsOrder.MaterialsOrderID = Convert.ToInt32(command.Parameters["@ProductMaterialOrderID_Output"].Value);
                 }
 
-                return materialsOrder;
+                return productMaterialsOrderUpdate;
             }
 
         }
 
-        public MaterialsOrder DeleteMaterialsOrder(MaterialsOrder materialsOrder)
+        public ProductMaterialsOrderDelete DeleteMaterialsOrder(ProductMaterialsOrderDelete productMaterialsOrderDelete)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsMaterialsOrder", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureDeleteProductsMaterialsOrder", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductMaterialOrderID", materialsOrder.MaterialID);
-                    command.Parameters.AddWithValue("@ProductMaterialOrderID_Output", materialsOrder.MaterialsOrderID).Direction = ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@MaterialsOrderIDDelete", productMaterialsOrderDelete.MaterialsOrderID);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    materialsOrder.MaterialsOrderID = Convert.ToInt32(command.Parameters["@ProductMaterialOrderID_Output"].Value);
                 }
 
-                return materialsOrder;
+                return productMaterialsOrderDelete;
             }
 
         }

@@ -4,11 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using InventorySystem.DataLayerClasses;
 using InventorySystem.Models;
-using System.IO;
 using Microsoft.AspNet.OData;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -16,11 +13,11 @@ using Microsoft.AspNet.OData;
 namespace InventorySystem.Controllers
 {
     [Route("api/[controller]")]
-    public class SKUsController : Controller
+    public class ProductSkusController : Controller
     {
         private readonly IConfiguration _configuration;
 
-        public SKUsController(IConfiguration configuration)
+        public ProductSkusController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -30,7 +27,7 @@ namespace InventorySystem.Controllers
         [EnableQuery()]
         public IEnumerable<SKU> Get(int? id)
         {
-            return new SKUDataLayer(_configuration).GetProductSKU(id);
+            return new ProductSkusDataLayer(_configuration).GetProductSKU(id);
         }
 
         // POST api/skus
@@ -38,21 +35,21 @@ namespace InventorySystem.Controllers
         //[Consumes("application/json")]
         public IActionResult Post([FromBody] SKU sKU)
         {
-            return Ok(new SKUDataLayer(_configuration).InsertSKU(sKU));
+            return Ok(new ProductSkusDataLayer(_configuration).InsertProductSKU(sKU));
         }
 
         // PUT api/skus/1
-        [HttpPut("{id}")]
-        public IActionResult Put([FromBody] SKU sKU)
+        [HttpPut]
+        public IActionResult Put([FromBody] ProdcutsSkuUpdate prodcutsSkuUpdate)
         {
-            return Ok(new SKUDataLayer(_configuration).UpdateSKU(sKU));
+            return Ok(new ProductSkusDataLayer(_configuration).UpdateProductSKU(prodcutsSkuUpdate));
         }
 
         // DELETE api/skus/1
-        [HttpDelete("{id}")]
-        public IActionResult Delete([FromBody] SKU sKU)
+        [HttpDelete]
+        public IActionResult Delete([FromBody] ProdcutsSkuDelete prodcutsSkuDelete)
         {
-            return Ok(new SKUDataLayer(_configuration).DeleteSKU(sKU));
+            return Ok(new ProductSkusDataLayer(_configuration).DeleteProductSKU(prodcutsSkuDelete));
         }
     }
 }

@@ -7,19 +7,19 @@ using InventorySystem.Models;
 
 namespace InventorySystem.DataLayerClasses
 {
-    public class SKUDataLayer
+    public class ProductSkusDataLayer
     {
         SqlConnection connection;
         SqlCommand command;
         String connectionString;
 
-        public SKUDataLayer(IConfiguration configuration)
+        public ProductSkusDataLayer(IConfiguration configuration)
         {
             connectionString = configuration.GetConnectionString("localDB");
             connection = new SqlConnection(connectionString);
         }
 
-        public SKU InsertSKU(SKU sKU)
+        public SKU InsertProductSKU(SKU sKU)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -41,46 +41,41 @@ namespace InventorySystem.DataLayerClasses
 
         }
 
-        public SKU UpdateSKU(SKU sKU)
+        public ProdcutsSkuUpdate UpdateProductSKU(ProdcutsSkuUpdate prodcutsSkuUpdate)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsSKU", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureUpdateProductsSKU", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductSKU", sKU.SKUValue);
-                    command.Parameters.AddWithValue("@SKUID_Output", sKU.SKUID).Direction = ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@SKUIDUpdate", prodcutsSkuUpdate.ProductSkuID);
+                    command.Parameters.AddWithValue("@SKUValueUpdate", prodcutsSkuUpdate.ProductSku);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    sKU.SKUID = Convert.ToInt32(command.Parameters["@BrandID_Output"].Value);
                 }
 
-                return sKU;
+                return prodcutsSkuUpdate;
             }
 
         }
 
-        public SKU DeleteSKU(SKU sKU)
+        public ProdcutsSkuDelete DeleteProductSKU(ProdcutsSkuDelete prodcutsSkuDelete)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsSKU", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureDeleteProductsSKU", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductSKU", sKU.SKUValue);
-                    command.Parameters.AddWithValue("@SKUID_Output", sKU.SKUID).Direction = ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@SKUIDDelete", prodcutsSkuDelete.ProductSkuID);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    sKU.SKUID = Convert.ToInt32(command.Parameters["@BrandID_Output"].Value);
                 }
 
-                return sKU;
+                return prodcutsSkuDelete;
             }
 
         }

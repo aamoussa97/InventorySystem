@@ -7,13 +7,13 @@ using InventorySystem.Models;
 
 namespace InventorySystem.DataLayerClasses
 {
-    public class VariableCostsDataLayer
+    public class ProductVariableCostsDataLayer
     {
         SqlConnection connection;
         SqlCommand command;
         String connectionString;
 
-        public VariableCostsDataLayer(IConfiguration configuration)
+        public ProductVariableCostsDataLayer(IConfiguration configuration)
         {
             connectionString = configuration.GetConnectionString("localDB");
             connection = new SqlConnection(connectionString);
@@ -47,59 +47,40 @@ namespace InventorySystem.DataLayerClasses
             }
         }
 
-        public VariableCost UpdateVariableCost(VariableCost variableCost)
+        public ProductsVariableCostUpdate UpdateVariableCost(ProductsVariableCostUpdate productsVariableCostUpdate)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsVariableCost", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureUpdateProductsVariableCost", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductVariableCost", variableCost.VariableCostValue);
-                    command.Parameters.AddWithValue("@ProductVariableCost_Output", variableCost.VariableCostID).Direction = ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@VariableCostIDUpdate", productsVariableCostUpdate.ProductsVariableCostID);
+                    command.Parameters.AddWithValue("@VariableCostValueUpdate", productsVariableCostUpdate.ProductsVariableCost);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    variableCost.VariableCostID = Convert.ToInt32(command.Parameters["@ProductVariableCost_Output"].Value);
-
-                    /*
-                    // Check Error
-                    if (result < 0)
-                        Console.WriteLine("Error inserting data into Database!");
-                        //Throw error status code
-                        */
                 }
 
-                return variableCost;
+                return productsVariableCostUpdate;
             }
         }
 
-        public VariableCost DeleteVariableCost(VariableCost variableCost)
+        public ProductsVariableCostDelete DeleteVariableCost(ProductsVariableCostDelete productsVariableCostDelete)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsVariableCost", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureDeleteProductsVariableCost", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductVariableCost", variableCost.VariableCostValue);
-                    command.Parameters.AddWithValue("@ProductVariableCost_Output", variableCost.VariableCostID).Direction = ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@VariableCostIDDelete", productsVariableCostDelete.ProductsVariableCostID);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    variableCost.VariableCostID = Convert.ToInt32(command.Parameters["@ProductVariableCost_Output"].Value);
-
-                    /*
-                    // Check Error
-                    if (result < 0)
-                        Console.WriteLine("Error inserting data into Database!");
-                        //Throw error status code
-                        */
                 }
 
-                return variableCost;
+                return productsVariableCostDelete;
             }
         }
 

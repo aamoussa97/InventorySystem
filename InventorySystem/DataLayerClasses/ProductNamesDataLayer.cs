@@ -7,13 +7,13 @@ using InventorySystem.Models;
 
 namespace InventorySystem.DataLayerClasses
 {
-    public class NameDataLayer
+    public class ProductNamesDataLayer
     {
         SqlConnection connection;
         SqlCommand command;
         String connectionString;
 
-        public NameDataLayer(IConfiguration configuration)
+        public ProductNamesDataLayer(IConfiguration configuration)
         {
             connectionString = configuration.GetConnectionString("localDB");
             connection = new SqlConnection(connectionString);
@@ -42,46 +42,41 @@ namespace InventorySystem.DataLayerClasses
         }
 
 
-        public Name UpdateName(Name name)
+        public ProductsNameUpdate UpdateProductName(ProductsNameUpdate productsNameUpdate)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsName", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureUpdateProductsName", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductName", name.NameValue);
-                    command.Parameters.AddWithValue("@ProductName_Output", null).Direction = ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@NameIDUpdate", productsNameUpdate.ProductsNameID);
+                    command.Parameters.AddWithValue("@NameValueUpdate", productsNameUpdate.ProductsName);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    name.NameID = Convert.ToInt32(command.Parameters["@ProductName_Output"].Value);
                 }
 
-                return name;
+                return productsNameUpdate;
             }
 
         }
 
-        public Name DeleteName(Name name)
+        public ProductsNameDelete DeleteProductName(ProductsNameDelete productsNameDelete)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsName", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureDeleteProductsName", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductName", name.NameValue);
-                    command.Parameters.AddWithValue("@ProductName_Output", null).Direction = ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@NameIDDelete", productsNameDelete.ProductsNameID);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    name.NameID = Convert.ToInt32(command.Parameters["@ProductName_Output"].Value);
                 }
 
-                return name;
+                return productsNameDelete;
             }
 
         }
