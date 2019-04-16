@@ -19,7 +19,37 @@ namespace InventorySystem.DataLayerClasses
             connection = new SqlConnection(connectionString);
         }
 
-        public Price InsertPrice(Price price)
+        public IEnumerable<ProductPrice> GetPrice(int? ProductPriceID)
+        {
+            List<ProductPrice> productPrices = new List<ProductPrice>();
+
+            if (ProductPriceID == null)
+            {
+                command = new SqlCommand("SELECT * FROM [ViewProductPrices]", connection);
+            }
+            else
+            {
+                command = new SqlCommand("SELECT * FROM [ViewProductPrices] WHERE ProductID = '" + ProductPriceID + "'", connection);
+            }
+
+            connection.Open();
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    ProductPrice productPrice = new ProductPrice((int)Convert.ToInt64(reader["ProductID"]),
+                         (int)Convert.ToInt64(reader["ProductPrice"]));
+                    productPrices.Add(productPrice);
+                }
+            }
+
+            connection.Close();
+
+            return productPrices;
+        }
+
+        public ProductsPriceInsert InsertProductPrice(ProductsPriceInsert productsPriceInsert)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -27,23 +57,13 @@ namespace InventorySystem.DataLayerClasses
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductPrice", price.PriceValue);
-                    command.Parameters.AddWithValue("@ProductPrice_Output", price.PriceID).Direction = ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@ProductPrice", productsPriceInsert.ProductPrice);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    price.PriceID = Convert.ToInt32(command.Parameters["@ProductPrice_Output"].Value);
-
-                    /*
-                    // Check Error
-                    if (result < 0)
-                        Console.WriteLine("Error inserting data into Database!");
-                        //Throw error status code
-                        */
                 }
 
-                return price;
+                return productsPriceInsert;
             }
         }
 
@@ -83,36 +103,5 @@ namespace InventorySystem.DataLayerClasses
                 return productsPriceDelete;
             }
         }
-
-        public IEnumerable<Price> GetPrice(int? PriceID)
-        {
-            List<Price> prices = new List<Price>();
-
-            if (PriceID == null)
-            {
-                command = new SqlCommand("SELECT * FROM [ViewProductPrices]", connection);
-            }
-            else
-            {
-                command = new SqlCommand("SELECT * FROM [ViewProductPrices] WHERE ProductID = '" + PriceID + "'", connection);
-            }
-
-            connection.Open();
-
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    Price price = new Price((int)Convert.ToInt64(reader["ProductID"]),
-                         (int)Convert.ToInt64(reader["ProductPrice"]));
-                    prices.Add(price);
-                }
-            }
-
-            connection.Close();
-
-            return prices;
-        }
-
     }
 }

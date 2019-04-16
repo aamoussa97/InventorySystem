@@ -1,12 +1,12 @@
 ﻿using System;
 namespace InventorySystem.Models
 {
-    public class Price
+    public class ProductPrice
     {
         private int mPriceID;
         private int mPriceValue;
 
-        public Price(int mPriceID, int mPriceValue)
+        public ProductPrice(int mPriceID, int mPriceValue)
         {
             this.mPriceID = mPriceID;
             this.mPriceValue = mPriceValue;

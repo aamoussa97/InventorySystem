@@ -19,7 +19,37 @@ namespace InventorySystem.DataLayerClasses
             connection = new SqlConnection(connectionString);
         }
 
-        public Name InsertName(Name name)
+        public IEnumerable<ProductName> GetProductName(int? NameID)
+        {
+            List<ProductName> productNames = new List<ProductName>();
+
+            if (NameID == null)
+            {
+                command = new SqlCommand("SELECT * FROM [ViewProductNames]", connection);
+            }
+            else
+            {
+                command = new SqlCommand("SELECT * FROM [ViewProductNames] WHERE ProductID = '" + NameID + "'", connection);
+            }
+
+            connection.Open();
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    ProductName productName = new ProductName((int)Convert.ToInt64(reader["ProductID"]),
+                       (String)reader["ProductName"]);
+                    productNames.Add(productName);
+                }
+            }
+
+            connection.Close();
+
+            return productNames;
+        }
+
+        public ProductsNameInsert InsertProductName(ProductsNameInsert productsNameInsert)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -27,16 +57,13 @@ namespace InventorySystem.DataLayerClasses
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductName", name.NameValue);
-                    command.Parameters.AddWithValue("@ProductName_Output", null).Direction = ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@ProductName", productsNameInsert.ProductsName);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    name.NameID = Convert.ToInt32(command.Parameters["@ProductName_Output"].Value);
                 }
 
-                return name;
+                return productsNameInsert;
             }
 
         }
@@ -79,59 +106,6 @@ namespace InventorySystem.DataLayerClasses
                 return productsNameDelete;
             }
 
-        }
-
-        /*
-        public IEnumerable<Brand> GetBrandsByName(string BrandName)
-        {
-            List<Brand> brands = new List<Brand>();
-            String toSearch = String.Format("SELECT * FROM [ViewBrands] WHERE BrandName LIKE '%{0}%'", BrandName);
-            command = new SqlCommand(toSearch, connection);
-
-            connection.Open();
-
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    Brand brand = new Brand((int)Convert.ToInt64(reader["BrandID"]),
-                       (String)reader["BrandName"]);
-                    brands.Add(brand);
-                }
-            }
-
-            connection.Close();
-            return brands;
-        }*/
-
-        public IEnumerable<Name> GetProductName(int? NameID)
-        {
-            List<Name> names = new List<Name>();
-
-            if (NameID == null)
-            {
-                command = new SqlCommand("SELECT * FROM [ViewProductNames]", connection);
-            }
-            else
-            {
-                command = new SqlCommand("SELECT * FROM [ViewProductNames] WHERE ProductID = '" + NameID + "'", connection);
-            }
-
-            connection.Open();
-
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    Name name = new Name((int)Convert.ToInt64(reader["ProductID"]),
-                       (String)reader["ProductName"]);
-                    names.Add(name);
-                }
-            }
-
-            connection.Close();
-
-            return names;
         }
     }
 }

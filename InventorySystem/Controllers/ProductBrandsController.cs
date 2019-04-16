@@ -16,11 +16,11 @@ using Microsoft.AspNet.OData;
 namespace InventorySystem.Controllers
 {
     [Route("api/[controller]")]
-    public class BrandsController : Controller
+    public class ProductBrandsController : Controller
     {
         private readonly IConfiguration _configuration;
 
-        public BrandsController(IConfiguration configuration)
+        public ProductBrandsController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -28,31 +28,31 @@ namespace InventorySystem.Controllers
         // GET: api/brands?id
         [HttpGet("{id?}")]
         [EnableQuery()]
-        public IEnumerable<Brand> Get(int? id)
+        public IEnumerable<ProductBrand> Get(int? id)
         {
-            return new BrandsDataLayer(_configuration).GetBrand(id);
+            return new ProductBrandsDataLayer(_configuration).GetBrand(id);
         }
 
         // POST api/brand
         [HttpPost]
         //[Consumes("application/json")]
-        public IActionResult Post([FromBody] Brand brand)
+        public IActionResult Post([FromBody] ProductBrandInsert productBrandInsert)
         {
-            return Ok(new BrandsDataLayer(_configuration).InsertBrand(brand));
+            return Ok(new ProductBrandsDataLayer(_configuration).InsertProductBrand(productBrandInsert));
         }
 
         // PUT api/brand/1
         [HttpPut]
-        public IActionResult Put([FromBody] BrandsUpdate brandsUpdate)
+        public IActionResult Put([FromBody] ProductBrandsUpdate productBrandsUpdate)
         {
-            return Ok(new BrandsDataLayer(_configuration).UpdateBrand(brandsUpdate));
+            return Ok(new ProductBrandsDataLayer(_configuration).UpdateProductBrand(productBrandsUpdate));
         }
 
         // DELETE api/brand/1
         [HttpDelete]
-        public IActionResult Delete([FromBody] BrandsDelete brandsDelete)
+        public IActionResult Delete([FromBody] ProductBrandsDelete productBrandsDelete)
         {
-            return Delete(new BrandsDataLayer(_configuration).DeleteBrand(brandsDelete));
+            return Delete(new ProductBrandsDataLayer(_configuration).DeleteProductBrand(productBrandsDelete));
         }
     }
 }

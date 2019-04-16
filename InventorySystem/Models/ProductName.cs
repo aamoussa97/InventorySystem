@@ -1,12 +1,12 @@
 ﻿using System;
 namespace InventorySystem.Models
 {
-    public class Name
+    public class ProductName
     {
         private int mNameID;
         private string mNameValue;
 
-        public Name(int mNameID, string mNameValue)
+        public ProductName(int mNameID, string mNameValue)
         {
             this.mNameID = mNameID;
             this.mNameValue = mNameValue;

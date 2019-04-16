@@ -25,31 +25,31 @@ namespace InventorySystem.Controllers
         // GET: api/skus?id
         [HttpGet("{id?}")]
         [EnableQuery()]
-        public IEnumerable<SKU> Get(int? id)
+        public IEnumerable<ProductSku> Get(int? id)
         {
-            return new ProductSkusDataLayer(_configuration).GetProductSKU(id);
+            return new ProductSkusDataLayer(_configuration).GetProductSku(id);
         }
 
         // POST api/skus
         [HttpPost]
         //[Consumes("application/json")]
-        public IActionResult Post([FromBody] SKU sKU)
+        public IActionResult Post([FromBody] ProductsSkuInsert productsSkuInsert)
         {
-            return Ok(new ProductSkusDataLayer(_configuration).InsertProductSKU(sKU));
+            return Ok(new ProductSkusDataLayer(_configuration).InsertProductSKU(productsSkuInsert));
         }
 
         // PUT api/skus/1
         [HttpPut]
-        public IActionResult Put([FromBody] ProdcutsSkuUpdate prodcutsSkuUpdate)
+        public IActionResult Put([FromBody] ProductsSkuUpdate productsSkuUpdate)
         {
-            return Ok(new ProductSkusDataLayer(_configuration).UpdateProductSKU(prodcutsSkuUpdate));
+            return Ok(new ProductSkusDataLayer(_configuration).UpdateProductSku(productsSkuUpdate));
         }
 
         // DELETE api/skus/1
         [HttpDelete]
-        public IActionResult Delete([FromBody] ProdcutsSkuDelete prodcutsSkuDelete)
+        public IActionResult Delete([FromBody] ProductsSkuDelete productsSkuDelete)
         {
-            return Ok(new ProductSkusDataLayer(_configuration).DeleteProductSKU(prodcutsSkuDelete));
+            return Ok(new ProductSkusDataLayer(_configuration).DeleteProductSku(productsSkuDelete));
         }
     }
 }

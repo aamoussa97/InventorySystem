@@ -1,12 +1,12 @@
 ﻿using System;
 namespace InventorySystem.Models
 {
-    public class SKU
+    public class ProductSku
     {
         private int mSKUID;
         private long mSKUValue;
 
-        public SKU(int mSKUID, long mSKUValue)
+        public ProductSku(int mSKUID, long mSKUValue)
         {
             this.mSKUID = mSKUID;
             this.mSKUValue = mSKUValue;

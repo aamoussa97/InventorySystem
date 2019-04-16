@@ -25,31 +25,31 @@ namespace InventorySystem.Controllers
         // GET: api/variablecosts?id
         [HttpGet("{id?}")]
         [EnableQuery()]
-        public IEnumerable<VariableCost> Get(int? id)
+        public IEnumerable<ProductVariableCost> Get(int? id)
         {
-            return new ProductVariableCostsDataLayer(_configuration).GetVariableCost(id);
+            return new ProductVariableCostsDataLayer(_configuration).GetProductVariableCost(id);
         }
 
         // POST api/variablecosts
         [HttpPost]
         //[Consumes("application/json")]
-        public IActionResult Post([FromBody] VariableCost variableCost)
+        public IActionResult Post([FromBody] ProductsVariableCostInsert productsVariableCostInsert)
         {
-            return Ok(new ProductVariableCostsDataLayer(_configuration).InsertVariableCost(variableCost));
+            return Ok(new ProductVariableCostsDataLayer(_configuration).InsertProductVariableCost(productsVariableCostInsert));
         }
 
         // PUT api/variablecosts/1
         [HttpPut]
         public IActionResult Put([FromBody] ProductsVariableCostUpdate productsVariableCostUpdate)
         {
-            return Ok(new ProductVariableCostsDataLayer(_configuration).UpdateVariableCost(productsVariableCostUpdate));
+            return Ok(new ProductVariableCostsDataLayer(_configuration).UpdateProductVariableCost(productsVariableCostUpdate));
         }
 
         // DELETE api/variablecosts/1
         [HttpDelete]
         public IActionResult Delete([FromBody] ProductsVariableCostDelete productsVariableCostDelete)
         {
-            return Ok(new ProductVariableCostsDataLayer(_configuration).DeleteVariableCost(productsVariableCostDelete));
+            return Ok(new ProductVariableCostsDataLayer(_configuration).DeleteProductVariableCost(productsVariableCostDelete));
         }
     }
 }

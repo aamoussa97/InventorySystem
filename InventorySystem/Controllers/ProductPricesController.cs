@@ -25,7 +25,7 @@ namespace InventorySystem.Controllers
         // GET: api/prices?id
         [HttpGet("{id?}")]
         [EnableQuery()]
-        public IEnumerable<Price> Get(int? id)
+        public IEnumerable<ProductPrice> Get(int? id)
         {
             return new ProductPricesDataLayer(_configuration).GetPrice(id);
         }
@@ -33,9 +33,9 @@ namespace InventorySystem.Controllers
         // POST api/prices
         [HttpPost]
         //[Consumes("application/json")]
-        public IActionResult Post([FromBody] Price price)
+        public IActionResult Post([FromBody] ProductsPriceInsert productsPriceInsert)
         {
-            return Ok(new ProductPricesDataLayer(_configuration).InsertPrice(price));
+            return Ok(new ProductPricesDataLayer(_configuration).InsertProductPrice(productsPriceInsert));
         }
 
         // PUT api/prices/1

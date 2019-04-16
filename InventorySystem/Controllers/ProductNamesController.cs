@@ -28,7 +28,7 @@ namespace InventorySystem.Controllers
         // GET: api/brands?id
         [HttpGet("{id?}")]
         [EnableQuery()]
-        public IEnumerable<Name> Get(int? id)
+        public IEnumerable<ProductName> Get(int? id)
         {
             return new ProductNamesDataLayer(_configuration).GetProductName(id);
         }
@@ -36,23 +36,23 @@ namespace InventorySystem.Controllers
         // POST api/brands
         [HttpPost]
         //[Consumes("application/json")]
-        public IActionResult Post([FromBody] Name name)
+        public IActionResult Post([FromBody] ProductsNameInsert productsNameInsert)
         {
-            return Ok(new ProductNamesDataLayer(_configuration).InsertName(name));
+            return Ok(new ProductNamesDataLayer(_configuration).InsertProductName(productsNameInsert));
         }
 
         // PUT api/brands/1
         [HttpPut]
         public IActionResult Put([FromBody] ProductsNameUpdate productsNameUpdate)
         {
-            return Ok(new ProductNamesDataLayer(_configuration).UpdateName(productsNameUpdate));
+            return Ok(new ProductNamesDataLayer(_configuration).UpdateProductName(productsNameUpdate));
         }
 
         // DELETE api/brands/1
         [HttpDelete]
         public IActionResult Delete([FromBody] ProductsNameDelete productsNameDelete)
         {
-            return Ok(new ProductNamesDataLayer(_configuration).DeleteName(productsNameDelete));
+            return Ok(new ProductNamesDataLayer(_configuration).DeleteProductName(productsNameDelete));
         }
     }
 }

@@ -19,7 +19,37 @@ namespace InventorySystem.DataLayerClasses
             connection = new SqlConnection(connectionString);
         }
 
-        public VariableCost InsertVariableCost(VariableCost variableCost)
+        public IEnumerable<ProductVariableCost> GetProductVariableCost(int? ProductVariableCostID)
+        {
+            List<ProductVariableCost> productVariableCosts = new List<ProductVariableCost>();
+
+            if (ProductVariableCostID == null)
+            {
+                command = new SqlCommand("SELECT * FROM [ViewProductVariableCosts]", connection);
+            }
+            else
+            {
+                command = new SqlCommand("SELECT * FROM [ViewProductVariableCosts] WHERE ProductID = '" + ProductVariableCostID + "'", connection);
+            }
+
+            connection.Open();
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    ProductVariableCost productVariableCost = new ProductVariableCost((int)Convert.ToInt64(reader["ProductID"]),
+                         (int)Convert.ToInt64(reader["ProductVariableCost"]));
+                    productVariableCosts.Add(productVariableCost);
+                }
+            }
+
+            connection.Close();
+
+            return productVariableCosts;
+        }
+
+        public ProductsVariableCostInsert InsertProductVariableCost(ProductsVariableCostInsert productsVariableCostInsert)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -27,27 +57,17 @@ namespace InventorySystem.DataLayerClasses
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductVariableCost", variableCost.VariableCostValue);
-                    command.Parameters.AddWithValue("@ProductVariableCost_Output", variableCost.VariableCostID).Direction = ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@ProductVariableCost", productsVariableCostInsert.ProductsVariableCost);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    variableCost.VariableCostID = Convert.ToInt32(command.Parameters["@ProductVariableCost_Output"].Value);
-
-                    /*
-                    // Check Error
-                    if (result < 0)
-                        Console.WriteLine("Error inserting data into Database!");
-                        //Throw error status code
-                        */
                 }
 
-                return variableCost;
+                return productsVariableCostInsert;
             }
         }
 
-        public ProductsVariableCostUpdate UpdateVariableCost(ProductsVariableCostUpdate productsVariableCostUpdate)
+        public ProductsVariableCostUpdate UpdateProductVariableCost(ProductsVariableCostUpdate productsVariableCostUpdate)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -66,7 +86,7 @@ namespace InventorySystem.DataLayerClasses
             }
         }
 
-        public ProductsVariableCostDelete DeleteVariableCost(ProductsVariableCostDelete productsVariableCostDelete)
+        public ProductsVariableCostDelete DeleteProductVariableCost(ProductsVariableCostDelete productsVariableCostDelete)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -82,36 +102,6 @@ namespace InventorySystem.DataLayerClasses
 
                 return productsVariableCostDelete;
             }
-        }
-
-        public IEnumerable<VariableCost> GetVariableCost(int? VariableCostID)
-        {
-            List<VariableCost> variableCosts = new List<VariableCost>();
-
-            if (VariableCostID == null)
-            {
-                command = new SqlCommand("SELECT * FROM [ViewProductVariableCosts]", connection);
-            }
-            else
-            {
-                command = new SqlCommand("SELECT * FROM [ViewProductVariableCosts] WHERE ProductID = '" + VariableCostID + "'", connection);
-            }
-
-            connection.Open();
-
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    VariableCost variableCost = new VariableCost((int)Convert.ToInt64(reader["ProductID"]),
-                         (int)Convert.ToInt64(reader["ProductVariableCost"]));
-                    variableCosts.Add(variableCost);
-                }
-            }
-
-            connection.Close();
-
-            return variableCosts;
         }
     }
 }

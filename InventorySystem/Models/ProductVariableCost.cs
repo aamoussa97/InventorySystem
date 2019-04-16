@@ -1,12 +1,12 @@
 ﻿using System;
 namespace InventorySystem.Models
 {
-    public class VariableCost
+    public class ProductVariableCost
     {
         private int mVariableCostID;
         private int mVariableCostValue;
 
-        public VariableCost(int mVariableCostID, int mVariableCostValue)
+        public ProductVariableCost(int mVariableCostID, int mVariableCostValue)
         {
             this.mVariableCostID = mVariableCostID;
             this.mVariableCostValue = mVariableCostValue;

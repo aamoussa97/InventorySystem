@@ -22,6 +22,41 @@ namespace InventorySystem.DataLayerClasses
             _configuration = configuration;
         }
 
+        public IEnumerable<ProductsGet> GetProduct(int? ProductID)
+        {
+            List<ProductsGet> productsGet = new List<ProductsGet>();
+
+            if (ProductID == null)
+            {
+                command = new SqlCommand("SELECT * FROM [ViewProducts]", connection);
+            }
+            else
+            {
+                command = new SqlCommand("SELECT * FROM [ViewProducts] WHERE ProductID = '" + ProductID + "'", connection);
+            }
+
+            connection.Open();
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    ProductsGet productGet = new ProductsGet((int)Convert.ToInt64(reader["ProductID"]),
+                         (long)reader["ProductSKU"],
+                         (String)reader["ProductName"],
+                         (String)reader["BrandName"],
+                         (int)Convert.ToInt64(reader["MaterialID"]),
+                         (int)Convert.ToInt64(reader["ProductPrice"]),
+                         (int)Convert.ToInt64(reader["ProductVariableCost"]));
+                    productsGet.Add(productGet);
+                }
+            }
+
+            connection.Close();
+
+            return productsGet;
+        }
+
         public ProductsInsert InsertProduct(ProductsInsert productsInsert)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -39,13 +74,6 @@ namespace InventorySystem.DataLayerClasses
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    /*
-                    // Check Error
-                    if (result < 0)
-                        Console.WriteLine("Error inserting data into Database!");
-                        //Throw error status code
-                        */
                 }
 
                 return productsInsert;
@@ -120,41 +148,5 @@ namespace InventorySystem.DataLayerClasses
             connection.Close();
             return productsGET;
         }
-
-        public IEnumerable<ProductsGet> GetProduct(int? ProductID)
-        {
-            List<ProductsGet> productsGet = new List<ProductsGet>();
-
-            if (ProductID == null)
-            {
-                command = new SqlCommand("SELECT * FROM [ViewProducts]", connection);
-            }
-            else
-            {
-                command = new SqlCommand("SELECT * FROM [ViewProducts] WHERE ProductID = '" + ProductID + "'", connection);
-            }
-
-            connection.Open();
-
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    ProductsGet productGet = new ProductsGet((int)Convert.ToInt64(reader["ProductID"]),
-                         (long)reader["ProductSKU"],
-                         (String)reader["ProductName"],
-                         (String)reader["BrandName"],
-                         (int)Convert.ToInt64(reader["MaterialID"]),
-                         (int)Convert.ToInt64(reader["ProductPrice"]),
-                         (int)Convert.ToInt64(reader["ProductVariableCost"]));
-                    productsGet.Add(productGet);
-                }
-            }
-
-            connection.Close();
-
-            return productsGet;
-        }
-
     }
 }

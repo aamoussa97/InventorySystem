@@ -1,12 +1,12 @@
 ﻿using System;
 namespace InventorySystem.Models
 {
-    public class MaterialsOrder
+    public class ProductMaterialsOrder
     {
         private int mMaterialsOrderID;
         private int mMaterialID;
 
-        public MaterialsOrder(int mMaterialsOrderID, int mMaterialID)
+        public ProductMaterialsOrder(int mMaterialsOrderID, int mMaterialID)
         {
             this.mMaterialsOrderID = mMaterialsOrderID;
             this.mMaterialID = mMaterialID;

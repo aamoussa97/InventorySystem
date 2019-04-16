@@ -33,9 +33,9 @@ namespace InventorySystem.Controllers
         // POST api/material
         [HttpPost]
         //[Consumes("application/json")]
-        public IActionResult Post([FromBody] Material material)
+        public IActionResult Post([FromBody] MaterialsInsert materialsInsert)
         {
-            return Ok(new MaterialsDataLayer(_configuration).InsertMaterial(material));
+            return Ok(new MaterialsDataLayer(_configuration).InsertMaterial(materialsInsert));
         }
 
         // PUT api/material/1

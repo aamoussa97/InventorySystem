@@ -1,11 +1,11 @@
 ﻿using System;
 namespace InventorySystem.Models
 {
-    public class BrandsDelete
+    public class ProductBrandsDelete
     {
         private int mBrandID;
 
-        public BrandsDelete(int mBrandID)
+        public ProductBrandsDelete(int mBrandID)
         {
             this.mBrandID = mBrandID;
         }

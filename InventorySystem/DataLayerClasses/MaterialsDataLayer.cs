@@ -19,7 +19,38 @@ namespace InventorySystem.DataLayerClasses
             connection = new SqlConnection(connectionString);
         }
 
-        public Material InsertMaterial(Material material)
+        public IEnumerable<Material> GetMaterial(int? MaterialID)
+        {
+            List<Material> materials = new List<Material>();
+
+            if (MaterialID == null)
+            {
+                command = new SqlCommand("SELECT * FROM [ViewMaterials]", connection);
+            }
+            else
+            {
+                command = new SqlCommand("SELECT * FROM [ViewMaterials] WHERE MaterialID = '" + MaterialID + "'", connection);
+            }
+
+            connection.Open();
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Material material = new Material((int)Convert.ToInt64(reader["MaterialID"]),
+                         //(String)reader["MaterialSKU"],
+                         (String)reader["MaterialName"]);
+                    materials.Add(material);
+                }
+            }
+
+            connection.Close();
+
+            return materials;
+        }
+
+        public MaterialsInsert InsertMaterial(MaterialsInsert materialsInsert)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -27,23 +58,13 @@ namespace InventorySystem.DataLayerClasses
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@MaterialName", material.MaterialName);
-                    command.Parameters.AddWithValue("@MaterialID_Output", material.MaterialID).Direction = ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@MaterialName", materialsInsert.MaterialName);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    material.MaterialID = Convert.ToInt32(command.Parameters["@MaterialID_Output"].Value);
-
-                    /*
-                    // Check Error
-                    if (result < 0)
-                        Console.WriteLine("Error inserting data into Database!");
-                        //Throw error status code
-                        */
                 }
 
-                return material;
+                return materialsInsert;
             }
         }
 
@@ -84,35 +105,5 @@ namespace InventorySystem.DataLayerClasses
             }
         }
 
-        public IEnumerable<Material> GetMaterial(int? MaterialID)
-        {
-            List<Material> materials = new List<Material>();
-
-            if (MaterialID == null)
-            {
-                command = new SqlCommand("SELECT * FROM [ViewMaterials]", connection);
-            }
-            else
-            {
-                command = new SqlCommand("SELECT * FROM [ViewMaterials] WHERE MaterialID = '" + MaterialID + "'", connection);
-            }
-
-            connection.Open();
-
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    Material material = new Material((int)Convert.ToInt64(reader["MaterialID"]),
-                         //(String)reader["MaterialSKU"],
-                         (String)reader["MaterialName"]);
-                    materials.Add(material);
-                }
-            }
-
-            connection.Close();
-
-            return materials;
-        }
     }
 }

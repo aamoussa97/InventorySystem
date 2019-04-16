@@ -1,18 +1,18 @@
 ﻿using System;
 namespace InventorySystem.Models
 {
-    public class Brand
+    public class ProductBrandsUpdate
     {
         private int mBrandID;
-        private String mBrandName;
+        private string mBrandName;
 
-        public Brand(int mBrandID, String mBrandName)
+        public ProductBrandsUpdate(int mBrandID, string mBrandName)
         {
             this.mBrandID = mBrandID;
             this.mBrandName = mBrandName;
         }
 
         public int BrandID { get => mBrandID; set => mBrandID = value; }
-        public String BrandName { get => mBrandName; set => mBrandName = value; }
+        public string BrandName { get => mBrandName; set => mBrandName = value; }
     }
 }
