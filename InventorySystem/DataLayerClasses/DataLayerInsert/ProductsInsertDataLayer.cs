@@ -49,7 +49,7 @@ namespace InventorySystem.DataLayerClasses
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsNameProduct", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsNameProducts", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -71,7 +71,7 @@ namespace InventorySystem.DataLayerClasses
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsBrandProduct", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsBrandProductsV2", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -93,7 +93,7 @@ namespace InventorySystem.DataLayerClasses
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsSKUProduct", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsSKUProducts", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -115,7 +115,7 @@ namespace InventorySystem.DataLayerClasses
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertMaterialProduct", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertMaterialProducts", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -136,7 +136,7 @@ namespace InventorySystem.DataLayerClasses
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsMaterialsOrderProduct", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsMaterialsOrderProducts", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -158,7 +158,7 @@ namespace InventorySystem.DataLayerClasses
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsPriceProduct", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsPriceProducts", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -179,7 +179,7 @@ namespace InventorySystem.DataLayerClasses
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsVariableCostProduct", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsVariableCostProducts", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
