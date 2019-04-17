@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNet.OData.Formatter;
@@ -34,6 +35,21 @@ namespace InventorySystem
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOData();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)  
+                .AddJwtBearer(options =>  
+                {  
+                    options.TokenValidationParameters = new TokenValidationParameters  
+                    {  
+                        ValidateIssuer = true,  
+                        ValidateAudience = true,  
+                        ValidateLifetime = true,  
+                        ValidateIssuerSigningKey = true,  
+                        ValidIssuer = Configuration["Jwt:Issuer"],  
+                        ValidAudience = Configuration["Jwt:Issuer"],  
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))  
+                    };  
+                }); 
 
             //Fix for exception: InvalidOperationException: No media types found in ‘Microsoft.AspNet.OData.Formatter.ODataOutputFormatter.SupportedMediaTypes’. Add at least one media type to the list of supported media types.
             services.AddMvc(op =>
@@ -93,6 +109,10 @@ namespace InventorySystem
 
             //app.UseHttpsRedirection();
             app.UseCors(MyAllowSpecificOrigins);
+            
+            //Bearer token validator
+            app.UseAuthentication();
+            
             //DependencyInjection for OData.
             app.UseMvc(routeBuilder =>
             {
