@@ -115,7 +115,7 @@ namespace InventorySystem.DataLayerClasses
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertMaterialProducts", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertMaterialProductsV2", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
