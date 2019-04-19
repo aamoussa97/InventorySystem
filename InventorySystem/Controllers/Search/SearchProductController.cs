@@ -12,11 +12,11 @@ namespace InventorySystem.Controllers
 {
     [Route("api/search/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class SearchProductController : ControllerBase
     {
         readonly IConfiguration _configuration;
 
-        public ProductController(IConfiguration configuration)
+        public SearchProductController(IConfiguration configuration)
         {
             _configuration = configuration;
         }

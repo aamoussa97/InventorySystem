@@ -12,7 +12,6 @@ namespace InventorySystem.DataLayerClasses
         private readonly IConfiguration _configuration;
 
         SqlConnection connection;
-        SqlCommand command; 
         String connectionString;
 
         private int SKUID;

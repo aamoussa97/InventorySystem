@@ -15,12 +15,12 @@ using Microsoft.AspNet.OData;
 
 namespace InventorySystem.Controllers
 {
-    [Route("api/product/names")]//api/[controller]
-    public class ProductNamesController : Controller
+    [Route("api/product/[controller]")]
+    public class NamesController : Controller
     {
         private readonly IConfiguration _configuration;
 
-        public ProductNamesController(IConfiguration configuration)
+        public NamesController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
