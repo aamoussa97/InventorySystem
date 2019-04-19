@@ -12,7 +12,7 @@ using Microsoft.AspNet.OData;
 
 namespace InventorySystem.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/material")]
     public class MaterialsController : Controller
     {
         private readonly IConfiguration _configuration;

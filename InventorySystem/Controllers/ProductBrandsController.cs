@@ -15,7 +15,7 @@ using Microsoft.AspNet.OData;
 
 namespace InventorySystem.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/product/brands")]//api/[controller]
     public class ProductBrandsController : Controller
     {
         private readonly IConfiguration _configuration;
