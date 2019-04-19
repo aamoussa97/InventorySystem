@@ -6,6 +6,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace InventorySystem.Controllers
 {
@@ -23,34 +26,38 @@ namespace InventorySystem.Controllers
         {
             _configuration = configuration;
         }
-        
+
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Post([FromBody] User userData)
         {
-           //TODO: Connect to JAVA REST API
-           if(!ModelState.IsValid)
+            Console.WriteLine(userData);
+            //TODO: Connect to JAVA REST API
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
-           return Ok(GenerateJSONWebToken(userData));
+            var tokeOptions = new JwtSecurityToken(
+                issuer: "http://localhost:5001",
+                audience: "http://localhost:4200",
+                claims: new List<Claim>(),
+                expires: DateTime.Now.AddMinutes(5),
+                signingCredentials: signinCredentials
+            );
+
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+            return Ok(new { Token = tokenString });
         }
 
-        private string GenerateJSONWebToken(User user)
+        private string GenerateJSONWebToken()
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            
-            var token = new JwtSecurityToken(_configuration["Jwt:Issuer"],  
-                _configuration["Jwt:Issuer"],  
-                null,  
-                expires: DateTime.Now.AddMinutes(60),  
-                signingCredentials: credentials);
-  
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return "TODO";
         }
     }
-   
+
 
     public struct User
     {

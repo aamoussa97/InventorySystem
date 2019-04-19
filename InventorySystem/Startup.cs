@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNet.OData.Formatter;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Swashbuckle.AspNetCore.Swagger;
@@ -36,24 +39,32 @@ namespace InventorySystem
         {
             services.AddOData();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)  
-                .AddJwtBearer(options =>  
-                {  
-                    options.TokenValidationParameters = new TokenValidationParameters  
-                    {  
-                        ValidateIssuer = true,  
-                        ValidateAudience = true,  
-                        ValidateLifetime = true,  
-                        ValidateIssuerSigningKey = true,  
-                        ValidIssuer = Configuration["Jwt:Issuer"],  
-                        ValidAudience = Configuration["Jwt:Issuer"],  
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))  
-                    };  
-                }); 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+               .AddJwtBearer(options =>
+               {
+                   options.TokenValidationParameters = new TokenValidationParameters
+                   {
+                       ValidateIssuer = true,
+                       ValidateAudience = true,
+                       ValidateLifetime = true,
+                       ValidateIssuerSigningKey = true,
+
+                       ValidIssuer = "http://localhost:5001",
+                       ValidAudience = "http://localhost:4200",
+                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"))
+                   };
+               });
+
+            IdentityModelEventSource.ShowPII = true;
 
             //Fix for exception: InvalidOperationException: No media types found in ‘Microsoft.AspNet.OData.Formatter.ODataOutputFormatter.SupportedMediaTypes’. Add at least one media type to the list of supported media types.
             services.AddMvc(op =>
             {
+                var policy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+                op.Filters.Add(new AuthorizeFilter(policy));
+
                 foreach (var formatter in op.OutputFormatters
                 .OfType<ODataOutputFormatter>()
                 .Where(it => !it.SupportedMediaTypes.Any()))
@@ -80,8 +91,7 @@ namespace InventorySystem
                 {
                     builder.AllowAnyOrigin()
                     .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials();
+                    .AllowAnyHeader();
                 });
             });
         }
