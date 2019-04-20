@@ -104,7 +104,7 @@ namespace InventorySystem.DataLayerClasses
             }
         }
 
-        public ProductsDelete DeleteProduct(ProductsDelete productsDelete)
+        public int DeleteProduct(int productsDeleteID)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -112,13 +112,13 @@ namespace InventorySystem.DataLayerClasses
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductIDDelete", productsDelete.ProductID);
+                    command.Parameters.AddWithValue("@ProductIDDelete", productsDeleteID);
 
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
 
-                return productsDelete;
+                return productsDeleteID;
             }
         }
 

@@ -49,10 +49,10 @@ namespace InventorySystem.Controllers
         }
 
         // DELETE api/products/1
-        [HttpDelete]
-        public IActionResult Delete([FromBody] ProductsDelete productsDelete)
+        [HttpDelete("{id?}")]//[HttpDelete]
+        public IActionResult Delete(int id)//([FromBody] ProductsDelete productsDelete)
         {
-            return Ok(new ProductsDataLayer(_configuration).DeleteProduct(productsDelete));
+            return Ok(new ProductsDataLayer(_configuration).DeleteProduct(id));
         }
     }
 }
