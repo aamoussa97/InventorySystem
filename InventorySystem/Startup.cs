@@ -63,7 +63,7 @@ namespace InventorySystem
                 var policy = new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
                 .Build();
-               // op.Filters.Add(new AuthorizeFilter(policy));
+               //op.Filters.Add(new AuthorizeFilter(policy));
 
                 foreach (var formatter in op.OutputFormatters
                 .OfType<ODataOutputFormatter>()

@@ -1,5 +1,4 @@
 using System;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
@@ -9,6 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace InventorySystem.Controllers
 {
@@ -29,14 +30,17 @@ namespace InventorySystem.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Post([FromBody] User userData)
+        public async Task<IActionResult> PostAsync([FromBody] User userData)
         {
-            Console.WriteLine(userData);
-            //TODO: Connect to JAVA REST API
-            if (!ModelState.IsValid)
+            int ResponseStatusCode;
+
+            ResponseStatusCode = await UserAuthHTTPRequestAsync(userData);
+
+            if (ResponseStatusCode == 401)
             {
                 return BadRequest(ModelState);
             }
+
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
@@ -56,8 +60,20 @@ namespace InventorySystem.Controllers
         {
             return "TODO";
         }
-    }
 
+        public async Task<int> UserAuthHTTPRequestAsync(User user)
+        {
+            int ResponseStatusCode;
+            string url = @"http://localhost:8080/auth/authenticate"; //REST java auth server
+
+            HttpClient client = new HttpClient();
+            var response = await client.PostAsJsonAsync(url, user);
+            ResponseStatusCode = (int)response.StatusCode;
+
+            return ResponseStatusCode;
+        }
+
+    }
 
     public struct User
     {
