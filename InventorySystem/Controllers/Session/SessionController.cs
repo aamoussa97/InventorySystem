@@ -32,22 +32,22 @@ namespace InventorySystem.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> PostAsync([FromBody] User userData)
         {
-            int ResponseStatusCode;
-
-            ResponseStatusCode = await UserAuthHTTPRequestAsync(userData);
-
-            if (ResponseStatusCode == 401)
-            {
-                return BadRequest(ModelState);
-            }
+//            int ResponseStatusCode;
+//
+//            ResponseStatusCode = await UserAuthHTTPRequestAsync(userData);
+//
+//            if (ResponseStatusCode == 401)
+//            {
+//                return BadRequest(ModelState);
+//            }
 
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
             var tokeOptions = new JwtSecurityToken(
-                issuer: "http://localhost:5001",
-                audience: "http://localhost:4200",
-                claims: new List<Claim>(),
+                "http://localhost:5001",
+                "http://localhost:4200",
+                new List<Claim>(),
                 expires: DateTime.Now.AddMinutes(5),
                 signingCredentials: signinCredentials
             );
@@ -61,14 +61,13 @@ namespace InventorySystem.Controllers
             return "TODO";
         }
 
-        public async Task<int> UserAuthHTTPRequestAsync(User user)
+        protected async Task<int> UserAuthHTTPRequestAsync(User user)
         {
-            int ResponseStatusCode;
             string url = @"http://localhost:8080/auth/authenticate"; //REST java auth server
 
             HttpClient client = new HttpClient();
             var response = await client.PostAsJsonAsync(url, user);
-            ResponseStatusCode = (int)response.StatusCode;
+            var ResponseStatusCode = (int)response.StatusCode;
 
             return ResponseStatusCode;
         }

@@ -83,7 +83,7 @@ namespace InventorySystem
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info {Title="Inventory System API", Version="V1"});
+                c.SwaggerDoc("v1", new Info {Title="Inventory System API", Version="V1"});
             });
             services.AddCors(options =>
             {
