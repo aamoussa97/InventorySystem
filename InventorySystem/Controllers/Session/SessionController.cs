@@ -63,7 +63,7 @@ namespace InventorySystem.Controllers
 
         protected async Task<int> UserAuthHTTPRequestAsync(User user)
         {
-            string url = @"http://localhost:8080/auth/authenticate"; //REST java auth server
+            string url = @"http://dist.saluton.dk:5119/auth/authenticate"; //http://localhost:8080/auth/authenticate"; //REST java auth server
 
             HttpClient client = new HttpClient();
             var response = await client.PostAsJsonAsync(url, user);
