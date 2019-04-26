@@ -3,16 +3,14 @@ namespace InventorySystem.Models
 {
     public class ProductSku
     {
-        private int mSKUID;
-        private long mSKUValue;
-
-        public ProductSku(int mSKUID, long mSKUValue)
+        public ProductSku(int mSkuid, long mSkuValue)
         {
-            this.mSKUID = mSKUID;
-            this.mSKUValue = mSKUValue;
+            SKUID = mSkuid;
+            SKUValue = mSkuValue;
         }
 
-        public int SKUID { get => mSKUID; set => mSKUID = value; }
-        public long SKUValue { get => mSKUValue; set => mSKUValue = value; }
+        public int SKUID { get; set; }
+
+        public long SKUValue { get; set; }
     }
 }

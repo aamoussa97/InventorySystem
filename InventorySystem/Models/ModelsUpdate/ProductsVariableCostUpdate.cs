@@ -1,18 +1,15 @@
-﻿using System;
-namespace InventorySystem.Models
+﻿namespace InventorySystem.Models
 {
     public class ProductsVariableCostUpdate
     {
-        private int mProductsVariableCostID;
-        private long mProductsVariableCost;
-
         public ProductsVariableCostUpdate(int mProductsVariableCostID, long mProductsVariableCost)
         {
-            this.mProductsVariableCostID = mProductsVariableCostID;
-            this.mProductsVariableCost = mProductsVariableCost;
+            ProductsVariableCostID = mProductsVariableCostID;
+            ProductsVariableCost = mProductsVariableCost;
         }
 
-        public int ProductsVariableCostID { get => mProductsVariableCostID; set => mProductsVariableCostID = value; }
-        public long ProductsVariableCost { get => mProductsVariableCost; set => mProductsVariableCost = value; }
+        public int ProductsVariableCostID { get; set; }
+
+        public long ProductsVariableCost { get; set; }
     }
 }

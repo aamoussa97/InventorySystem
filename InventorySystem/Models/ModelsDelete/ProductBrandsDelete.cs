@@ -3,13 +3,11 @@ namespace InventorySystem.Models
 {
     public class ProductBrandsDelete
     {
-        private int mBrandID;
-
         public ProductBrandsDelete(int mBrandID)
         {
-            this.mBrandID = mBrandID;
+            BrandID = mBrandID;
         }
 
-        public int BrandID { get => mBrandID; set => mBrandID = value; }
+        public int BrandID { get; set; }
     }
 }

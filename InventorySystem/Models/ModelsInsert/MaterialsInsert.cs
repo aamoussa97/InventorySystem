@@ -1,15 +1,12 @@
-﻿using System;
-namespace InventorySystem.Models
+﻿namespace InventorySystem.Models
 {
     public class MaterialsInsert
     {
-        private string mMaterialName;
-
         public MaterialsInsert(string mMaterialName)
         {
-            this.mMaterialName = mMaterialName;
+            MaterialName = mMaterialName;
         }
 
-        public string MaterialName { get => mMaterialName; set => mMaterialName = value; }
+        public string MaterialName { get; set; }
     }
 }

@@ -1,18 +1,15 @@
-﻿using System;
-namespace InventorySystem.Models
+﻿namespace InventorySystem.Models
 {
     public class ProductsPriceUpdate
     {
-        private int mProductPriceID;
-        private long mProductPrice;
-
         public ProductsPriceUpdate(int mProductPriceID, long mProductPrice)
         {
-            this.mProductPriceID = mProductPriceID;
-            this.mProductPrice = mProductPrice;
+            ProductPriceID = mProductPriceID;
+            ProductPrice = mProductPrice;
         }
 
-        public int ProductPriceID { get => mProductPriceID; set => mProductPriceID = value; }
-        public long ProductPrice { get => mProductPrice; set => mProductPrice = value; }
+        public int ProductPriceID { get; set; }
+
+        public long ProductPrice { get; set; }
     }
 }

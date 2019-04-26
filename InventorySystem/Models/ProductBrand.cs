@@ -1,18 +1,15 @@
 ﻿using System;
 namespace InventorySystem.Models
 {
-    public class ProductBrand
+    public struct ProductBrand
     {
-        private int mBrandID;
-        private String mBrandName;
-
         public ProductBrand(int mBrandID, String mBrandName)
         {
-            this.mBrandID = mBrandID;
-            this.mBrandName = mBrandName;
+            this.BrandID = mBrandID;
+            this.BrandName = mBrandName;
         }
 
-        public int BrandID { get => mBrandID; set => mBrandID = value; }
-        public String BrandName { get => mBrandName; set => mBrandName = value; }
+        public int BrandID { get; set; }
+        public String BrandName { get; set; }
     }
 }

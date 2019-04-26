@@ -3,13 +3,11 @@ namespace InventorySystem.Models
 {
     public class ProductsVariableCostInsert
     {
-        private long mProductsVariableCost;
-
         public ProductsVariableCostInsert(long mProductsVariableCost)
         {
-            this.mProductsVariableCost = mProductsVariableCost;
+            ProductsVariableCost = mProductsVariableCost;
         }
 
-        public long ProductsVariableCost { get => mProductsVariableCost; set => mProductsVariableCost = value; }
+        public long ProductsVariableCost { get; set; }
     }
 }

@@ -1,18 +1,15 @@
-﻿using System;
-namespace InventorySystem.Models
+﻿namespace InventorySystem.Models
 {
     public class ProductsSkuUpdate
     {
-        private int mProductSkuID;
-        private long mProductSku;
-
         public ProductsSkuUpdate(int mProductSkuID, long mProductSku)
         {
-            this.mProductSkuID = mProductSkuID;
-            this.mProductSku = mProductSku;
+            ProductSkuID = mProductSkuID;
+            ProductSku = mProductSku;
         }
 
-        public int ProductSkuID { get => mProductSkuID; set => mProductSkuID = value; }
-        public long ProductSku { get => mProductSku; set => mProductSku = value; }
+        public int ProductSkuID { get; set; }
+
+        public long ProductSku { get; set; }
     }
 }

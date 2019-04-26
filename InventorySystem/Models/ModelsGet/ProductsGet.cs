@@ -1,5 +1,4 @@
-﻿using System;
-namespace InventorySystem.Models
+﻿namespace InventorySystem.Models
 {
     public struct ProductsGet
     {
@@ -19,13 +18,13 @@ namespace InventorySystem.Models
                        int variablecost
                        )
         {
-            this.ProductID = id;
-            this.ProductSKU = sku;
-            this.ProductName = name;
-            this.ProductBrand = brandID;
-            this.ProductMaterialsOrderID = materialsID;
-            this.ProductPrice = price;
-            this.ProductVariableCost = variablecost;
+            ProductID = id;
+            ProductSKU = sku;
+            ProductName = name;
+            ProductBrand = brandID;
+            ProductMaterialsOrderID = materialsID;
+            ProductPrice = price;
+            ProductVariableCost = variablecost;
         }
     }
 }

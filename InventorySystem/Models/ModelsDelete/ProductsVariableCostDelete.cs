@@ -3,13 +3,11 @@ namespace InventorySystem.Models
 {
     public class ProductsVariableCostDelete
     {
-        private int mProductsVariableCostID;
-
         public ProductsVariableCostDelete(int mProductsVariableCostID)
         {
-            this.mProductsVariableCostID = mProductsVariableCostID;
+            ProductsVariableCostID = mProductsVariableCostID;
         }
 
-        public int ProductsVariableCostID { get => mProductsVariableCostID; set => mProductsVariableCostID = value; }
+        public int ProductsVariableCostID { get; set; }
     }
 }

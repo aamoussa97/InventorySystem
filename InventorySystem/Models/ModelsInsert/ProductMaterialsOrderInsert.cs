@@ -1,15 +1,12 @@
-﻿using System;
-namespace InventorySystem.Models
+﻿namespace InventorySystem.Models
 {
     public class ProductMaterialsOrderInsert
     {
-        private int mMaterialID;
-
         public ProductMaterialsOrderInsert(int mMaterialID)
         {
-            this.mMaterialID = mMaterialID;
+            MaterialID = mMaterialID;
         }
 
-        public int MaterialID { get => mMaterialID; set => mMaterialID = value; }
+        public int MaterialID { get; set; }
     }
 }

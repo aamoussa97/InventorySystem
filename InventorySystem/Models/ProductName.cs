@@ -1,18 +1,15 @@
-﻿using System;
-namespace InventorySystem.Models
+﻿namespace InventorySystem.Models
 {
     public class ProductName
     {
-        private int mNameID;
-        private string mNameValue;
-
         public ProductName(int mNameID, string mNameValue)
         {
-            this.mNameID = mNameID;
-            this.mNameValue = mNameValue;
+            NameID = mNameID;
+            NameValue = mNameValue;
         }
 
-        public int NameID { get => mNameID; set => mNameID = value; }
-        public string NameValue { get => mNameValue; set => mNameValue = value; }
+        public int NameID { get; set; }
+
+        public string NameValue { get; set; }
     }
 }

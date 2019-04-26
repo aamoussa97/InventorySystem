@@ -3,13 +3,11 @@ namespace InventorySystem.Models
 {
     public class ProductMaterialsOrderDelete
     {
-        private int mMaterialsOrderID;
-
         public ProductMaterialsOrderDelete(int mMaterialsOrderID)
         {
-            this.mMaterialsOrderID = mMaterialsOrderID;
+            MaterialsOrderID = mMaterialsOrderID;
         }
 
-        public int MaterialsOrderID { get => mMaterialsOrderID; set => mMaterialsOrderID = value; }
+        public int MaterialsOrderID { get; set; }
     }
 }
