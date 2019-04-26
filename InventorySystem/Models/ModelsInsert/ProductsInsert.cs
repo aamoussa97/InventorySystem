@@ -1,6 +1,6 @@
 ﻿namespace InventorySystem.Models
 {
-    public class ProductsInsert
+    public struct ProductsInsert
     {
         public ProductsInsert(int mProductSKUID, int mProductNameID, int mProductBrandID, int mProductMaterialsOrderID, int mProductPriceID, int mProductVariableCostID)
         {

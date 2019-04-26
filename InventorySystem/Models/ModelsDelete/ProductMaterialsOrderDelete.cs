@@ -1,7 +1,7 @@
 ﻿using System;
 namespace InventorySystem.Models
 {
-    public class ProductMaterialsOrderDelete
+    public struct ProductMaterialsOrderDelete
     {
         public ProductMaterialsOrderDelete(int mMaterialsOrderID)
         {

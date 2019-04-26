@@ -1,7 +1,7 @@
 ﻿using System;
 namespace InventorySystem.Models
 {
-    public class ProductsVariableCostDelete
+    public struct ProductsVariableCostDelete
     {
         public ProductsVariableCostDelete(int mProductsVariableCostID)
         {

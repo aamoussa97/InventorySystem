@@ -1,7 +1,7 @@
 ﻿using System;
 namespace InventorySystem.Models
 {
-    public class ProductsVariableCostInsert
+    public struct ProductsVariableCostInsert
     {
         public ProductsVariableCostInsert(long mProductsVariableCost)
         {

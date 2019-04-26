@@ -1,7 +1,7 @@
 ﻿using System;
 namespace InventorySystem.Models
 {
-    public class ProductsPriceInsert
+    public struct ProductsPriceInsert
     {
         public ProductsPriceInsert(long mProductPrice)
         {

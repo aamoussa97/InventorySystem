@@ -1,6 +1,6 @@
 ﻿namespace InventorySystem.Models
 {
-    public class ProductsSkuInsert
+    public struct ProductsSkuInsert
     {
         public ProductsSkuInsert(long mProductSku)
         {

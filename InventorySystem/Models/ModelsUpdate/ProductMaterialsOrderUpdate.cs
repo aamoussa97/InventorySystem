@@ -1,6 +1,6 @@
 ﻿namespace InventorySystem.Models
 {
-    public class ProductMaterialsOrderUpdate
+    public struct ProductMaterialsOrderUpdate
     {
         public ProductMaterialsOrderUpdate(int mMaterialsOrderID, int mMaterialID)
         {

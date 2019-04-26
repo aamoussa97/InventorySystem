@@ -1,6 +1,6 @@
 ﻿namespace InventorySystem.Models
 {
-    public class ProductBrandInsert
+    public struct ProductBrandInsert
     {
         public ProductBrandInsert(string mBrandName)
         {

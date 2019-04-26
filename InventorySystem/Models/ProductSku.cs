@@ -1,7 +1,7 @@
 ﻿using System;
 namespace InventorySystem.Models
 {
-    public class ProductSku
+    public struct ProductSku
     {
         public ProductSku(int mSkuid, long mSkuValue)
         {

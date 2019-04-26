@@ -1,6 +1,6 @@
 ﻿namespace InventorySystem.Models
 {
-    public class MaterialsInsert
+    public struct MaterialsInsert
     {
         public MaterialsInsert(string mMaterialName)
         {

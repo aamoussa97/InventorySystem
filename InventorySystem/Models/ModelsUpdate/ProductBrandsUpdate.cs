@@ -1,6 +1,6 @@
 ﻿namespace InventorySystem.Models
 {
-    public class ProductBrandsUpdate
+    public struct ProductBrandsUpdate
     {
         public ProductBrandsUpdate(int mBrandID, string mBrandName)
         {

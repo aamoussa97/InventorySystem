@@ -1,7 +1,7 @@
 ﻿using System;
 namespace InventorySystem.Models
 {
-    public class BrandsGet
+    public struct BrandsGet
     {
         public BrandsGet(String mBrandName)
         {

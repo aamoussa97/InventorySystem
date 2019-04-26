@@ -1,6 +1,6 @@
 ﻿namespace InventorySystem.Models
 {
-    public class ProductsPriceUpdate
+    public struct ProductsPriceUpdate
     {
         public ProductsPriceUpdate(int mProductPriceID, long mProductPrice)
         {

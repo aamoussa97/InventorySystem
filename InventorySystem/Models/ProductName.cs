@@ -1,6 +1,6 @@
 ﻿namespace InventorySystem.Models
 {
-    public class ProductName
+    public struct ProductName
     {
         public ProductName(int mNameID, string mNameValue)
         {

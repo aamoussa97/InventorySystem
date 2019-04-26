@@ -1,7 +1,7 @@
 ﻿using System;
 namespace InventorySystem.Models
 {
-    public class ProductsPriceDelete
+    public struct ProductsPriceDelete
     {
         public ProductsPriceDelete(int mProductPriceID)
         {

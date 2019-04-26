@@ -1,6 +1,6 @@
 ﻿namespace InventorySystem.Models
 {
-    public class MaterialsDelete
+    public struct MaterialsDelete
     {
         public MaterialsDelete(int mMaterialID)
         {
