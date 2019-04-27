@@ -9,13 +9,17 @@
         public int ProductMaterialsOrderID { get; set; }
         public int ProductPrice { get; set; }
         public int ProductVariableCost { get; set; }
+        public int ProductStartFactor { get; set; }
+        public int ProductGrowthFactor { get; set; }
         public ProductsGet(int id,
                        long sku,
                        string name,
                        string brandID,
                        int materialsID,
                        int price,
-                       int variablecost
+                       int variablecost,
+                       int productStartFactor,
+                       int productGrowthFactor
                        )
         {
             ProductID = id;
@@ -25,6 +29,8 @@
             ProductMaterialsOrderID = materialsID;
             ProductPrice = price;
             ProductVariableCost = variablecost;
+            ProductStartFactor = productStartFactor;
+            ProductGrowthFactor = productGrowthFactor;
         }
     }
 }
