@@ -21,6 +21,8 @@ namespace InventorySystem.DataLayerClasses
         private int MaterialID;
         private int PriceID;
         private int VariableCostID;
+        private int StartFactorID;
+        private int GrowthFactorID;
 
         public ProductsInsertDataLayer(IConfiguration configuration)
         {
@@ -38,8 +40,10 @@ namespace InventorySystem.DataLayerClasses
             //MaterialID = InsertMaterial(productsGet.);
             PriceID = InsertPrice(productsGet.ProductPrice);
             VariableCostID = InsertVariableCost(productsGet.ProductVariableCost);
+            StartFactorID = InsertStartFactor(productsGet.ProductStartFactor);
+            GrowthFactorID = InsertGrowthFactor(productsGet.ProductGrowthFactor);
 
-            ProductsInsert productsInsert = new ProductsInsert(SKUID, NameID, BrandID, MaterialsOrderID, PriceID, VariableCostID);
+            ProductsInsert productsInsert = new ProductsInsert(SKUID, NameID, BrandID, MaterialsOrderID, PriceID, VariableCostID, StartFactorID, GrowthFactorID);
 
             return productsInsert;
         }
@@ -48,7 +52,7 @@ namespace InventorySystem.DataLayerClasses
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsNameProducts", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsNameProductsV2", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -192,6 +196,48 @@ namespace InventorySystem.DataLayerClasses
                 }
 
                 return VariableCostID;
+            }
+        }
+
+        public int InsertStartFactor(int startFactor)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsStartFactorProducts", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductStartFactor", startFactor);
+                    command.Parameters.AddWithValue("@ProductStartFactor_Output", GrowthFactorID).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    StartFactorID = Convert.ToInt32(command.Parameters["@ProductStartFactor_Output"].Value);
+                }
+
+                return StartFactorID;
+            }
+        }
+
+        public int InsertGrowthFactor(int growthFactor)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsGrowthFactorProducts", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductGrowthFactor", growthFactor);
+                    command.Parameters.AddWithValue("@ProductGrowthFactor_Output", GrowthFactorID).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    GrowthFactorID = Convert.ToInt32(command.Parameters["@ProductGrowthFactor_Output"].Value);
+                }
+
+                return GrowthFactorID;
             }
         }
 

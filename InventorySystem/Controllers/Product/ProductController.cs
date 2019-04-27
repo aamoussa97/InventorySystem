@@ -34,7 +34,7 @@ namespace InventorySystem.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] ProductsGet productsGet)
         {
-            ProductsInsert productsInsert = new ProductsInsert(0, 0, 0, 0, 0, 0);
+            ProductsInsert productsInsert = new ProductsInsert(0, 0, 0, 0, 0, 0, 0, 0);
 
             productsInsert = new ProductsInsertDataLayer(_configuration).InsertProduct(productsGet);
 
