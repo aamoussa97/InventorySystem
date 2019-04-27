@@ -19,9 +19,39 @@ namespace InventorySystem.DataLayerClasses
             connection = new SqlConnection(connectionString);
         }
 
-        public IEnumerable<ProductMaterialsOrder> GetProductMaterialsOrder(int? ProductMaterialsOrderID)
+        public IEnumerable<ProductMaterialsOrder> GetProductsFromMaterials(int? ProductMaterialsOrderID)
         {
-            List<ProductMaterialsOrder> productMaterialsOrders = new List<ProductMaterialsOrder>();
+            List<ProductMaterialsOrder> products = new List<ProductMaterialsOrder>();
+
+            if (ProductMaterialsOrderID == null)
+            {
+                command = new SqlCommand("SELECT * FROM [ViewProductMaterials]", connection);
+            }
+            else
+            {
+                command = new SqlCommand("SELECT * FROM [ViewProductMaterials] WHERE MaterialID = '" + ProductMaterialsOrderID + "'", connection);
+            }
+
+            connection.Open();
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    ProductMaterialsOrder productMaterialsOrder = new ProductMaterialsOrder((int)Convert.ToInt64(reader["ProductID"]),
+                       (int)Convert.ToInt64(reader["MaterialID"]));
+                    products.Add(productMaterialsOrder);
+                }
+            }
+
+            connection.Close();
+
+            return products;
+        }
+
+        public IEnumerable<ProductMaterialsOrder> GetMaterialsFromProducts(int? ProductMaterialsOrderID)
+        {
+            List<ProductMaterialsOrder> materials = new List<ProductMaterialsOrder>();
 
             if (ProductMaterialsOrderID == null)
             {
@@ -40,13 +70,13 @@ namespace InventorySystem.DataLayerClasses
                 {
                     ProductMaterialsOrder productMaterialsOrder = new ProductMaterialsOrder((int)Convert.ToInt64(reader["ProductID"]),
                        (int)Convert.ToInt64(reader["MaterialID"]));
-                    productMaterialsOrders.Add(productMaterialsOrder);
+                    materials.Add(productMaterialsOrder);
                 }
             }
 
             connection.Close();
 
-            return productMaterialsOrders;
+            return materials;
         }
 
         public ProductMaterialsOrderInsert InsertMaterialsOrder(ProductMaterialsOrderInsert productMaterialsOrderInsert)
