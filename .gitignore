@@ -358,3 +358,7 @@ InventorySystem/\.DS_Store
 
 #Mac DS_Store file
 .DS_Store
+InventorySystem/bin/Debug/netcoreapp2.2/InventorySystem.deps.json
+InventorySystem/bin/Debug/netcoreapp2.2/InventorySystem.dll
+InventorySystem/bin/Debug/netcoreapp2.2/InventorySystem.pdb
+InventorySystem/bin/Debug/netcoreapp2.2/InventorySystem.runtimeconfig.dev.json

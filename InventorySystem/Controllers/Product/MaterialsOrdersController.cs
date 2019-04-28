@@ -30,7 +30,7 @@ namespace InventorySystem.Controllers
         [EnableQuery()]
         public IEnumerable<ProductMaterialsOrder> Get(int? id)
         {
-            return new ProductMaterialsOrderDataLayer(_configuration).GetProductMaterialsOrder(id);
+            return new ProductMaterialsOrderDataLayer(_configuration).GetMaterialsFromProducts(id);
         }
 
         // POST api/brands
