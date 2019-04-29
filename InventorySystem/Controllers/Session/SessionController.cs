@@ -32,14 +32,14 @@ namespace InventorySystem.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> PostAsync([FromBody] User userData)
         {
-//            int ResponseStatusCode;
-//
-//            ResponseStatusCode = await UserAuthHTTPRequestAsync(userData);
-//
-//            if (ResponseStatusCode == 401)
-//            {
-//                return BadRequest(ModelState);
-//            }
+            int ResponseStatusCode;
+
+            ResponseStatusCode = await UserAuthHTTPRequestAsync(userData);
+
+            if (ResponseStatusCode == 401)
+            {
+                return BadRequest(ModelState);
+            }
 
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
