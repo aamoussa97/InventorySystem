@@ -41,6 +41,11 @@ namespace InventorySystem.Controllers
                 return BadRequest(ModelState);
             }
 
+            return Ok(GenerateJSONWebToken());
+        }
+
+        private object GenerateJSONWebToken()
+        {
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
@@ -53,12 +58,7 @@ namespace InventorySystem.Controllers
             );
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-            return Ok(new { Token = tokenString });
-        }
-
-        private string GenerateJSONWebToken()
-        {
-            return "TODO";
+            return new {Token = tokenString};
         }
 
         protected async Task<int> UserAuthHTTPRequestAsync(User user)
