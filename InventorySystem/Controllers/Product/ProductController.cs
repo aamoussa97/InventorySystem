@@ -32,13 +32,17 @@ namespace InventorySystem.Controllers
 
         // POST api/products/1
         [HttpPost]
-        public IActionResult Post([FromBody] ProductsGet productsGet)
+        public IActionResult Post([FromBody] ProductsInsertComplex productsInsertComplex)
         {
-            ProductsInsert productsInsert = new ProductsInsert(0, 0, 0, 0, 0, 0, 0, 0);
+            ProductsInsert productsInsert = new ProductsInsert(0, 0, 0, 0, 0, 0, 0);
 
-            productsInsert = new ProductsInsertDataLayer(_configuration).InsertProduct(productsGet);
+            productsInsert = new ProductsInsertDataLayer(_configuration).InsertProduct(productsInsertComplex);
 
-            return Ok(new ProductsDataLayer(_configuration).InsertProduct(productsInsert));
+            int ProductID = new ProductsDataLayer(_configuration).InsertProduct(productsInsert);
+
+            new ProductsInsertDataLayer(_configuration).InsertProductMaterial(ProductID, productsInsertComplex);
+
+            return Ok();
         }
 
         // PUT api/products/1

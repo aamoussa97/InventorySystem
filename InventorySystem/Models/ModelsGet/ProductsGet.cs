@@ -6,7 +6,6 @@
         public long ProductSKU { get; set; }
         public string ProductName { get; set; }
         public string ProductBrand { get; set; }
-        public int ProductMaterialsOrderID { get; set; }
         public int ProductPrice { get; set; }
         public int ProductVariableCost { get; set; }
         public int ProductStartFactor { get; set; }
@@ -15,7 +14,6 @@
                        long sku,
                        string name,
                        string brandID,
-                       int materialsID,
                        int price,
                        int variablecost,
                        int productStartFactor,
@@ -26,7 +24,6 @@
             ProductSKU = sku;
             ProductName = name;
             ProductBrand = brandID;
-            ProductMaterialsOrderID = materialsID;
             ProductPrice = price;
             ProductVariableCost = variablecost;
             ProductStartFactor = productStartFactor;

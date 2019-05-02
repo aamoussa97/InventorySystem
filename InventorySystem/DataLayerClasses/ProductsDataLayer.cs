@@ -45,7 +45,6 @@ namespace InventorySystem.DataLayerClasses
                          (long)reader["ProductSKU"],
                          (String)reader["ProductName"],
                          (String)reader["BrandName"],
-                         (int)Convert.ToInt64(reader["MaterialID"]),
                          (int)Convert.ToInt64(reader["ProductPrice"]),
                          (int)Convert.ToInt64(reader["ProductVariableCost"]),
                          (int)Convert.ToInt64(reader["ProductStartFactor"]),
@@ -59,28 +58,32 @@ namespace InventorySystem.DataLayerClasses
             return productsGet;
         }
 
-        public ProductsInsert InsertProduct(ProductsInsert productsInsert)
+        public int InsertProduct(ProductsInsert productsInsert)
         {
+            int ProductIDFromInsert = 0;
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProducts", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsV2", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.AddWithValue("@ProductSKUID", productsInsert.ProductSKUID);
                     command.Parameters.AddWithValue("@ProductNameID", productsInsert.ProductNameID);
                     command.Parameters.AddWithValue("@ProductBrandID", productsInsert.ProductBrandID);
-                    command.Parameters.AddWithValue("@ProductMaterialsOrderID", productsInsert.ProductMaterialsOrderID);
                     command.Parameters.AddWithValue("@ProductPriceID", productsInsert.ProductPriceID);
                     command.Parameters.AddWithValue("@ProductVariableCostID", productsInsert.ProductVariableCostID);
                     command.Parameters.AddWithValue("@ProductStartFactorID", productsInsert.ProductStartFactorID);
                     command.Parameters.AddWithValue("@ProductGrowthFactorID", productsInsert.ProductGrowthFactorID);
+                    command.Parameters.AddWithValue("@ProductID_Output", ProductIDFromInsert).Direction = ParameterDirection.Output;
 
                     connection.Open();
                     command.ExecuteNonQuery();
+
+                    ProductIDFromInsert = Convert.ToInt32(command.Parameters["@ProductID_Output"].Value);
                 }
 
-                return productsInsert;
+                return ProductIDFromInsert;
             }
         }
 
@@ -142,7 +145,6 @@ namespace InventorySystem.DataLayerClasses
                          (long)reader["ProductSKU"],
                          (String)reader["ProductName"],
                          (String)reader["BrandName"],
-                         (int)Convert.ToInt64(reader["MaterialID"]),
                          (int)Convert.ToInt64(reader["ProductPrice"]),
                          (int)Convert.ToInt64(reader["ProductVariableCost"]),
                          (int)Convert.ToInt64(reader["ProductStartFactor"]),

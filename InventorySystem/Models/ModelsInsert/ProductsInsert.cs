@@ -2,12 +2,11 @@
 {
     public struct ProductsInsert
     {
-        public ProductsInsert(int mProductSKUID, int mProductNameID, int mProductBrandID, int mProductMaterialsOrderID, int mProductPriceID, int mProductVariableCostID, int mProductStartFactorID, int mProductGrowthFactorID)
+        public ProductsInsert(int mProductSKUID, int mProductNameID, int mProductBrandID, int mProductPriceID, int mProductVariableCostID, int mProductStartFactorID, int mProductGrowthFactorID)
         {
             ProductSKUID = mProductSKUID;
             ProductNameID = mProductNameID;
             ProductBrandID = mProductBrandID;
-            ProductMaterialsOrderID = mProductMaterialsOrderID;
             ProductPriceID = mProductPriceID;
             ProductVariableCostID = mProductVariableCostID;
             ProductStartFactorID = mProductStartFactorID;
@@ -20,9 +19,7 @@
         public int ProductNameID { get; set; }
 
         public int ProductBrandID { get; set; }
-
-        public int ProductMaterialsOrderID { get; set; }
-
+        
         public int ProductPriceID { get; set; }
 
         public int ProductVariableCostID { get; set; }

@@ -25,6 +25,7 @@ namespace InventorySystem.Controllers
             _configuration = configuration;
         }
 
+        /*
         // GET: api/brands?id
         [HttpGet("{id?}")]
         [EnableQuery()]

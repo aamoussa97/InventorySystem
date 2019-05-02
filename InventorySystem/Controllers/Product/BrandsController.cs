@@ -52,7 +52,7 @@ namespace InventorySystem.Controllers
         [HttpDelete]
         public IActionResult Delete([FromBody] ProductBrandsDelete productBrandsDelete)
         {
-            return Delete(new ProductBrandsDataLayer(_configuration).DeleteProductBrand(productBrandsDelete));
+            return Ok(new ProductBrandsDataLayer(_configuration).DeleteProductBrand(productBrandsDelete));
         }
     }
 }

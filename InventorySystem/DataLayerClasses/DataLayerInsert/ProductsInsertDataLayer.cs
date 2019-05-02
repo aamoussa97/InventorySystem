@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using InventorySystem.Models;
+using Newtonsoft.Json;
 
 namespace InventorySystem.DataLayerClasses
 {
@@ -24,6 +25,8 @@ namespace InventorySystem.DataLayerClasses
         private int StartFactorID;
         private int GrowthFactorID;
 
+        public static int ProductIDFromInsert;
+
         public ProductsInsertDataLayer(IConfiguration configuration)
         {
             connectionString = configuration.GetConnectionString("localDB");
@@ -31,19 +34,28 @@ namespace InventorySystem.DataLayerClasses
             _configuration = configuration;
         }
 
-        public ProductsInsert InsertProduct(ProductsGet productsGet)
+        /*
+        public ProductsInsert InsertProduct(ProductsInsertComplex productsInsertComplex)
         {
-            SKUID = InsertSKU(productsGet.ProductSKU);
-            NameID = InsertName(productsGet.ProductName);
-            BrandID = InsertBrand(productsGet.ProductBrand);
-            MaterialsOrderID = InsertMaterialsOrder(productsGet.ProductMaterialsOrderID);
-            //MaterialID = InsertMaterial(productsGet.);
-            PriceID = InsertPrice(productsGet.ProductPrice);
-            VariableCostID = InsertVariableCost(productsGet.ProductVariableCost);
-            StartFactorID = InsertStartFactor(productsGet.ProductStartFactor);
-            GrowthFactorID = InsertGrowthFactor(productsGet.ProductGrowthFactor);
+            ProductsInsert productsInsert = new ProductsInsert();
 
-            ProductsInsert productsInsert = new ProductsInsert(SKUID, NameID, BrandID, MaterialsOrderID, PriceID, VariableCostID, StartFactorID, GrowthFactorID);
+            productsInsert = InsertProductToID(productsInsertComplex);
+
+          
+            return productsInsert;
+        }*/
+
+        public ProductsInsert InsertProduct(ProductsInsertComplex productsInsertComplex)
+        {
+            SKUID = InsertSKU(productsInsertComplex.ProductSKU);
+            NameID = InsertName(productsInsertComplex.ProductName);
+            BrandID = InsertBrand(productsInsertComplex.ProductBrand);
+            PriceID = InsertPrice(productsInsertComplex.ProductPrice);
+            VariableCostID = InsertVariableCost(productsInsertComplex.ProductVariableCost);
+            StartFactorID = InsertStartFactor(productsInsertComplex.ProductStartFactor);
+            GrowthFactorID = InsertGrowthFactor(productsInsertComplex.ProductGrowthFactor);
+
+            ProductsInsert productsInsert = new ProductsInsert(SKUID, NameID, BrandID, PriceID, VariableCostID, StartFactorID, GrowthFactorID);
 
             return productsInsert;
         }
@@ -114,47 +126,34 @@ namespace InventorySystem.DataLayerClasses
 
         }
 
-        public int InsertMaterial(string materialName)
+        public void InsertProductMaterial(int productID, ProductsInsertComplex productsInsertComplex)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            ProductsInsert productsInsert = new ProductsInsert();
+            
+            foreach (ProductsInsertComplex.ProductsInsertMaterial productsInsertMaterial in productsInsertComplex.productsInsertMaterials)
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertMaterialProductsV2", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    command.Parameters.AddWithValue("@MaterialName", materialName);
-                    command.Parameters.AddWithValue("@MaterialID_Output", MaterialID).Direction = ParameterDirection.Output;
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-
-                    MaterialID = Convert.ToInt32(command.Parameters["@MaterialID_Output"].Value);
-                }
-
-                return MaterialID;
+                InsertMaterial(productID, productsInsertMaterial.MaterialName);
+                Console.WriteLine(productID + productsInsertMaterial.MaterialName);
             }
         }
 
-        public int InsertMaterialsOrder(int MaterialID)
+        public void InsertMaterial(int productID, string materialName)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsMaterialsOrderProducts", connection))
                 {
-                    command.CommandType = CommandType.StoredProcedure;
+                    using (SqlCommand command = new SqlCommand("ProcedureInsertProductsMaterialsV3", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductMaterialOrderID", MaterialID);
-                    command.Parameters.AddWithValue("@ProductMaterialOrderID_Output", MaterialsOrderID).Direction = ParameterDirection.Output;
+                        command.Parameters.AddWithValue("@ProductID_Input", productID);
+                        command.Parameters.AddWithValue("@MaterialName_Input", materialName);
 
-                    connection.Open();
-                    command.ExecuteNonQuery();
-
-                    MaterialsOrderID = Convert.ToInt32(command.Parameters["@ProductMaterialOrderID_Output"].Value);
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                    }
                 }
-
-                return MaterialsOrderID;
             }
-
         }
 
         public int InsertPrice(int priceValue)
