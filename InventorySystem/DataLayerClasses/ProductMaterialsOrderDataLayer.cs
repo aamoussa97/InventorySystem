@@ -49,17 +49,17 @@ namespace InventorySystem.DataLayerClasses
             return products;
         }
 
-        public IEnumerable<ProductMaterialsOrder> GetMaterialsFromProducts(int? ProductMaterialsOrderID)
+        public IEnumerable<ProductMaterialsOrderName> GetMaterialsFromProducts(int? ProductMaterialsOrderID)
         {
-            List<ProductMaterialsOrder> materials = new List<ProductMaterialsOrder>();
+            List<ProductMaterialsOrderName> materials = new List<ProductMaterialsOrderName>();
 
             if (ProductMaterialsOrderID == null)
             {
-                command = new SqlCommand("SELECT * FROM [ViewProductMaterials]", connection);
+                command = new SqlCommand("SELECT * FROM [ViewProductMaterialsV2]", connection);
             }
             else
             {
-                command = new SqlCommand("SELECT * FROM [ViewProductMaterials] WHERE ProductID = '" + ProductMaterialsOrderID + "'", connection);
+                command = new SqlCommand("SELECT * FROM [ViewProductMaterialsV2] WHERE ProductID = '" + ProductMaterialsOrderID + "'", connection);
             }
 
             connection.Open();
@@ -68,9 +68,8 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    ProductMaterialsOrder productMaterialsOrder = new ProductMaterialsOrder((int)Convert.ToInt64(reader["ProductID"]),
-                       (int)Convert.ToInt64(reader["MaterialID"]));
-                    materials.Add(productMaterialsOrder);
+                    ProductMaterialsOrderName productMaterialsOrderName = new ProductMaterialsOrderName((String)reader["MaterialName"]);
+                    materials.Add(productMaterialsOrderName);
                 }
             }
 

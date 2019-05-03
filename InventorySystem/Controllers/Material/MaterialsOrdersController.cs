@@ -15,7 +15,7 @@ using Microsoft.AspNet.OData;
 
 namespace InventorySystem.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/material/[controller]")]
     public class MaterialsOrdersController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -28,7 +28,7 @@ namespace InventorySystem.Controllers
         // GET: api/brands?id
         [HttpGet("{id?}")]
         [EnableQuery()]
-        public IEnumerable<ProductMaterialsOrder> Get(int? id)
+        public IEnumerable<ProductMaterialsOrderName> Get(int? id)
         {
             return new ProductMaterialsOrderDataLayer(_configuration).GetMaterialsFromProducts(id);
         }

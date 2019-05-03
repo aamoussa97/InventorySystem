@@ -15,4 +15,16 @@ namespace InventorySystem.Models
         public int MaterialsOrderID { get => mMaterialsOrderID; set => mMaterialsOrderID = value; }
         public int MaterialID { get => mMaterialID; set => mMaterialID = value; }
     }
+
+    public struct ProductMaterialsOrderName
+    {
+        private string mMaterialName;
+
+        public ProductMaterialsOrderName(string mMaterialName)
+        {
+            this.mMaterialName = mMaterialName;
+        }
+
+        public string MaterialName { get => mMaterialName; set => mMaterialName = value; }
+    }
 }
