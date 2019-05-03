@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace InventorySystem.Models
 {
     public struct ProductMaterialsOrder
@@ -12,8 +13,27 @@ namespace InventorySystem.Models
             this.mMaterialID = mMaterialID;
         }
 
-        public int MaterialsOrderID { get => mMaterialsOrderID; set => mMaterialsOrderID = value; }
-        public int MaterialID { get => mMaterialID; set => mMaterialID = value; }
+        public int MaterialsOrderID
+        {
+            get => mMaterialsOrderID;
+            set => mMaterialsOrderID = value;
+        }
+
+        public int MaterialID
+        {
+            get => mMaterialID;
+            set => mMaterialID = value;
+        }
+    }
+
+    public struct ProductMaterialsOrderInsert
+    {
+        public ProductMaterialsOrderInsert(int mMaterialID)
+        {
+            MaterialID = mMaterialID;
+        }
+
+        public int MaterialID { get; set; }
     }
 
     public struct ProductMaterialsOrderName
@@ -25,6 +45,33 @@ namespace InventorySystem.Models
             this.mMaterialName = mMaterialName;
         }
 
-        public string MaterialName { get => mMaterialName; set => mMaterialName = value; }
+        public string MaterialName
+        {
+            get => mMaterialName;
+            set => mMaterialName = value;
+        }
+    }
+
+    public struct ProductMaterialsOrderUpdate
+    {
+        public ProductMaterialsOrderUpdate(int mMaterialsOrderID, int mMaterialID)
+        {
+            MaterialsOrderID = mMaterialsOrderID;
+            MaterialID = mMaterialID;
+        }
+
+        public int MaterialsOrderID { get; set; }
+
+        public int MaterialID { get; set; }
+    }
+
+    public struct ProductMaterialsOrderDelete
+    {
+        public ProductMaterialsOrderDelete(int mMaterialsOrderID)
+        {
+            MaterialsOrderID = mMaterialsOrderID;
+        }
+
+        public int MaterialsOrderID { get; set; }
     }
 }

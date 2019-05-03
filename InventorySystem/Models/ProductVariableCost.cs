@@ -12,4 +12,37 @@
 
         public int VariableCostValue { get; set; }
     }
+    
+    public struct ProductsVariableCostInsert
+    {
+        public ProductsVariableCostInsert(long mProductsVariableCost)
+        {
+            ProductsVariableCost = mProductsVariableCost;
+        }
+
+        public long ProductsVariableCost { get; set; }
+    }
+    
+    public struct ProductsVariableCostUpdate
+    {
+        public ProductsVariableCostUpdate(int mProductsVariableCostID, long mProductsVariableCost)
+        {
+            ProductsVariableCostID = mProductsVariableCostID;
+            ProductsVariableCost = mProductsVariableCost;
+        }
+
+        public int ProductsVariableCostID { get; set; }
+
+        public long ProductsVariableCost { get; set; }
+    }
+    
+    public struct ProductsVariableCostDelete
+    {
+        public ProductsVariableCostDelete(int mProductsVariableCostID)
+        {
+            ProductsVariableCostID = mProductsVariableCostID;
+        }
+
+        public int ProductsVariableCostID { get; set; }
+    }
 }
