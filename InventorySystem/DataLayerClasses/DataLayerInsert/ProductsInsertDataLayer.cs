@@ -24,6 +24,7 @@ namespace InventorySystem.DataLayerClasses
         private int VariableCostID;
         private int StartFactorID;
         private int GrowthFactorID;
+        private int QuantityID;
 
         public static int ProductIDFromInsert;
 
@@ -54,8 +55,9 @@ namespace InventorySystem.DataLayerClasses
             VariableCostID = InsertVariableCost(productsInsertComplex.ProductVariableCost);
             StartFactorID = InsertStartFactor(productsInsertComplex.ProductStartFactor);
             GrowthFactorID = InsertGrowthFactor(productsInsertComplex.ProductGrowthFactor);
+            QuantityID = InsertQuantity(productsInsertComplex.ProductQuantity);
 
-            ProductsInsert productsInsert = new ProductsInsert(SKUID, NameID, BrandID, PriceID, VariableCostID, StartFactorID, GrowthFactorID);
+            ProductsInsert productsInsert = new ProductsInsert(SKUID, NameID, BrandID, PriceID, VariableCostID, StartFactorID, GrowthFactorID, QuantityID);
 
             return productsInsert;
         }
@@ -237,6 +239,27 @@ namespace InventorySystem.DataLayerClasses
                 }
 
                 return GrowthFactorID;
+            }
+        }
+        
+        public int InsertQuantity(int quantity)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsQuantitiesProducts", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@ProductQuantity_Input", quantity);
+                    command.Parameters.AddWithValue("@ProductID_Output", QuantityID).Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    QuantityID = Convert.ToInt32(command.Parameters["@ProductID_Output"].Value);
+                }
+
+                return QuantityID;
             }
         }
 

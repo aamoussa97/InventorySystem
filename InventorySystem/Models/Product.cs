@@ -32,7 +32,7 @@ namespace InventorySystem.Models
     
     public struct ProductsInsert
     {
-        public ProductsInsert(int mProductSKUID, int mProductNameID, int mProductBrandID, int mProductPriceID, int mProductVariableCostID, int mProductStartFactorID, int mProductGrowthFactorID)
+        public ProductsInsert(int mProductSKUID, int mProductNameID, int mProductBrandID, int mProductPriceID, int mProductVariableCostID, int mProductStartFactorID, int mProductGrowthFactorID, int mProductQuantityID)
         {
             ProductSKUID = mProductSKUID;
             ProductNameID = mProductNameID;
@@ -41,6 +41,7 @@ namespace InventorySystem.Models
             ProductVariableCostID = mProductVariableCostID;
             ProductStartFactorID = mProductStartFactorID;
             ProductGrowthFactorID = mProductGrowthFactorID;
+            ProductQuantityID = mProductQuantityID;
 
         }
 
@@ -57,6 +58,8 @@ namespace InventorySystem.Models
         public int ProductStartFactorID { get; set; }
 
         public int ProductGrowthFactorID { get; set; }
+        
+        public int ProductQuantityID { get; set; }
     }
     
     public struct ProductsUpdate
@@ -99,7 +102,7 @@ namespace InventorySystem.Models
     
     public struct ProductsInsertComplex
     {
-        public ProductsInsertComplex(long productSKU, string productName, string productBrand, int productPrice, int productVariableCost, int productStartFactor, int productGrowthFactor, List<ProductsInsertMaterial> productsInsertMaterials)
+        public ProductsInsertComplex(long productSKU, string productName, string productBrand, int productPrice, int productVariableCost, int productStartFactor, int productGrowthFactor, int productQuantity, List<ProductsInsertMaterial> productsInsertMaterials)
         {
             ProductSKU = productSKU;
             ProductName = productName;
@@ -108,6 +111,7 @@ namespace InventorySystem.Models
             ProductVariableCost = productVariableCost;
             ProductStartFactor = productStartFactor;
             ProductGrowthFactor = productGrowthFactor;
+            ProductQuantity = productQuantity;
             this.productsInsertMaterials = productsInsertMaterials;
         }
 
@@ -118,6 +122,7 @@ namespace InventorySystem.Models
         public int ProductVariableCost { get; set; }
         public int ProductStartFactor { get; set; }
         public int ProductGrowthFactor { get; set; }
+        public int ProductQuantity { get; set; }
         public List<ProductsInsertMaterial> productsInsertMaterials { get; set; }
 
         //ProductMaterialInsert
@@ -139,6 +144,8 @@ namespace InventorySystem.Models
         public int ProductVariableCost { get; set; }
         public int ProductStartFactor { get; set; }
         public int ProductGrowthFactor { get; set; }
+        
+        public int ProductQuantity { get; set; }
         public ProductsGet(int id,
             long sku,
             string name,
@@ -146,7 +153,8 @@ namespace InventorySystem.Models
             int price,
             int variablecost,
             int productStartFactor,
-            int productGrowthFactor
+            int productGrowthFactor,
+            int productQuantity
         )
         {
             ProductID = id;
@@ -157,6 +165,7 @@ namespace InventorySystem.Models
             ProductVariableCost = variablecost;
             ProductStartFactor = productStartFactor;
             ProductGrowthFactor = productGrowthFactor;
+            ProductQuantity = productQuantity;
         }
     }
 }
