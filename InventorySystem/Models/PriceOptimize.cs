@@ -9,25 +9,45 @@ using Microsoft.Extensions.Configuration;
 using InventorySystem.DataLayerClasses;
 using InventorySystem.Models;
 using Microsoft.AspNet.OData;
+using System.Data.SqlClient;
 
 namespace InventorySystem.Models
 {
     public class PriceOptimize
     {
-        
+        private readonly IConfiguration _configuration;
+        SqlConnection connection;
+        SqlCommand command;
+        String connectionString;
+
+        public PriceOptimize(IConfiguration configuration)
+        {
+            connectionString = _configuration.GetConnectionString("localDB");
+            connection = new SqlConnection(connectionString);
+            _configuration = configuration;
+        }
+         
         
 
-        /*public int OptimizePrice(int id)
+        public int OptimizePrice(int id)
         {
-            
-            //Product product = productsDataLayer.GetProduct(id);
-            //double vCost = VcostDataLayer.GetProductVariableCost(product.ProductVariableCostID);
-            double startFactor = 5000; //TODO Add datalayer class to get the products startfactor
-            double growthFactor = 0.5; //TODO Add datalayer class to get the products growthfactor
-            double marginalRevenue = growthFactor * 2;
-            double optimalAmount = startFactor / growthFactor - marginalRevenue / growthFactor;
-            double optimalPrice = startFactor - growthFactor * optimalAmount;
-            return optimalPrice;
-        }*/
+            List<ProductsGet> productsGets = new List<ProductsGet>();
+            IEnumerable<ProductsGet> enumProducts = new ProductsDataLayer(_configuration).GetProduct(id);
+            productsGets = enumProducts.ToList();
+            foreach (ProductsGet product in productsGets)
+            {
+
+
+
+                double vCost = product.ProductVariableCost;
+                double startFactor = product.ProductStartFactor;
+                double growthFactor = product.ProductGrowthFactor;
+                double marginalRevenue = startFactor - growthFactor * 2;
+                double optimalAmount = startFactor / growthFactor*2 - vCost / growthFactor*2;
+                double optimalPrice = startFactor - growthFactor * optimalAmount;
+                return (int)optimalPrice;
+            }
+            return 0;
+        }
     }
 }
