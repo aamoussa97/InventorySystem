@@ -35,8 +35,10 @@ namespace InventorySystem.Controllers
         public IActionResult Post([FromBody] ProductsInsertComplex productsInsertComplex)
         {
             ProductsInsert productsInsert = new ProductsInsert(0, 0, 0, 0, 0, 0, 0, 0);
-
+            PriceOptimize priceOptimize = new PriceOptimize();
+            productsInsertComplex.ProductPrice = priceOptimize.OptimizePrice(productsInsertComplex.ProductVariableCost, productsInsertComplex.ProductStartFactor, productsInsertComplex.ProductGrowthFactor);
             productsInsert = new ProductsInsertDataLayer(_configuration).InsertProduct(productsInsertComplex);
+            
 
             int ProductID = new ProductsDataLayer(_configuration).InsertProduct(productsInsert);
 
