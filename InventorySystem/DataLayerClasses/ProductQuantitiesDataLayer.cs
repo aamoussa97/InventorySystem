@@ -49,60 +49,61 @@ namespace InventorySystem.DataLayerClasses
             return productQuantites;
         }
 
-        public ProductBrandInsert InsertProductBrand(ProductBrandInsert productBrandInsert)
+        public ProductQuantitiesInsert InsertProductQuantitiy(ProductQuantitiesInsert productQuantitiesInsert)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsBrand", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsQuantities", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductBrandName", productBrandInsert.BrandName);
-
+                    command.Parameters.AddWithValue("@ProductID_Input", productQuantitiesInsert.ProductID);
+                    command.Parameters.AddWithValue("@ProductQuantity_Input", productQuantitiesInsert.QuantityValue);
+                    
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
 
-                return productBrandInsert;
+                return productQuantitiesInsert;
             }
 
         }
 
-        public ProductBrandsUpdate UpdateProductBrand(ProductBrandsUpdate productBrandsUpdate)
+        public ProductQuantitiesUpdate UpdateProductQuantitiy(ProductQuantitiesUpdate productQuantitiesUpdate)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureUpdateProductsBrand", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureUpdateProductsQuantity", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@BrandIDUpdate", productBrandsUpdate.BrandID);
-                    command.Parameters.AddWithValue("@BrandNameUpdate", productBrandsUpdate.BrandName);
+                    command.Parameters.AddWithValue("@ProductIDUpdate", productQuantitiesUpdate.ProductID);
+                    command.Parameters.AddWithValue("@QuantityUpdate", productQuantitiesUpdate.QuantityValue);
 
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
 
-                return productBrandsUpdate;
+                return productQuantitiesUpdate;
             }
 
         }
 
-        public ProductBrandsDelete DeleteProductBrand(ProductBrandsDelete productBrandsDelete)
+        public ProductQuantitiesDelete DeleteProductQuantitiy(ProductQuantitiesDelete productQuantitiesDelete)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureDeleteProductsBrand", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureDeleteProductsQuantity", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@BrandIDDelete", productBrandsDelete.BrandID);
+                    command.Parameters.AddWithValue("@ProductIDDelete", productQuantitiesDelete.ProductID);
 
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
 
-                return productBrandsDelete;
+                return productQuantitiesDelete;
             }
 
         }

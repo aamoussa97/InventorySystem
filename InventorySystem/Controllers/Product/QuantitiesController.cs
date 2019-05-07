@@ -36,23 +36,23 @@ namespace InventorySystem.Controllers
         // POST api/brand
         [HttpPost]
         //[Consumes("application/json")]
-        public IActionResult Post([FromBody] ProductBrandInsert productBrandInsert)
+        public IActionResult Post([FromBody] ProductQuantitiesInsert productQuantitiesInsert)
         {
-            return Ok(new ProductBrandsDataLayer(_configuration).InsertProductBrand(productBrandInsert));
+            return Ok(new ProductQuantitiesDataLayer(_configuration).InsertProductQuantitiy(productQuantitiesInsert));
         }
 
         // PUT api/brand/1
         [HttpPut]
-        public IActionResult Put([FromBody] ProductBrandsUpdate productBrandsUpdate)
+        public IActionResult Put([FromBody] ProductQuantitiesUpdate productQuantitiesUpdate)
         {
-            return Ok(new ProductBrandsDataLayer(_configuration).UpdateProductBrand(productBrandsUpdate));
+            return Ok(new ProductQuantitiesDataLayer(_configuration).UpdateProductQuantitiy(productQuantitiesUpdate));
         }
 
         // DELETE api/brand/1
         [HttpDelete]
-        public IActionResult Delete([FromBody] ProductBrandsDelete productBrandsDelete)
+        public IActionResult Delete([FromBody] ProductQuantitiesDelete productQuantitiesDelete)
         {
-            return Ok(new ProductBrandsDataLayer(_configuration).DeleteProductBrand(productBrandsDelete));
+            return Ok(new ProductQuantitiesDataLayer(_configuration).DeleteProductQuantitiy(productQuantitiesDelete));
         }
     }
 }
