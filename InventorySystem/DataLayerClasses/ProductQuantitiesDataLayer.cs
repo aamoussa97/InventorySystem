@@ -64,13 +64,6 @@ namespace InventorySystem.DataLayerClasses
                     command.ExecuteNonQuery();
                 }
                 
-                //At least one row exists
-                if (Convert.ToInt32(command.ExecuteScalar()) != 0) 
-                    //LikeButton.Enabled = false;
-                //No rows exists
-                else
-                    //LikeButton.Enabled = true;
-
                 return productQuantitiesInsert;
             }
 
