@@ -25,7 +25,7 @@ namespace InventorySystem.DataLayerClasses
         public IEnumerable<ProductsGet> GetProduct(int? ProductID)
         {
             List<ProductsGet> productsGet = new List<ProductsGet>();
-
+            
             if (ProductID == null)
             {
                 command = new SqlCommand("SELECT * FROM [ViewProductsV3]", connection);
