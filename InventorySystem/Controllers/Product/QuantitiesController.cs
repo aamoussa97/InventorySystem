@@ -28,7 +28,7 @@ namespace InventorySystem.Controllers
         // GET: api/brands?id
         [HttpGet("{id?}")]//("/{id?}")] //("{id?}")]
         [EnableQuery()]
-        public IEnumerable<ProductQuantity> Get(int? id)
+        public IEnumerable<ProductQuantityModel> Get(int? id)
         {
             return new ProductQuantitiesDataLayer(_configuration).GetQuantities(id);
         }

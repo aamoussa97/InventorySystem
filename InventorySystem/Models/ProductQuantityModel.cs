@@ -1,40 +1,40 @@
 ﻿using System;
 namespace InventorySystem.Models
 {
-    public struct ProductQuantity
+    public struct ProductQuantityModel
     {
-        public ProductQuantity(int mProductID, int mQuantityValue)
+        public ProductQuantityModel(int mProductID, int mProductQuantity)
         {
             this.ProductID = mProductID;
-            this.QuantityValue = mQuantityValue;
+            this.ProductQuantity = mProductQuantity;
         }
 
         public int ProductID { get; set; }
-        public int QuantityValue { get; set; }
+        public int ProductQuantity { get; set; }
     }
     
     public struct ProductQuantitiesInsert
     {
-        public ProductQuantitiesInsert(int mProductID, int mQuantityValue)
+        public ProductQuantitiesInsert(int mProductID, int mProductQuantity)
         {
             ProductID = mProductID;
-            QuantityValue = mQuantityValue;
+            ProductQuantity = mProductQuantity;
         }
     
         public int ProductID { get; set; }
-        public int QuantityValue { get; set; }
+        public int ProductQuantity { get; set; }
     }
     
     public struct ProductQuantitiesUpdate
     {
-        public ProductQuantitiesUpdate(int mProductID, int mQuantityValue)
+        public ProductQuantitiesUpdate(int mProductID, int mProductQuantity)
         {
             ProductID = mProductID;
-            QuantityValue = mQuantityValue;
+            ProductQuantity = mProductQuantity;
         }
     
         public int ProductID { get; set; }
-        public int QuantityValue { get; set; }
+        public int ProductQuantity { get; set; }
     }
     
     public struct ProductQuantitiesDelete

@@ -19,9 +19,9 @@ namespace InventorySystem.DataLayerClasses
             connection = new SqlConnection(connectionString);
         }
 
-        public IEnumerable<ProductQuantity> GetQuantities(int? ProductID)
+        public IEnumerable<ProductQuantityModel> GetQuantities(int? ProductID)
         {
-            List<ProductQuantity> productQuantites = new List<ProductQuantity>();
+            List<ProductQuantityModel> productQuantites = new List<ProductQuantityModel>();
 
             if (ProductID == null)
             {
@@ -38,9 +38,9 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    ProductQuantity productQuantity = new ProductQuantity((int)Convert.ToInt64(reader["ProductID"]),
+                    ProductQuantityModel productQuantityModel = new ProductQuantityModel((int)Convert.ToInt64(reader["ProductID"]),
                         (int)Convert.ToInt64(reader["ProductQuantity"]));
-                    productQuantites.Add(productQuantity);
+                    productQuantites.Add(productQuantityModel);
                 }
             }
 
@@ -58,11 +58,18 @@ namespace InventorySystem.DataLayerClasses
                     command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.AddWithValue("@ProductID_Input", productQuantitiesInsert.ProductID);
-                    command.Parameters.AddWithValue("@ProductQuantity_Input", productQuantitiesInsert.QuantityValue);
+                    command.Parameters.AddWithValue("@ProductQuantity_Input", productQuantitiesInsert.ProductQuantity);
                     
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
+                
+                //At least one row exists
+                if (Convert.ToInt32(command.ExecuteScalar()) != 0) 
+                    //LikeButton.Enabled = false;
+                //No rows exists
+                else
+                    //LikeButton.Enabled = true;
 
                 return productQuantitiesInsert;
             }
@@ -78,7 +85,7 @@ namespace InventorySystem.DataLayerClasses
                     command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.AddWithValue("@ProductIDUpdate", productQuantitiesUpdate.ProductID);
-                    command.Parameters.AddWithValue("@QuantityUpdate", productQuantitiesUpdate.QuantityValue);
+                    command.Parameters.AddWithValue("@QuantityUpdate", productQuantitiesUpdate.ProductQuantity);
 
                     connection.Open();
                     command.ExecuteNonQuery();
