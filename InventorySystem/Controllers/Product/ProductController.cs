@@ -34,7 +34,7 @@ namespace InventorySystem.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] ProductsInsertComplex productsInsertComplex)
         {
-            ProductsInsert productsInsert = new ProductsInsert(0, 0, 0, 0, 0, 0, 0, 0);
+            ProductsInsert productsInsert = new ProductsInsert(0, 0, 0, 0, 0, 0, 0);
             PriceOptimize priceOptimize = new PriceOptimize();
             productsInsertComplex.ProductPrice = priceOptimize.OptimizePrice(productsInsertComplex.ProductVariableCost, productsInsertComplex.ProductStartFactor, productsInsertComplex.ProductGrowthFactor);
             productsInsert = new ProductsInsertDataLayer(_configuration).InsertProduct(productsInsertComplex);
@@ -43,6 +43,7 @@ namespace InventorySystem.Controllers
             int ProductID = new ProductsDataLayer(_configuration).InsertProduct(productsInsert);
 
             new ProductsInsertDataLayer(_configuration).InsertProductMaterial(ProductID, productsInsertComplex);
+            new ProductsInsertDataLayer(_configuration).InsertProductQuantity(ProductID, productsInsertComplex);
 
             return Ok();
         }

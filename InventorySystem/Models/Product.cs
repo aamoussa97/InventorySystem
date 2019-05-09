@@ -32,7 +32,7 @@ namespace InventorySystem.Models
     
     public struct ProductsInsert
     {
-        public ProductsInsert(int mProductSKUID, int mProductNameID, int mProductBrandID, int mProductPriceID, int mProductVariableCostID, int mProductStartFactorID, int mProductGrowthFactorID, int mProductQuantityID)
+        public ProductsInsert(int mProductSKUID, int mProductNameID, int mProductBrandID, int mProductPriceID, int mProductVariableCostID, int mProductStartFactorID, int mProductGrowthFactorID)
         {
             ProductSKUID = mProductSKUID;
             ProductNameID = mProductNameID;
@@ -41,8 +41,6 @@ namespace InventorySystem.Models
             ProductVariableCostID = mProductVariableCostID;
             ProductStartFactorID = mProductStartFactorID;
             ProductGrowthFactorID = mProductGrowthFactorID;
-            ProductQuantityID = mProductQuantityID;
-
         }
 
         public int ProductSKUID { get; set; }
@@ -58,8 +56,6 @@ namespace InventorySystem.Models
         public int ProductStartFactorID { get; set; }
 
         public int ProductGrowthFactorID { get; set; }
-        
-        public int ProductQuantityID { get; set; }
     }
     
     public struct ProductsUpdate

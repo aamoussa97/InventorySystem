@@ -55,9 +55,8 @@ namespace InventorySystem.DataLayerClasses
             VariableCostID = InsertVariableCost(productsInsertComplex.ProductVariableCost);
             StartFactorID = InsertStartFactor(productsInsertComplex.ProductStartFactor);
             GrowthFactorID = InsertGrowthFactor(productsInsertComplex.ProductGrowthFactor);
-            QuantityID = InsertQuantity(productsInsertComplex.ProductQuantity);
 
-            ProductsInsert productsInsert = new ProductsInsert(SKUID, NameID, BrandID, PriceID, VariableCostID, StartFactorID, GrowthFactorID, QuantityID);
+            ProductsInsert productsInsert = new ProductsInsert(SKUID, NameID, BrandID, PriceID, VariableCostID, StartFactorID, GrowthFactorID);
 
             return productsInsert;
         }
@@ -242,24 +241,20 @@ namespace InventorySystem.DataLayerClasses
             }
         }
         
-        public int InsertQuantity(int quantity)
+        public void InsertProductQuantity(int productID, ProductsInsertComplex productsInsertComplex)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand command = new SqlCommand("ProcedureInsertProductsQuantitiesProducts", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-
-                    command.Parameters.AddWithValue("@ProductQuantity_Input", quantity);
-                    command.Parameters.AddWithValue("@ProductID_Output", QuantityID).Direction = ParameterDirection.Output;
+                    
+                    command.Parameters.AddWithValue("@ProductID_Input", productID);
+                    command.Parameters.AddWithValue("@ProductQuantity_Input", productsInsertComplex.ProductQuantity);
 
                     connection.Open();
                     command.ExecuteNonQuery();
-
-                    QuantityID = Convert.ToInt32(command.Parameters["@ProductID_Output"].Value);
                 }
-
-                return QuantityID;
             }
         }
 

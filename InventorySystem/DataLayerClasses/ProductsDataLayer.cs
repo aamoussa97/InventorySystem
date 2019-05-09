@@ -76,7 +76,6 @@ namespace InventorySystem.DataLayerClasses
                     command.Parameters.AddWithValue("@ProductVariableCostID", productsInsert.ProductVariableCostID);
                     command.Parameters.AddWithValue("@ProductStartFactorID", productsInsert.ProductStartFactorID);
                     command.Parameters.AddWithValue("@ProductGrowthFactorID", productsInsert.ProductGrowthFactorID);
-                    command.Parameters.AddWithValue("@ProductQuantityID", productsInsert.ProductQuantityID);
                     command.Parameters.AddWithValue("@ProductID_Output", ProductIDFromInsert).Direction = ParameterDirection.Output;
 
                     connection.Open();
