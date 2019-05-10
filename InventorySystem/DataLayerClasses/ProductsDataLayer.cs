@@ -92,18 +92,20 @@ namespace InventorySystem.DataLayerClasses
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureUpdateProducts", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureUpdateProductsV2", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductIDUpdate", productsUpdate.ProductID);
-                    command.Parameters.AddWithValue("@ProductSKUIDUpdate", productsUpdate.ProductSKUID);
-                    command.Parameters.AddWithValue("@ProductNameIDUpdate", productsUpdate.ProductNameID);
-                    command.Parameters.AddWithValue("@ProductBrandIDUpdate", productsUpdate.ProductBrandID);
-                    command.Parameters.AddWithValue("@ProductMaterialsOrderIDUpdate", productsUpdate.ProductMaterialsOrderID);
-                    command.Parameters.AddWithValue("@ProductPriceIDUpdate", productsUpdate.ProductPriceID);
-                    command.Parameters.AddWithValue("@ProductVariableCostIDUpdate", productsUpdate.ProductVariableCostID);
-
+                    command.Parameters.AddWithValue("@ProductID_Input", productsUpdate.ProductID);
+                    command.Parameters.AddWithValue("@ProductSKUValue_Input", productsUpdate.ProductSKU);
+                    command.Parameters.AddWithValue("@ProductNameValue_Input", productsUpdate.ProductName);
+                    command.Parameters.AddWithValue("@ProductBrandValue_Input", productsUpdate.ProductBrand);
+                    command.Parameters.AddWithValue("@ProductPriceValue_Input", productsUpdate.ProductPrice);
+                    command.Parameters.AddWithValue("@ProductVariableCost_Input", productsUpdate.ProductVariableCost);
+                    command.Parameters.AddWithValue("@ProductStartFactor_Input", productsUpdate.ProductStartFactor);
+                    command.Parameters.AddWithValue("@ProductGrowthFactor_Input", productsUpdate.ProductGrowthFactor);
+                    command.Parameters.AddWithValue("@ProductQuantity_Input", productsUpdate.ProductQuantity);
+                    
                     connection.Open();
                     command.ExecuteNonQuery();
                 }

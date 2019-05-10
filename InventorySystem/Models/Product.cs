@@ -60,30 +60,28 @@ namespace InventorySystem.Models
     
     public struct ProductsUpdate
     {
-        public ProductsUpdate(int mProductID, int mProductSKUID, int mProductNameID, int mProductBrandID, int mProductMaterialsOrderID, int mProductPriceID, int mProductVariableCostID)
+        public ProductsUpdate(int mProductId, long mProductSku, string mProductName, string mProductBrand, int mProductPrice, int mProductVariableCost, int mProductStartFactor, int mProductGrowthFactor, int mProductQuantity)
         {
-            ProductID = mProductID;
-            ProductSKUID = mProductSKUID;
-            ProductNameID = mProductNameID;
-            ProductBrandID = mProductBrandID;
-            ProductMaterialsOrderID = mProductMaterialsOrderID;
-            ProductPriceID = mProductPriceID;
-            ProductVariableCostID = mProductVariableCostID;
+            ProductID = mProductId;
+            ProductSKU = mProductSku;
+            ProductName = mProductName;
+            ProductBrand = mProductBrand;
+            ProductPrice = mProductPrice;
+            ProductVariableCost = mProductVariableCost;
+            ProductStartFactor = mProductStartFactor;
+            ProductGrowthFactor = mProductGrowthFactor;
+            ProductQuantity = mProductQuantity;
         }
 
         public int ProductID { get; set; }
-
-        public int ProductSKUID { get; set; }
-
-        public int ProductNameID { get; set; }
-
-        public int ProductBrandID { get; set; }
-
-        public int ProductMaterialsOrderID { get; set; }
-
-        public int ProductPriceID { get; set; }
-
-        public int ProductVariableCostID { get; set; }
+        public long ProductSKU { get; set; }
+        public string ProductName{ get; set; }
+        public string ProductBrand { get; set; }
+        public int ProductPrice{ get; set; }
+        public int ProductVariableCost { get; set; }
+        public int ProductStartFactor { get; set; }
+        public int ProductGrowthFactor { get; set; }
+        public int ProductQuantity { get; set; }
     }
     
     public struct ProductsDelete
