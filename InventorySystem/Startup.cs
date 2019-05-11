@@ -30,8 +30,6 @@ namespace InventorySystem
             Configuration = configuration;
         }
 
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -63,7 +61,7 @@ namespace InventorySystem
                 var policy = new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
                 .Build();
-               //op.Filters.Add(new AuthorizeFilter(policy));
+               op.Filters.Add(new AuthorizeFilter(policy));
 
                 foreach (var formatter in op.OutputFormatters
                 .OfType<ODataOutputFormatter>()
@@ -84,15 +82,6 @@ namespace InventorySystem
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info {Title="Inventory System API", Version="V1"});
-            });
-            services.AddCors(options =>
-            {
-                options.AddPolicy(MyAllowSpecificOrigins, builder =>
-                {
-                    builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-                });
             });
         }
 
@@ -118,7 +107,13 @@ namespace InventorySystem
             });
 
             //app.UseHttpsRedirection();
-            app.UseCors(MyAllowSpecificOrigins);
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowCredentials()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
             
             //Bearer token validator
             app.UseAuthentication();
