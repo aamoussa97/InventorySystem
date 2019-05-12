@@ -1,7 +1,0 @@
-C:\Users\Ali\Documents\GitHub\InventorySystem\InventorySystemWCF\bin\InventorySystemWCF.dll.config
-C:\Users\Ali\Documents\GitHub\InventorySystem\InventorySystemWCF\bin\InventorySystemWCF.dll
-C:\Users\Ali\Documents\GitHub\InventorySystem\InventorySystemWCF\bin\InventorySystemWCF.pdb
-C:\Users\Ali\Documents\GitHub\InventorySystem\InventorySystemWCF\obj\Debug\InventorySystemWCF.csprojAssemblyReference.cache
-C:\Users\Ali\Documents\GitHub\InventorySystem\InventorySystemWCF\obj\Debug\InventorySystemWCF.csproj.CoreCompileInputs.cache
-C:\Users\Ali\Documents\GitHub\InventorySystem\InventorySystemWCF\obj\Debug\InventorySystemWCF.dll
-C:\Users\Ali\Documents\GitHub\InventorySystem\InventorySystemWCF\obj\Debug\InventorySystemWCF.pdb
