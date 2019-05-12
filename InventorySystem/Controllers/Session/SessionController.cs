@@ -53,7 +53,7 @@ namespace InventorySystem.Controllers
                 "http://localhost:5001",
                 "http://localhost:4200",
                 new List<Claim>(),
-                expires: DateTime.Now.AddMinutes(5),
+                expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: signinCredentials
             );
 
