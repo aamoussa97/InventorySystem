@@ -50,9 +50,7 @@ namespace InventorySystem.Controllers
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
             var tokeOptions = new JwtSecurityToken(
-                "http://localhost:5001",
-                "http://localhost:4200",
-                new List<Claim>(),
+                
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: signinCredentials
             );
