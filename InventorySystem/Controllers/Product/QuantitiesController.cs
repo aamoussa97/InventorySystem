@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using System.Collections.Generic;
 using InventorySystem.DataLayerClasses;
 using InventorySystem.Models;
-using System.IO;
 using Microsoft.AspNet.OData;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,8 +20,8 @@ namespace InventorySystem.Controllers
         }
 
         // GET: api/brands?id
-        [HttpGet("{id?}")]//("/{id?}")] //("{id?}")]
-        [EnableQuery()]
+        [HttpGet("{id?}")] //("/{id?}")] //("{id?}")]
+        [EnableQuery]
         public IEnumerable<ProductQuantityModel> Get(int? id)
         {
             return new ProductQuantitiesDataLayer(_configuration).GetQuantities(id);

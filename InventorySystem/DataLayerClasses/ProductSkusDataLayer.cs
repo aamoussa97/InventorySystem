@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 using InventorySystem.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace InventorySystem.DataLayerClasses
 {
     public class ProductSkusDataLayer
     {
-        SqlConnection connection;
-        SqlCommand command;
-        String connectionString;
+        private SqlCommand command;
+        private readonly SqlConnection connection;
+        private readonly string connectionString;
 
         public ProductSkusDataLayer(IConfiguration configuration)
         {
@@ -21,16 +21,13 @@ namespace InventorySystem.DataLayerClasses
 
         public IEnumerable<ProductSku> GetProductSku(int? ProductSkuID)
         {
-            List<ProductSku> productSkus = new List<ProductSku>();
+            var productSkus = new List<ProductSku>();
 
             if (ProductSkuID == null)
-            {
                 command = new SqlCommand("SELECT * FROM [ViewProductsSKU]", connection);
-            }
             else
-            {
-                command = new SqlCommand("SELECT * FROM [ViewProductsSKU] WHERE ProductID = '" + ProductSkuID + "'", connection);
-            }
+                command = new SqlCommand("SELECT * FROM [ViewProductsSKU] WHERE ProductID = '" + ProductSkuID + "'",
+                    connection);
 
             connection.Open();
 
@@ -38,8 +35,8 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    ProductSku productSku = new ProductSku((int)Convert.ToInt64(reader["ProductID"]),
-                       (long)reader["ProductSKU"]);
+                    var productSku = new ProductSku((int) Convert.ToInt64(reader["ProductID"]),
+                        (long) reader["ProductSKU"]);
                     productSkus.Add(productSku);
                 }
             }
@@ -51,9 +48,9 @@ namespace InventorySystem.DataLayerClasses
 
         public ProductsSkuInsert InsertProductSKU(ProductsSkuInsert productsSkuInsert)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsSKU", connection))
+                using (var command = new SqlCommand("ProcedureInsertProductsSKU", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -65,14 +62,13 @@ namespace InventorySystem.DataLayerClasses
 
                 return productsSkuInsert;
             }
-
         }
 
         public ProductsSkuUpdate UpdateProductSku(ProductsSkuUpdate productsSkuUpdate)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureUpdateProductsSKU", connection))
+                using (var command = new SqlCommand("ProcedureUpdateProductsSKU", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -85,14 +81,13 @@ namespace InventorySystem.DataLayerClasses
 
                 return productsSkuUpdate;
             }
-
         }
 
         public ProductsSkuDelete DeleteProductSku(ProductsSkuDelete productsSkuDelete)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureDeleteProductsSKU", connection))
+                using (var command = new SqlCommand("ProcedureDeleteProductsSKU", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -104,7 +99,6 @@ namespace InventorySystem.DataLayerClasses
 
                 return productsSkuDelete;
             }
-
         }
     }
 }

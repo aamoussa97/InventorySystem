@@ -12,7 +12,7 @@
 
         public int PriceValue { get; set; }
     }
-    
+
     public struct ProductsPriceInsert
     {
         public ProductsPriceInsert(long mProductPrice)
@@ -22,7 +22,7 @@
 
         public long ProductPrice { get; set; }
     }
-    
+
     public struct ProductsPriceUpdate
     {
         public ProductsPriceUpdate(int mProductPriceID, long mProductPrice)
@@ -35,7 +35,7 @@
 
         public long ProductPrice { get; set; }
     }
-    
+
     public struct ProductsPriceDelete
     {
         public ProductsPriceDelete(int mProductPriceID)

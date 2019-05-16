@@ -1,15 +1,13 @@
 using System;
-using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Net.Http;
 
 namespace InventorySystem.Controllers
 {
@@ -32,14 +30,9 @@ namespace InventorySystem.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> PostAsync([FromBody] User userData)
         {
-            int ResponseStatusCode;
+            var ResponseStatusCode = await UserAuthHTTPRequestAsync(userData);
 
-            ResponseStatusCode = await UserAuthHTTPRequestAsync(userData);
-
-            if (ResponseStatusCode == 401)
-            {
-                return BadRequest(ModelState);
-            }
+            if (ResponseStatusCode == 401) return BadRequest(ModelState);
 
             return Ok(GenerateJSONWebToken());
         }
@@ -50,7 +43,6 @@ namespace InventorySystem.Controllers
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
             var tokeOptions = new JwtSecurityToken(
-                
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: signinCredentials
             );
@@ -61,22 +53,21 @@ namespace InventorySystem.Controllers
 
         protected async Task<int> UserAuthHTTPRequestAsync(User user)
         {
-            string url = @"http://dist.saluton.dk:5119/auth/authenticate";//"http://localhost:5119/auth/authenticate";//;"http://dist.saluton.dk:5119/auth/authenticate"; //http://localhost:8080/auth/authenticate"; //REST java auth server
+            var
+                url =
+                    @"http://dist.saluton.dk:5119/auth/authenticate"; //"http://localhost:5119/auth/authenticate";//;"http://dist.saluton.dk:5119/auth/authenticate"; //http://localhost:8080/auth/authenticate"; //REST java auth server
 
-            HttpClient client = new HttpClient();
+            var client = new HttpClient();
             var response = await client.PostAsJsonAsync(url, user);
-            var ResponseStatusCode = (int)response.StatusCode;
+            var ResponseStatusCode = (int) response.StatusCode;
 
             return ResponseStatusCode;
         }
-
     }
 
     public struct User
     {
-        [MinLength(4)]
-        [MaxLength(7)]
-        public string Username { get; set; }
+        [MinLength(4)] [MaxLength(7)] public string Username { get; set; }
         public string Password { get; set; }
     }
 }

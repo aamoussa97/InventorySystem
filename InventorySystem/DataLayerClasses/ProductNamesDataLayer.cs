@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 using InventorySystem.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace InventorySystem.DataLayerClasses
 {
     public class ProductNamesDataLayer
     {
-        SqlConnection connection;
-        SqlCommand command;
-        String connectionString;
+        private SqlCommand command;
+        private readonly SqlConnection connection;
+        private readonly string connectionString;
 
         public ProductNamesDataLayer(IConfiguration configuration)
         {
@@ -21,16 +21,13 @@ namespace InventorySystem.DataLayerClasses
 
         public IEnumerable<ProductName> GetProductName(int? NameID)
         {
-            List<ProductName> productNames = new List<ProductName>();
+            var productNames = new List<ProductName>();
 
             if (NameID == null)
-            {
                 command = new SqlCommand("SELECT * FROM [ViewProductNames]", connection);
-            }
             else
-            {
-                command = new SqlCommand("SELECT * FROM [ViewProductNames] WHERE ProductID = '" + NameID + "'", connection);
-            }
+                command = new SqlCommand("SELECT * FROM [ViewProductNames] WHERE ProductID = '" + NameID + "'",
+                    connection);
 
             connection.Open();
 
@@ -38,8 +35,8 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    ProductName productName = new ProductName((int)Convert.ToInt64(reader["ProductID"]),
-                       (String)reader["ProductName"]);
+                    var productName = new ProductName((int) Convert.ToInt64(reader["ProductID"]),
+                        (string) reader["ProductName"]);
                     productNames.Add(productName);
                 }
             }
@@ -51,9 +48,9 @@ namespace InventorySystem.DataLayerClasses
 
         public ProductsNameInsert InsertProductName(ProductsNameInsert productsNameInsert)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsName", connection))
+                using (var command = new SqlCommand("ProcedureInsertProductsName", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -65,15 +62,14 @@ namespace InventorySystem.DataLayerClasses
 
                 return productsNameInsert;
             }
-
         }
 
 
         public ProductsNameUpdate UpdateProductName(ProductsNameUpdate productsNameUpdate)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureUpdateProductsName", connection))
+                using (var command = new SqlCommand("ProcedureUpdateProductsName", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -86,14 +82,13 @@ namespace InventorySystem.DataLayerClasses
 
                 return productsNameUpdate;
             }
-
         }
 
         public ProductsNameDelete DeleteProductName(ProductsNameDelete productsNameDelete)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureDeleteProductsName", connection))
+                using (var command = new SqlCommand("ProcedureDeleteProductsName", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -105,7 +100,6 @@ namespace InventorySystem.DataLayerClasses
 
                 return productsNameDelete;
             }
-
         }
     }
 }

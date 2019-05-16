@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using System.Collections.Generic;
 using InventorySystem.DataLayerClasses;
 using InventorySystem.Models;
-using System.IO;
 using Microsoft.AspNet.OData;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,7 +21,7 @@ namespace InventorySystem.Controllers
 
         // GET: api/brands?id
         [HttpGet("{id?}")]
-        [EnableQuery()]
+        [EnableQuery]
         public IEnumerable<ProductMaterialsOrderName> Get(int? id)
         {
             return new ProductMaterialsOrderDataLayer(_configuration).GetMaterialsFromProducts(id);
@@ -38,21 +32,24 @@ namespace InventorySystem.Controllers
         //[Consumes("application/json")]
         public IActionResult Post([FromBody] ProductMaterialsOrderInsert productMaterialsOrderInsert)
         {
-            return Ok(new ProductMaterialsOrderDataLayer(_configuration).InsertMaterialsOrder(productMaterialsOrderInsert));
+            return Ok(
+                new ProductMaterialsOrderDataLayer(_configuration).InsertMaterialsOrder(productMaterialsOrderInsert));
         }
 
         // PUT api/brands/1
         [HttpPut]
         public IActionResult Put([FromBody] ProductMaterialsOrderUpdate productMaterialsOrderUpdate)
         {
-            return Ok(new ProductMaterialsOrderDataLayer(_configuration).UpdateMaterialsOrder(productMaterialsOrderUpdate));
+            return Ok(
+                new ProductMaterialsOrderDataLayer(_configuration).UpdateMaterialsOrder(productMaterialsOrderUpdate));
         }
 
         // DELETE api/brands/1
         [HttpDelete]
         public IActionResult Delete([FromBody] ProductMaterialsOrderDelete productMaterialsOrderDelete)
         {
-            return Ok(new ProductMaterialsOrderDataLayer(_configuration).DeleteMaterialsOrder(productMaterialsOrderDelete));
+            return Ok(
+                new ProductMaterialsOrderDataLayer(_configuration).DeleteMaterialsOrder(productMaterialsOrderDelete));
         }
     }
 }

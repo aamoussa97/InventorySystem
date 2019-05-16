@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 using InventorySystem.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace InventorySystem.DataLayerClasses
 {
     public class ProductsDataLayer
     {
         private readonly IConfiguration _configuration;
+        private SqlCommand command;
 
-        SqlConnection connection;
-        SqlCommand command;
-        String connectionString;
+        private readonly SqlConnection connection;
+        private readonly string connectionString;
 
         public ProductsDataLayer(IConfiguration configuration)
         {
@@ -24,16 +24,13 @@ namespace InventorySystem.DataLayerClasses
 
         public IEnumerable<ProductsGet> GetProduct(int? ProductID)
         {
-            List<ProductsGet> productsGet = new List<ProductsGet>();
-            
+            var productsGet = new List<ProductsGet>();
+
             if (ProductID == null)
-            {
                 command = new SqlCommand("SELECT * FROM [ViewProductsV3]", connection);
-            }
             else
-            {
-                command = new SqlCommand("SELECT * FROM [ViewProductsV3] WHERE ProductID = '" + ProductID + "'", connection);
-            }
+                command = new SqlCommand("SELECT * FROM [ViewProductsV3] WHERE ProductID = '" + ProductID + "'",
+                    connection);
 
             connection.Open();
 
@@ -41,15 +38,15 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    ProductsGet productGet = new ProductsGet((int)Convert.ToInt64(reader["ProductID"]),
-                         (long)reader["ProductSKU"],
-                         (String)reader["ProductName"],
-                         (String)reader["BrandName"],
-                         (int)Convert.ToInt64(reader["ProductPrice"]),
-                         (int)Convert.ToInt64(reader["ProductVariableCost"]),
-                         (int)Convert.ToInt64(reader["ProductStartFactor"]),
-                         (int)Convert.ToInt64(reader["ProductGrowthFactor"]),
-                         (int)Convert.ToInt64(reader["ProductQuantity"]));
+                    var productGet = new ProductsGet((int) Convert.ToInt64(reader["ProductID"]),
+                        (long) reader["ProductSKU"],
+                        (string) reader["ProductName"],
+                        (string) reader["BrandName"],
+                        (int) Convert.ToInt64(reader["ProductPrice"]),
+                        (int) Convert.ToInt64(reader["ProductVariableCost"]),
+                        (int) Convert.ToInt64(reader["ProductStartFactor"]),
+                        (int) Convert.ToInt64(reader["ProductGrowthFactor"]),
+                        (int) Convert.ToInt64(reader["ProductQuantity"]));
                     productsGet.Add(productGet);
                 }
             }
@@ -61,11 +58,11 @@ namespace InventorySystem.DataLayerClasses
 
         public int InsertProduct(ProductsInsert productsInsert)
         {
-            int ProductIDFromInsert = 0;
+            var ProductIDFromInsert = 0;
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsV3", connection))
+                using (var command = new SqlCommand("ProcedureInsertProductsV3", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -76,7 +73,8 @@ namespace InventorySystem.DataLayerClasses
                     command.Parameters.AddWithValue("@ProductVariableCostID", productsInsert.ProductVariableCostID);
                     command.Parameters.AddWithValue("@ProductStartFactorID", productsInsert.ProductStartFactorID);
                     command.Parameters.AddWithValue("@ProductGrowthFactorID", productsInsert.ProductGrowthFactorID);
-                    command.Parameters.AddWithValue("@ProductID_Output", ProductIDFromInsert).Direction = ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@ProductID_Output", ProductIDFromInsert).Direction =
+                        ParameterDirection.Output;
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -90,9 +88,9 @@ namespace InventorySystem.DataLayerClasses
 
         public ProductsUpdate UpdateProduct(ProductsUpdate productsUpdate)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureUpdateProductsV2", connection))
+                using (var command = new SqlCommand("ProcedureUpdateProductsV2", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -105,7 +103,7 @@ namespace InventorySystem.DataLayerClasses
                     command.Parameters.AddWithValue("@ProductStartFactor_Input", productsUpdate.ProductStartFactor);
                     command.Parameters.AddWithValue("@ProductGrowthFactor_Input", productsUpdate.ProductGrowthFactor);
                     command.Parameters.AddWithValue("@ProductQuantity_Input", productsUpdate.ProductQuantity);
-                    
+
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -116,9 +114,9 @@ namespace InventorySystem.DataLayerClasses
 
         public int DeleteProduct(int productsDeleteID)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureDeleteProducts", connection))
+                using (var command = new SqlCommand("ProcedureDeleteProducts", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -134,8 +132,8 @@ namespace InventorySystem.DataLayerClasses
 
         public IEnumerable<ProductsGet> GetProductByName(string ProductName)
         {
-            List<ProductsGet> productsGET = new List<ProductsGet>();
-            String toSearch = String.Format("SELECT * FROM [ViewProducts] WHERE ProductName LIKE '%{0}%'", ProductName);
+            var productsGET = new List<ProductsGet>();
+            var toSearch = string.Format("SELECT * FROM [ViewProducts] WHERE ProductName LIKE '%{0}%'", ProductName);
             command = new SqlCommand(toSearch, connection);
 
             connection.Open();
@@ -144,15 +142,15 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    ProductsGet productGET = new ProductsGet((int)Convert.ToInt64(reader["ProductID"]),
-                         (long)reader["ProductSKU"],
-                         (String)reader["ProductName"],
-                         (String)reader["BrandName"],
-                         (int)Convert.ToInt64(reader["ProductPrice"]),
-                         (int)Convert.ToInt64(reader["ProductVariableCost"]),
-                         (int)Convert.ToInt64(reader["ProductStartFactor"]),
-                         (int)Convert.ToInt64(reader["ProductGrowthFactor"]),
-                         (int)Convert.ToInt64(reader["ProductQuantity"]));
+                    var productGET = new ProductsGet((int) Convert.ToInt64(reader["ProductID"]),
+                        (long) reader["ProductSKU"],
+                        (string) reader["ProductName"],
+                        (string) reader["BrandName"],
+                        (int) Convert.ToInt64(reader["ProductPrice"]),
+                        (int) Convert.ToInt64(reader["ProductVariableCost"]),
+                        (int) Convert.ToInt64(reader["ProductStartFactor"]),
+                        (int) Convert.ToInt64(reader["ProductGrowthFactor"]),
+                        (int) Convert.ToInt64(reader["ProductQuantity"]));
                     productsGET.Add(productGET);
                 }
             }

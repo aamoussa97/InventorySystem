@@ -1,28 +1,27 @@
-﻿using System;
-namespace InventorySystem.Models
+﻿namespace InventorySystem.Models
 {
     public struct ProductBrand
     {
-        public ProductBrand(int mBrandID, String mBrandName)
+        public ProductBrand(int mBrandID, string mBrandName)
         {
-            this.BrandID = mBrandID;
-            this.BrandName = mBrandName;
+            BrandID = mBrandID;
+            BrandName = mBrandName;
         }
 
         public int BrandID { get; set; }
-        public String BrandName { get; set; }
+        public string BrandName { get; set; }
     }
-    
+
     public struct ProductBrandInsert
     {
         public ProductBrandInsert(string mBrandName)
         {
             BrandName = mBrandName;
         }
-    
+
         public string BrandName { get; set; }
     }
-    
+
     public struct ProductBrandsUpdate
     {
         public ProductBrandsUpdate(int mBrandID, string mBrandName)
@@ -30,12 +29,12 @@ namespace InventorySystem.Models
             BrandID = mBrandID;
             BrandName = mBrandName;
         }
-    
+
         public int BrandID { get; set; }
-    
+
         public string BrandName { get; set; }
     }
-    
+
     public struct ProductBrandsDelete
     {
         public ProductBrandsDelete(int mBrandID)
@@ -45,14 +44,14 @@ namespace InventorySystem.Models
 
         public int BrandID { get; set; }
     }
-    
+
     public struct BrandsGet
     {
-        public BrandsGet(String mBrandName)
+        public BrandsGet(string mBrandName)
         {
             BrandName = mBrandName;
         }
 
-        public String BrandName { get; set; }
+        public string BrandName { get; set; }
     }
 }

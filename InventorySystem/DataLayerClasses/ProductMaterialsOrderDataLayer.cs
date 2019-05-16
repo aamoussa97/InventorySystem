@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 using InventorySystem.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace InventorySystem.DataLayerClasses
 {
     public class ProductMaterialsOrderDataLayer
     {
-        SqlConnection connection;
-        SqlCommand command;
-        String connectionString;
+        private SqlCommand command;
+        private readonly SqlConnection connection;
+        private readonly string connectionString;
 
         public ProductMaterialsOrderDataLayer(IConfiguration configuration)
         {
@@ -21,16 +21,14 @@ namespace InventorySystem.DataLayerClasses
 
         public IEnumerable<ProductMaterialsOrder> GetProductsFromMaterials(int? ProductMaterialsOrderID)
         {
-            List<ProductMaterialsOrder> products = new List<ProductMaterialsOrder>();
+            var products = new List<ProductMaterialsOrder>();
 
             if (ProductMaterialsOrderID == null)
-            {
                 command = new SqlCommand("SELECT * FROM [ViewProductMaterials]", connection);
-            }
             else
-            {
-                command = new SqlCommand("SELECT * FROM [ViewProductMaterials] WHERE MaterialID = '" + ProductMaterialsOrderID + "'", connection);
-            }
+                command = new SqlCommand(
+                    "SELECT * FROM [ViewProductMaterials] WHERE MaterialID = '" + ProductMaterialsOrderID + "'",
+                    connection);
 
             connection.Open();
 
@@ -38,8 +36,8 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    ProductMaterialsOrder productMaterialsOrder = new ProductMaterialsOrder((int)Convert.ToInt64(reader["ProductID"]),
-                       (int)Convert.ToInt64(reader["MaterialID"]));
+                    var productMaterialsOrder = new ProductMaterialsOrder((int) Convert.ToInt64(reader["ProductID"]),
+                        (int) Convert.ToInt64(reader["MaterialID"]));
                     products.Add(productMaterialsOrder);
                 }
             }
@@ -51,16 +49,14 @@ namespace InventorySystem.DataLayerClasses
 
         public IEnumerable<ProductMaterialsOrderName> GetMaterialsFromProducts(int? ProductMaterialsOrderID)
         {
-            List<ProductMaterialsOrderName> materials = new List<ProductMaterialsOrderName>();
+            var materials = new List<ProductMaterialsOrderName>();
 
             if (ProductMaterialsOrderID == null)
-            {
                 command = new SqlCommand("SELECT * FROM [ViewProductMaterialsV2]", connection);
-            }
             else
-            {
-                command = new SqlCommand("SELECT * FROM [ViewProductMaterialsV2] WHERE ProductID = '" + ProductMaterialsOrderID + "'", connection);
-            }
+                command = new SqlCommand(
+                    "SELECT * FROM [ViewProductMaterialsV2] WHERE ProductID = '" + ProductMaterialsOrderID + "'",
+                    connection);
 
             connection.Open();
 
@@ -68,7 +64,7 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    ProductMaterialsOrderName productMaterialsOrderName = new ProductMaterialsOrderName((String)reader["MaterialName"]);
+                    var productMaterialsOrderName = new ProductMaterialsOrderName((string) reader["MaterialName"]);
                     materials.Add(productMaterialsOrderName);
                 }
             }
@@ -80,9 +76,9 @@ namespace InventorySystem.DataLayerClasses
 
         public ProductMaterialsOrderInsert InsertMaterialsOrder(ProductMaterialsOrderInsert productMaterialsOrderInsert)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsMaterialsOrder", connection))
+                using (var command = new SqlCommand("ProcedureInsertProductsMaterialsOrder", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -94,19 +90,20 @@ namespace InventorySystem.DataLayerClasses
 
                 return productMaterialsOrderInsert;
             }
-
         }
 
         public ProductMaterialsOrderUpdate UpdateMaterialsOrder(ProductMaterialsOrderUpdate productMaterialsOrderUpdate)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureUpdateProductsMaterialsOrder", connection))
+                using (var command = new SqlCommand("ProcedureUpdateProductsMaterialsOrder", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductMaterialOrderIDUpdate", productMaterialsOrderUpdate.MaterialsOrderID);
-                    command.Parameters.AddWithValue("@ProductMaterialIDValueUpdate", productMaterialsOrderUpdate.MaterialID);
+                    command.Parameters.AddWithValue("@ProductMaterialOrderIDUpdate",
+                        productMaterialsOrderUpdate.MaterialsOrderID);
+                    command.Parameters.AddWithValue("@ProductMaterialIDValueUpdate",
+                        productMaterialsOrderUpdate.MaterialID);
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -114,18 +111,18 @@ namespace InventorySystem.DataLayerClasses
 
                 return productMaterialsOrderUpdate;
             }
-
         }
 
         public ProductMaterialsOrderDelete DeleteMaterialsOrder(ProductMaterialsOrderDelete productMaterialsOrderDelete)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureDeleteProductsMaterialsOrder", connection))
+                using (var command = new SqlCommand("ProcedureDeleteProductsMaterialsOrder", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@MaterialsOrderIDDelete", productMaterialsOrderDelete.MaterialsOrderID);
+                    command.Parameters.AddWithValue("@MaterialsOrderIDDelete",
+                        productMaterialsOrderDelete.MaterialsOrderID);
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -133,8 +130,6 @@ namespace InventorySystem.DataLayerClasses
 
                 return productMaterialsOrderDelete;
             }
-
         }
-
     }
 }

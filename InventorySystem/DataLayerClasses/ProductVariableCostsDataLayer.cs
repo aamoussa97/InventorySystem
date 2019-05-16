@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 using InventorySystem.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace InventorySystem.DataLayerClasses
 {
     public class ProductVariableCostsDataLayer
     {
-        SqlConnection connection;
-        SqlCommand command;
-        String connectionString;
+        private SqlCommand command;
+        private readonly SqlConnection connection;
+        private readonly string connectionString;
 
         public ProductVariableCostsDataLayer(IConfiguration configuration)
         {
@@ -21,16 +21,14 @@ namespace InventorySystem.DataLayerClasses
 
         public IEnumerable<ProductVariableCost> GetProductVariableCost(int? ProductVariableCostID)
         {
-            List<ProductVariableCost> productVariableCosts = new List<ProductVariableCost>();
+            var productVariableCosts = new List<ProductVariableCost>();
 
             if (ProductVariableCostID == null)
-            {
                 command = new SqlCommand("SELECT * FROM [ViewProductVariableCosts]", connection);
-            }
             else
-            {
-                command = new SqlCommand("SELECT * FROM [ViewProductVariableCosts] WHERE ProductID = '" + ProductVariableCostID + "'", connection);
-            }
+                command = new SqlCommand(
+                    "SELECT * FROM [ViewProductVariableCosts] WHERE ProductID = '" + ProductVariableCostID + "'",
+                    connection);
 
             connection.Open();
 
@@ -38,8 +36,8 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    ProductVariableCost productVariableCost = new ProductVariableCost((int)Convert.ToInt64(reader["ProductID"]),
-                         (int)Convert.ToInt64(reader["ProductVariableCost"]));
+                    var productVariableCost = new ProductVariableCost((int) Convert.ToInt64(reader["ProductID"]),
+                        (int) Convert.ToInt64(reader["ProductVariableCost"]));
                     productVariableCosts.Add(productVariableCost);
                 }
             }
@@ -49,15 +47,17 @@ namespace InventorySystem.DataLayerClasses
             return productVariableCosts;
         }
 
-        public ProductsVariableCostInsert InsertProductVariableCost(ProductsVariableCostInsert productsVariableCostInsert)
+        public ProductsVariableCostInsert InsertProductVariableCost(
+            ProductsVariableCostInsert productsVariableCostInsert)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsVariableCost", connection))
+                using (var command = new SqlCommand("ProcedureInsertProductsVariableCost", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@ProductVariableCost", productsVariableCostInsert.ProductsVariableCost);
+                    command.Parameters.AddWithValue("@ProductVariableCost",
+                        productsVariableCostInsert.ProductsVariableCost);
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -67,16 +67,19 @@ namespace InventorySystem.DataLayerClasses
             }
         }
 
-        public ProductsVariableCostUpdate UpdateProductVariableCost(ProductsVariableCostUpdate productsVariableCostUpdate)
+        public ProductsVariableCostUpdate UpdateProductVariableCost(
+            ProductsVariableCostUpdate productsVariableCostUpdate)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureUpdateProductsVariableCost", connection))
+                using (var command = new SqlCommand("ProcedureUpdateProductsVariableCost", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@VariableCostIDUpdate", productsVariableCostUpdate.ProductsVariableCostID);
-                    command.Parameters.AddWithValue("@VariableCostValueUpdate", productsVariableCostUpdate.ProductsVariableCost);
+                    command.Parameters.AddWithValue("@VariableCostIDUpdate",
+                        productsVariableCostUpdate.ProductsVariableCostID);
+                    command.Parameters.AddWithValue("@VariableCostValueUpdate",
+                        productsVariableCostUpdate.ProductsVariableCost);
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -86,15 +89,17 @@ namespace InventorySystem.DataLayerClasses
             }
         }
 
-        public ProductsVariableCostDelete DeleteProductVariableCost(ProductsVariableCostDelete productsVariableCostDelete)
+        public ProductsVariableCostDelete DeleteProductVariableCost(
+            ProductsVariableCostDelete productsVariableCostDelete)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureDeleteProductsVariableCost", connection))
+                using (var command = new SqlCommand("ProcedureDeleteProductsVariableCost", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@VariableCostIDDelete", productsVariableCostDelete.ProductsVariableCostID);
+                    command.Parameters.AddWithValue("@VariableCostIDDelete",
+                        productsVariableCostDelete.ProductsVariableCostID);
 
                     connection.Open();
                     command.ExecuteNonQuery();

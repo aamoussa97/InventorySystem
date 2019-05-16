@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+﻿using System.Collections.Generic;
 using InventorySystem.DataLayerClasses;
 using InventorySystem.Models;
 using Microsoft.AspNet.OData;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,8 +20,8 @@ namespace InventorySystem.Controllers
         }
 
         // GET: api/products?id
-        [HttpGet("{id?}")]
-        [EnableQuery()]
+        [HttpGet]
+        [EnableQuery]
         public IEnumerable<ProductsGet> Get(int? id)
         {
             return new ProductsDataLayer(_configuration).GetProduct(id);
@@ -34,13 +31,14 @@ namespace InventorySystem.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] ProductsInsertComplex productsInsertComplex)
         {
-            ProductsInsert productsInsert = new ProductsInsert(0, 0, 0, 0, 0, 0, 0);
-            PriceOptimize priceOptimize = new PriceOptimize();
-            productsInsertComplex.ProductPrice = priceOptimize.OptimizePrice(productsInsertComplex.ProductVariableCost, productsInsertComplex.ProductStartFactor, productsInsertComplex.ProductGrowthFactor);
+            var productsInsert = new ProductsInsert(0, 0, 0, 0, 0, 0, 0);
+            var priceOptimize = new PriceOptimize();
+            productsInsertComplex.ProductPrice = priceOptimize.OptimizePrice(productsInsertComplex.ProductVariableCost,
+                productsInsertComplex.ProductStartFactor, productsInsertComplex.ProductGrowthFactor);
             productsInsert = new ProductsInsertDataLayer(_configuration).InsertProduct(productsInsertComplex);
-            
 
-            int ProductID = new ProductsDataLayer(_configuration).InsertProduct(productsInsert);
+
+            var ProductID = new ProductsDataLayer(_configuration).InsertProduct(productsInsert);
 
             new ProductsInsertDataLayer(_configuration).InsertProductMaterial(ProductID, productsInsertComplex);
             new ProductsInsertDataLayer(_configuration).InsertProductQuantity(ProductID, productsInsertComplex);
@@ -56,8 +54,8 @@ namespace InventorySystem.Controllers
         }
 
         // DELETE api/products/1
-        [HttpDelete("{id?}")]//[HttpDelete]
-        public IActionResult Delete(int id)//([FromBody] ProductsDelete productsDelete)
+        [HttpDelete("{id?}")] //[HttpDelete]
+        public IActionResult Delete(int id) //([FromBody] ProductsDelete productsDelete)
         {
             return Ok(new ProductsDataLayer(_configuration).DeleteProduct(id));
         }

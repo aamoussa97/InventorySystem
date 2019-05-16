@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using InventorySystem.DataLayerClasses;
 using InventorySystem.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -14,7 +10,7 @@ namespace InventorySystem.Controllers
     [ApiController]
     public class SearchProductController : ControllerBase
     {
-        readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public SearchProductController(IConfiguration configuration)
         {
@@ -27,6 +23,5 @@ namespace InventorySystem.Controllers
         {
             return new ProductsDataLayer(_configuration).GetProductByName(productName);
         }
-
     }
 }

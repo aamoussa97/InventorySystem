@@ -1,29 +1,16 @@
-﻿using System;
-
-namespace InventorySystem.Models
+﻿namespace InventorySystem.Models
 {
     public struct ProductMaterialsOrder
     {
-        private int mMaterialsOrderID;
-        private int mMaterialID;
-
         public ProductMaterialsOrder(int mMaterialsOrderID, int mMaterialID)
         {
-            this.mMaterialsOrderID = mMaterialsOrderID;
-            this.mMaterialID = mMaterialID;
+            MaterialsOrderID = mMaterialsOrderID;
+            MaterialID = mMaterialID;
         }
 
-        public int MaterialsOrderID
-        {
-            get => mMaterialsOrderID;
-            set => mMaterialsOrderID = value;
-        }
+        public int MaterialsOrderID { get; set; }
 
-        public int MaterialID
-        {
-            get => mMaterialID;
-            set => mMaterialID = value;
-        }
+        public int MaterialID { get; set; }
     }
 
     public struct ProductMaterialsOrderInsert
@@ -38,18 +25,12 @@ namespace InventorySystem.Models
 
     public struct ProductMaterialsOrderName
     {
-        private string mMaterialName;
-
         public ProductMaterialsOrderName(string mMaterialName)
         {
-            this.mMaterialName = mMaterialName;
+            MaterialName = mMaterialName;
         }
 
-        public string MaterialName
-        {
-            get => mMaterialName;
-            set => mMaterialName = value;
-        }
+        public string MaterialName { get; set; }
     }
 
     public struct ProductMaterialsOrderUpdate

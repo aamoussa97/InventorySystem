@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 using InventorySystem.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace InventorySystem.DataLayerClasses
 {
     public class ProductBrandsDataLayer
     {
-        SqlConnection connection;
-        SqlCommand command;
-        String connectionString;
+        private SqlCommand command;
+        private readonly SqlConnection connection;
+        private readonly string connectionString;
 
         public ProductBrandsDataLayer(IConfiguration configuration)
         {
@@ -21,16 +21,12 @@ namespace InventorySystem.DataLayerClasses
 
         public IEnumerable<ProductBrand> GetBrand(int? BrandID)
         {
-            List<ProductBrand> productBrands = new List<ProductBrand>();
+            var productBrands = new List<ProductBrand>();
 
             if (BrandID == null)
-            {
                 command = new SqlCommand("SELECT * FROM [ViewBrands]", connection);
-            }
             else
-            {
                 command = new SqlCommand("SELECT * FROM [ViewBrands] WHERE BrandID = '" + BrandID + "'", connection);
-            }
 
             connection.Open();
 
@@ -38,8 +34,8 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    ProductBrand productBrand = new ProductBrand((int)Convert.ToInt64(reader["BrandID"]),
-                       (String)reader["BrandName"]);
+                    var productBrand = new ProductBrand((int) Convert.ToInt64(reader["BrandID"]),
+                        (string) reader["BrandName"]);
                     productBrands.Add(productBrand);
                 }
             }
@@ -51,9 +47,9 @@ namespace InventorySystem.DataLayerClasses
 
         public ProductBrandInsert InsertProductBrand(ProductBrandInsert productBrandInsert)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsBrand", connection))
+                using (var command = new SqlCommand("ProcedureInsertProductsBrand", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -65,14 +61,13 @@ namespace InventorySystem.DataLayerClasses
 
                 return productBrandInsert;
             }
-
         }
 
         public ProductBrandsUpdate UpdateProductBrand(ProductBrandsUpdate productBrandsUpdate)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureUpdateProductsBrand", connection))
+                using (var command = new SqlCommand("ProcedureUpdateProductsBrand", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -85,14 +80,13 @@ namespace InventorySystem.DataLayerClasses
 
                 return productBrandsUpdate;
             }
-
         }
 
         public ProductBrandsDelete DeleteProductBrand(ProductBrandsDelete productBrandsDelete)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand("ProcedureDeleteProductsBrand", connection))
+                using (var command = new SqlCommand("ProcedureDeleteProductsBrand", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -104,7 +98,6 @@ namespace InventorySystem.DataLayerClasses
 
                 return productBrandsDelete;
             }
-
         }
     }
 }

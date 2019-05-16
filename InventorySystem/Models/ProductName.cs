@@ -12,7 +12,7 @@
 
         public string NameValue { get; set; }
     }
-    
+
     public class ProductsNameInsert
     {
         public ProductsNameInsert(string mProductsName)
@@ -22,10 +22,9 @@
 
         public string ProductsName { get; set; }
     }
-    
+
     public struct ProductsNameUpdate
     {
-
         public ProductsNameUpdate(int mProductsNameID, string mProductsName)
         {
             ProductsNameID = mProductsNameID;
@@ -35,7 +34,7 @@
         public int ProductsNameID { get; set; }
         public string ProductsName { get; set; }
     }
-    
+
     public struct ProductsNameDelete
     {
         public ProductsNameDelete(int mProductsNameID)
@@ -45,5 +44,4 @@
 
         public int ProductsNameID { get; set; }
     }
-    
 }
