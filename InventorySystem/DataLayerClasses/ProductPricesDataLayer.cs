@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using InventorySystem.Models;
 using Microsoft.Extensions.Configuration;
+using InventorySystem.Models;
 
 namespace InventorySystem.DataLayerClasses
 {
     public class ProductPricesDataLayer
     {
-        private SqlCommand command;
-        private readonly SqlConnection connection;
-        private readonly string connectionString;
+        SqlConnection connection;
+        SqlCommand command;
+        String connectionString;
 
         public ProductPricesDataLayer(IConfiguration configuration)
         {
@@ -21,13 +21,16 @@ namespace InventorySystem.DataLayerClasses
 
         public IEnumerable<ProductPrice> GetPrice(int? ProductPriceID)
         {
-            var productPrices = new List<ProductPrice>();
+            List<ProductPrice> productPrices = new List<ProductPrice>();
 
             if (ProductPriceID == null)
+            {
                 command = new SqlCommand("SELECT * FROM [ViewProductPrices]", connection);
+            }
             else
-                command = new SqlCommand("SELECT * FROM [ViewProductPrices] WHERE ProductID = '" + ProductPriceID + "'",
-                    connection);
+            {
+                command = new SqlCommand("SELECT * FROM [ViewProductPrices] WHERE ProductID = '" + ProductPriceID + "'", connection);
+            }
 
             connection.Open();
 
@@ -35,8 +38,8 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    var productPrice = new ProductPrice((int) Convert.ToInt64(reader["ProductID"]),
-                        (int) Convert.ToInt64(reader["ProductPrice"]));
+                    ProductPrice productPrice = new ProductPrice((int)Convert.ToInt64(reader["ProductID"]),
+                         (int)Convert.ToInt64(reader["ProductPrice"]));
                     productPrices.Add(productPrice);
                 }
             }
@@ -48,9 +51,9 @@ namespace InventorySystem.DataLayerClasses
 
         public ProductsPriceInsert InsertProductPrice(ProductsPriceInsert productsPriceInsert)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (var command = new SqlCommand("ProcedureInsertProductsPrice", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsPrice", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -66,9 +69,9 @@ namespace InventorySystem.DataLayerClasses
 
         public ProductsPriceUpdate UpdateProductPrice(ProductsPriceUpdate productsPriceUpdate)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (var command = new SqlCommand("ProcedureUpdateProductsPrice", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureUpdateProductsPrice", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -85,9 +88,9 @@ namespace InventorySystem.DataLayerClasses
 
         public ProductsPriceDelete DeleteProductPrice(ProductsPriceDelete productsPriceDelete)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (var command = new SqlCommand("ProcedureInsertProductsPrice", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsPrice", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 

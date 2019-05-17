@@ -1,29 +1,32 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using InventorySystem.Models;
 using Microsoft.Extensions.Configuration;
+using InventorySystem.Models;
+using Newtonsoft.Json;
 
 namespace InventorySystem.DataLayerClasses
 {
     public class ProductsInsertDataLayer
     {
-        public static int ProductIDFromInsert;
         private readonly IConfiguration _configuration;
-        private int BrandID;
 
-        private SqlConnection connection;
-        private readonly string connectionString;
-        private int GrowthFactorID;
-        private int MaterialID;
-        private int MaterialsOrderID;
-        private int NameID;
-        private int PriceID;
-        private int QuantityID;
+        SqlConnection connection;
+        String connectionString;
 
         private int SKUID;
-        private int StartFactorID;
+        private int NameID;
+        private int BrandID;
+        private int MaterialsOrderID;
+        private int MaterialID;
+        private int PriceID;
         private int VariableCostID;
+        private int StartFactorID;
+        private int GrowthFactorID;
+        private int QuantityID;
+
+        public static int ProductIDFromInsert;
 
         public ProductsInsertDataLayer(IConfiguration configuration)
         {
@@ -53,23 +56,21 @@ namespace InventorySystem.DataLayerClasses
             StartFactorID = InsertStartFactor(productsInsertComplex.ProductStartFactor);
             GrowthFactorID = InsertGrowthFactor(productsInsertComplex.ProductGrowthFactor);
 
-            var productsInsert = new ProductsInsert(SKUID, NameID, BrandID, PriceID, VariableCostID, StartFactorID,
-                GrowthFactorID);
+            ProductsInsert productsInsert = new ProductsInsert(SKUID, NameID, BrandID, PriceID, VariableCostID, StartFactorID, GrowthFactorID);
 
             return productsInsert;
         }
 
         public int InsertName(string name)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (var command = new SqlCommand("ProcedureInsertProductsNameProductsV2", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsNameProductsV2", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.AddWithValue("@ProductName", name);
-                    command.Parameters.AddWithValue("@ProductName_Output", NameID).Direction =
-                        ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@ProductName_Output", NameID).Direction = ParameterDirection.Output;
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -79,13 +80,14 @@ namespace InventorySystem.DataLayerClasses
 
                 return NameID;
             }
+
         }
 
         public int InsertBrand(string brandName)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (var command = new SqlCommand("ProcedureInsertProductsBrandProductsV2", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsBrandProductsV2", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -100,13 +102,14 @@ namespace InventorySystem.DataLayerClasses
 
                 return BrandID;
             }
+
         }
 
         public int InsertSKU(long sKU)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (var command = new SqlCommand("ProcedureInsertProductsSKUProducts", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsSKUProducts", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -121,13 +124,14 @@ namespace InventorySystem.DataLayerClasses
 
                 return SKUID;
             }
+
         }
 
         public void InsertProductMaterial(int productID, ProductsInsertComplex productsInsertComplex)
         {
-            var productsInsert = new ProductsInsert();
-
-            foreach (var productsInsertMaterial in productsInsertComplex.productsInsertMaterials)
+            ProductsInsert productsInsert = new ProductsInsert();
+            
+            foreach (ProductsInsertComplex.ProductsInsertMaterial productsInsertMaterial in productsInsertComplex.productsInsertMaterials)
             {
                 InsertMaterial(productID, productsInsertMaterial.MaterialName);
                 Console.WriteLine(productID + productsInsertMaterial.MaterialName);
@@ -136,10 +140,10 @@ namespace InventorySystem.DataLayerClasses
 
         public void InsertMaterial(int productID, string materialName)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 {
-                    using (var command = new SqlCommand("ProcedureInsertProductsMaterialsV3", connection))
+                    using (SqlCommand command = new SqlCommand("ProcedureInsertProductsMaterialsV3", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
@@ -155,15 +159,14 @@ namespace InventorySystem.DataLayerClasses
 
         public int InsertPrice(int priceValue)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (var command = new SqlCommand("ProcedureInsertProductsPriceProducts", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsPriceProducts", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.AddWithValue("@ProductPrice", priceValue);
-                    command.Parameters.AddWithValue("@ProductPrice_Output", PriceID).Direction =
-                        ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@ProductPrice_Output", PriceID).Direction = ParameterDirection.Output;
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -177,15 +180,14 @@ namespace InventorySystem.DataLayerClasses
 
         public int InsertVariableCost(int variableCost)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (var command = new SqlCommand("ProcedureInsertProductsVariableCostProducts", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsVariableCostProducts", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.AddWithValue("@ProductVariableCost", variableCost);
-                    command.Parameters.AddWithValue("@ProductVariableCost_Output", VariableCostID).Direction =
-                        ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@ProductVariableCost_Output", VariableCostID).Direction = ParameterDirection.Output;
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -199,15 +201,14 @@ namespace InventorySystem.DataLayerClasses
 
         public int InsertStartFactor(int startFactor)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (var command = new SqlCommand("ProcedureInsertProductsStartFactorProducts", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsStartFactorProducts", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.AddWithValue("@ProductStartFactor", startFactor);
-                    command.Parameters.AddWithValue("@ProductStartFactor_Output", GrowthFactorID).Direction =
-                        ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@ProductStartFactor_Output", GrowthFactorID).Direction = ParameterDirection.Output;
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -221,15 +222,14 @@ namespace InventorySystem.DataLayerClasses
 
         public int InsertGrowthFactor(int growthFactor)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (var command = new SqlCommand("ProcedureInsertProductsGrowthFactorProducts", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsGrowthFactorProducts", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.AddWithValue("@ProductGrowthFactor", growthFactor);
-                    command.Parameters.AddWithValue("@ProductGrowthFactor_Output", GrowthFactorID).Direction =
-                        ParameterDirection.Output;
+                    command.Parameters.AddWithValue("@ProductGrowthFactor_Output", GrowthFactorID).Direction = ParameterDirection.Output;
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -240,15 +240,15 @@ namespace InventorySystem.DataLayerClasses
                 return GrowthFactorID;
             }
         }
-
+        
         public void InsertProductQuantity(int productID, ProductsInsertComplex productsInsertComplex)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (var command = new SqlCommand("ProcedureInsertProductsQuantitiesProducts", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsQuantitiesProducts", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-
+                    
                     command.Parameters.AddWithValue("@ProductID_Input", productID);
                     command.Parameters.AddWithValue("@ProductQuantity_Input", productsInsertComplex.ProductQuantity);
 
@@ -257,5 +257,6 @@ namespace InventorySystem.DataLayerClasses
                 }
             }
         }
+
     }
 }

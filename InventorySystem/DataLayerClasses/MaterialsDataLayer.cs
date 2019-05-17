@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using InventorySystem.Models;
 using Microsoft.Extensions.Configuration;
+using InventorySystem.Models;
 
 namespace InventorySystem.DataLayerClasses
 {
     public class MaterialsDataLayer
     {
-        private SqlCommand command;
-        private readonly SqlConnection connection;
-        private readonly string connectionString;
+        SqlConnection connection;
+        SqlCommand command;
+        String connectionString;
 
         public MaterialsDataLayer(IConfiguration configuration)
         {
@@ -21,13 +21,16 @@ namespace InventorySystem.DataLayerClasses
 
         public IEnumerable<Material> GetMaterial(int? MaterialID)
         {
-            var materials = new List<Material>();
+            List<Material> materials = new List<Material>();
 
             if (MaterialID == null)
+            {
                 command = new SqlCommand("SELECT * FROM [ViewMaterials]", connection);
+            }
             else
-                command = new SqlCommand("SELECT * FROM [ViewMaterials] WHERE MaterialID = '" + MaterialID + "'",
-                    connection);
+            {
+                command = new SqlCommand("SELECT * FROM [ViewMaterials] WHERE MaterialID = '" + MaterialID + "'", connection);
+            }
 
             connection.Open();
 
@@ -35,9 +38,9 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    var material = new Material((int) Convert.ToInt64(reader["MaterialID"]),
-                        //(String)reader["MaterialSKU"],
-                        (string) reader["MaterialName"]);
+                    Material material = new Material((int)Convert.ToInt64(reader["MaterialID"]),
+                         //(String)reader["MaterialSKU"],
+                         (String)reader["MaterialName"]);
                     materials.Add(material);
                 }
             }
@@ -49,9 +52,9 @@ namespace InventorySystem.DataLayerClasses
 
         public MaterialsInsert InsertMaterial(MaterialsInsert materialsInsert)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (var command = new SqlCommand("ProcedureInsertMaterial", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertMaterial", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -67,9 +70,9 @@ namespace InventorySystem.DataLayerClasses
 
         public MaterialsUpdate UpdateMaterial(MaterialsUpdate materialsUpdate)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (var command = new SqlCommand("ProcedureUpdateMaterial", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureUpdateMaterial", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -86,9 +89,9 @@ namespace InventorySystem.DataLayerClasses
 
         public MaterialsDelete DeleteMaterial(MaterialsDelete materialsDelete)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (var command = new SqlCommand("ProcedureDeleteMaterial", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureDeleteMaterial", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -101,5 +104,6 @@ namespace InventorySystem.DataLayerClasses
                 return materialsDelete;
             }
         }
+
     }
 }

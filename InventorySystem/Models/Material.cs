@@ -1,11 +1,12 @@
-﻿namespace InventorySystem.Models
+﻿using System;
+namespace InventorySystem.Models
 {
     public struct Material
     {
         public Material(int mMaterialID, string mMaterialName)
         {
-            MaterialID = mMaterialID;
-            MaterialName = mMaterialName;
+            this.MaterialID = mMaterialID;
+            this.MaterialName = mMaterialName;
         }
 
         public int MaterialID { get; set; }
@@ -16,7 +17,7 @@
     {
         public MaterialsInsert(string mMaterialName)
         {
-            MaterialName = mMaterialName;
+            this.MaterialName = mMaterialName;
         }
 
         public string MaterialName { get; set; }
@@ -26,8 +27,8 @@
     {
         public MaterialsUpdate(int mMaterialID, string mMaterialName)
         {
-            MaterialID = mMaterialID;
-            MaterialName = mMaterialName;
+            this.MaterialID = mMaterialID;
+            this.MaterialName = mMaterialName;
         }
 
         public int MaterialID { get; set; }
@@ -39,7 +40,7 @@
     {
         public MaterialsDelete(int mMaterialID)
         {
-            MaterialID = mMaterialID;
+            this.MaterialID = mMaterialID;
         }
 
         public int MaterialID { get; set; }

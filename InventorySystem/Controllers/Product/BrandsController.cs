@@ -1,9 +1,15 @@
-﻿using System.Collections.Generic;
-using InventorySystem.DataLayerClasses;
-using InventorySystem.Models;
-using Microsoft.AspNet.OData;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using InventorySystem.DataLayerClasses;
+using InventorySystem.Models;
+using System.IO;
+using Microsoft.AspNet.OData;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,7 +27,7 @@ namespace InventorySystem.Controllers
 
         // GET: api/brands?id
         [HttpGet("{id?}")]
-        [EnableQuery]
+        [EnableQuery()]
         public IEnumerable<ProductBrand> Get(int? id)
         {
             return new ProductBrandsDataLayer(_configuration).GetBrand(id);
@@ -46,8 +52,8 @@ namespace InventorySystem.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var productBrandsDelete = new ProductBrandsDelete(id);
-
+            ProductBrandsDelete productBrandsDelete = new ProductBrandsDelete(id);
+            
             return Ok(new ProductBrandsDataLayer(_configuration).DeleteProductBrand(productBrandsDelete));
         }
     }

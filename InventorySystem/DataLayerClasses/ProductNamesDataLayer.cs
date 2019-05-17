@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using InventorySystem.Models;
 using Microsoft.Extensions.Configuration;
+using InventorySystem.Models;
 
 namespace InventorySystem.DataLayerClasses
 {
     public class ProductNamesDataLayer
     {
-        private SqlCommand command;
-        private readonly SqlConnection connection;
-        private readonly string connectionString;
+        SqlConnection connection;
+        SqlCommand command;
+        String connectionString;
 
         public ProductNamesDataLayer(IConfiguration configuration)
         {
@@ -21,13 +21,16 @@ namespace InventorySystem.DataLayerClasses
 
         public IEnumerable<ProductName> GetProductName(int? NameID)
         {
-            var productNames = new List<ProductName>();
+            List<ProductName> productNames = new List<ProductName>();
 
             if (NameID == null)
+            {
                 command = new SqlCommand("SELECT * FROM [ViewProductNames]", connection);
+            }
             else
-                command = new SqlCommand("SELECT * FROM [ViewProductNames] WHERE ProductID = '" + NameID + "'",
-                    connection);
+            {
+                command = new SqlCommand("SELECT * FROM [ViewProductNames] WHERE ProductID = '" + NameID + "'", connection);
+            }
 
             connection.Open();
 
@@ -35,8 +38,8 @@ namespace InventorySystem.DataLayerClasses
             {
                 while (reader.Read())
                 {
-                    var productName = new ProductName((int) Convert.ToInt64(reader["ProductID"]),
-                        (string) reader["ProductName"]);
+                    ProductName productName = new ProductName((int)Convert.ToInt64(reader["ProductID"]),
+                       (String)reader["ProductName"]);
                     productNames.Add(productName);
                 }
             }
@@ -48,9 +51,9 @@ namespace InventorySystem.DataLayerClasses
 
         public ProductsNameInsert InsertProductName(ProductsNameInsert productsNameInsert)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (var command = new SqlCommand("ProcedureInsertProductsName", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureInsertProductsName", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -62,14 +65,15 @@ namespace InventorySystem.DataLayerClasses
 
                 return productsNameInsert;
             }
+
         }
 
 
         public ProductsNameUpdate UpdateProductName(ProductsNameUpdate productsNameUpdate)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (var command = new SqlCommand("ProcedureUpdateProductsName", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureUpdateProductsName", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -82,13 +86,14 @@ namespace InventorySystem.DataLayerClasses
 
                 return productsNameUpdate;
             }
+
         }
 
         public ProductsNameDelete DeleteProductName(ProductsNameDelete productsNameDelete)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (var command = new SqlCommand("ProcedureDeleteProductsName", connection))
+                using (SqlCommand command = new SqlCommand("ProcedureDeleteProductsName", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -100,6 +105,7 @@ namespace InventorySystem.DataLayerClasses
 
                 return productsNameDelete;
             }
+
         }
     }
 }

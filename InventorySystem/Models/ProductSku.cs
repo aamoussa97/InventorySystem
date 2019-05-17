@@ -1,4 +1,5 @@
-﻿namespace InventorySystem.Models
+﻿using System;
+namespace InventorySystem.Models
 {
     public struct ProductSku
     {
@@ -12,7 +13,7 @@
 
         public long SKUValue { get; set; }
     }
-
+    
     public struct ProductsSkuInsert
     {
         public ProductsSkuInsert(long mProductSku)
@@ -22,7 +23,7 @@
 
         public long ProductSku { get; set; }
     }
-
+    
     public struct ProductsSkuUpdate
     {
         public ProductsSkuUpdate(int mProductSkuID, long mProductSku)
@@ -35,7 +36,7 @@
 
         public long ProductSku { get; set; }
     }
-
+    
     public struct ProductsSkuDelete
     {
         public ProductsSkuDelete(int mProductSkuID)
