@@ -15,4 +15,4 @@ InventorySystem as the name implies, allows for a systemised inventory.
 Following courses was involved in this project:
 * [02363 Front End Web Technology](https://kurser.dtu.dk/course/02363)
 * [62413 Advanced object oriented programming using C# and .NET](https://kurser.dtu.dk/course/62413)
-* [62550 User experience and mobile application development](https://kurser.dtu.dk/course/62550)
+* [62596 Distributed Systems](https://kurser.dtu.dk/course/62596)
